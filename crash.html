@@ -4,9 +4,10 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>پرواز ضریب - شرط‌بندی ماهان</title>
+<title>پرواز ضریب</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -16,6 +17,7 @@
 <body>
 
 
+
 <header>
 
 <h1>
@@ -23,8 +25,16 @@
 </h1>
 
 
+
 <div class="coin">
-🪙 0
+
+🪙
+
+<span id="coins">
+0
+</span>
+
+
 </div>
 
 
@@ -35,30 +45,38 @@
 
 
 
+
 <div class="box">
 
 
+
 <h2>
-مبلغ بازی
+Crash Game
 </h2>
 
 
-<input
-id="bet"
-type="number"
-placeholder="تعداد سکه">
 
 
 
-<br><br>
+<div class="chart">
 
 
 
-<button onclick="startCrash()">
+<div id="rocket">
 
-شروع پرواز
+🚀
 
-</button>
+</div>
+
+
+
+
+<div id="multiplier">
+
+1.00×
+
+</div>
+
 
 
 </div>
@@ -72,31 +90,85 @@ placeholder="تعداد سکه">
 <div class="box">
 
 
-<h1 id="rocket">
 
-🚀
+<input 
+id="bet"
+type="number"
+placeholder="حداقل ورود 10000 سکه"
+>
 
-</h1>
+
+
+<br><br>
 
 
 
-<h2>
+<button onclick="startFly()">
 
-ضریب:
+🚀 شروع پرواز
 
-×<span id="multi">
+</button>
 
-1.00
+
+
+
+<button 
+id="cashout"
+onclick="cashOut()"
+disabled
+>
+
+💰 برداشت سود
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="game-info">
+
+
+
+<p>
+
+ورودی:
+
+<span id="betView">
+
+0
 
 </span>
 
-</h2>
+</p>
 
 
 
 
 
-<h3>
+<p>
+
+ضریب:
+
+<span id="multi">
+
+1.00×
+
+</span>
+
+</p>
+
+
+
+
+
+<p>
 
 سود:
 
@@ -108,38 +180,11 @@ placeholder="تعداد سکه">
 
 🪙
 
-</h3>
-
-
-
-
-
-<button onclick="cashOut()">
-
-برداشت سود
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-
-<div class="box">
-
-
-<p id="history">
-
-بازی شروع نشده
-
 </p>
 
 
+
+
 </div>
 
 
@@ -148,15 +193,19 @@ placeholder="تعداد سکه">
 
 
 
-<a href="games.html">
+<div id="message" class="message-box">
 
-<button>
+آماده بازی
 
-بازگشت
+</div>
 
-</button>
 
-</a>
+
+
+
+
+</div>
+
 
 
 
@@ -168,23 +217,35 @@ placeholder="تعداد سکه">
 
 
 <a href="index.html">
+
 خانه
+
 </a>
+
 
 
 <a href="games.html">
+
 بازی‌ها
+
 </a>
+
 
 
 <a href="wallet.html">
+
 کیف پول
+
 </a>
+
 
 
 <a href="profile.html">
+
 پروفایل
+
 </a>
+
 
 
 </nav>
@@ -195,9 +256,7 @@ placeholder="تعداد سکه">
 
 
 
-<script src="app.js"></script>
 <script src="crash.js"></script>
-
 
 
 </body>
