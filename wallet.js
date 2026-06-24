@@ -12,10 +12,9 @@ JSON.parse(localStorage.getItem("royalData")) || {
 
 
 
+let withdraws =
 
-let requests =
-
-JSON.parse(localStorage.getItem("walletRequests")) || [];
+JSON.parse(localStorage.getItem("withdrawRequests")) || [];
 
 
 
@@ -33,139 +32,20 @@ JSON.parse(localStorage.getItem("royalData")) || data;
 
 
 
-document.getElementById("coins").innerHTML =
+document.getElementById("list").innerHTML="";
 
-data.coins.toLocaleString();
 
 
+let list =
+document.getElementById("list");
 
 
-showRequests();
 
 
-}
+if(withdraws.length == 0){
 
 
-
-
-
-
-
-
-function sendRequest(){
-
-
-
-let amount =
-
-Number(
-document.getElementById("amount").value
-);
-
-
-
-
-
-if(!amount || amount < 10000){
-
-
-alert("حداقل درخواست 10000 سکه است");
-
-return;
-
-
-}
-
-
-
-
-
-
-let request = {
-
-
-
-id: Date.now(),
-
-
-
-user:"ماهان",
-
-
-
-coins:amount,
-
-
-
-status:"در انتظار تایید"
-
-
-
-};
-
-
-
-
-
-
-requests.push(request);
-
-
-
-
-
-
-localStorage.setItem(
-
-"walletRequests",
-
-JSON.stringify(requests)
-
-);
-
-
-
-
-
-
-document.getElementById("amount").value="";
-
-
-
-alert("درخواست ثبت شد");
-
-
-
-showRequests();
-
-
-}
-
-
-
-
-
-
-
-
-
-function showRequests(){
-
-
-
-let box =
-
-document.getElementById("requests");
-
-
-
-
-
-if(requests.length==0){
-
-
-box.innerHTML=
-
+list.innerHTML =
 "درخواستی وجود ندارد";
 
 
@@ -178,21 +58,11 @@ return;
 
 
 
-box.innerHTML="";
+withdraws.forEach(item=>{
 
 
 
-
-
-
-
-requests.forEach(item=>{
-
-
-
-box.innerHTML +=
-
-
+list.innerHTML +=
 
 `
 
@@ -201,9 +71,25 @@ box.innerHTML +=
 
 <p>
 
-🪙 ${item.coins.toLocaleString()} سکه
+💳 کارت:
+
+${item.card}
 
 </p>
+
+
+
+<p>
+
+💰 مبلغ:
+
+${item.money.toLocaleString()}
+
+تومان
+
+</p>
+
+
 
 
 <p>
@@ -228,8 +114,144 @@ ${item.status}
 
 
 
+}
+
+
+
+
+
+
+
+
+
+function sendWithdraw(){
+
+
+
+let card =
+
+document.getElementById("card").value;
+
+
+
+
+
+let money =
+
+Number(
+document.getElementById("money").value
+);
+
+
+
+
+
+
+if(card.length !== 16){
+
+
+alert("شماره کارت صحیح نیست");
+
+return;
+
 
 }
+
+
+
+
+
+
+
+if(!money || money < 10000){
+
+
+alert("حداقل برداشت 10000 تومان است");
+
+return;
+
+
+}
+
+
+
+
+
+
+
+
+let request = {
+
+
+
+id:Date.now(),
+
+
+
+user:"ماهان",
+
+
+
+card:card,
+
+
+
+money:money,
+
+
+
+status:"در انتظار تایید"
+
+
+
+};
+
+
+
+
+
+
+
+withdraws.push(request);
+
+
+
+
+
+
+localStorage.setItem(
+
+"withdrawRequests",
+
+JSON.stringify(withdraws)
+
+);
+
+
+
+
+
+
+
+document.getElementById("card").value="";
+
+document.getElementById("money").value="";
+
+
+
+
+
+alert("درخواست برداشت ثبت شد");
+
+
+
+update();
+
+
+
+}
+
+
 
 
 
