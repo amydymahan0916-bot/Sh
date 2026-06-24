@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>کیف پول</title>
+<title>کیف پول - شرط‌بندی ماهان</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -15,6 +15,7 @@
 
 
 <body>
+
 
 
 <header>
@@ -25,11 +26,12 @@
 
 
 <div class="coin">
-🪙 39,780
+🪙 0
 </div>
 
 
 </header>
+
 
 
 
@@ -50,16 +52,17 @@
 
 
 <input 
-id="coinInput"
+id="coinAmount"
 type="number"
-placeholder="تعداد سکه مورد نظر">
+placeholder="تعداد سکه">
 
 
 
 <br><br>
 
 
-<button onclick="calculatePrice()">
+
+<button onclick="calculate()">
 
 محاسبه قیمت
 
@@ -67,11 +70,12 @@ placeholder="تعداد سکه مورد نظر">
 
 
 
-<div id="result">
+<div id="priceBox">
 
 </div>
 
 
+
 </div>
 
 
@@ -80,8 +84,7 @@ placeholder="تعداد سکه مورد نظر">
 
 
 
-
-<div id="paymentBox" class="box" style="display:none;">
+<div id="payment" class="box" style="display:none;">
 
 
 <h2>
@@ -91,13 +94,13 @@ placeholder="تعداد سکه مورد نظر">
 
 
 <p>
-مبلغ پرداختی:
+مبلغ قابل پرداخت:
 </p>
 
 
-<h3 id="priceText" class="gold">
+<h2 class="gold" id="price">
 
-</h3>
+</h2>
 
 
 
@@ -108,12 +111,11 @@ placeholder="تعداد سکه مورد نظر">
 
 
 
-<h2 id="cardNumber">
+<h3>
 
 6037 9971 9478 4360
 
-</h2>
-
+</h3>
 
 
 
@@ -138,12 +140,10 @@ placeholder="تعداد سکه مورد نظر">
 </button>
 
 
-
 <br><br>
 
 
-
-<button onclick="sendPayment()">
+<button onclick="sendPay()">
 
 پرداخت کردم
 
@@ -159,12 +159,13 @@ placeholder="تعداد سکه مورد نظر">
 
 
 
-<div id="message" class="box" style="display:none;">
+
+<div id="msg" class="box" style="display:none;">
 
 
 <h3 class="gold">
 
-درخواست ارسال شد
+ارسال شد
 
 </h3>
 
@@ -220,25 +221,26 @@ placeholder="تعداد سکه مورد نظر">
 <script src="app.js"></script>
 
 
+
 <script>
 
 
-let selectedPrice = 0;
+let finalPrice = 0;
 
 
 
-function calculatePrice(){
+
+function calculate(){
 
 
 let coins =
 Number(
-document.getElementById("coinInput").value
+document.getElementById("coinAmount").value
 );
 
 
 
 if(coins < 1000){
-
 
 alert("حداقل 1000 سکه وارد کنید");
 
@@ -248,14 +250,12 @@ return;
 
 
 
-
-selectedPrice =
+finalPrice =
 (coins / 1000) * 10000;
 
 
 
-document.getElementById("result").innerHTML =
-
+document.getElementById("priceBox").innerHTML =
 
 `
 
@@ -270,15 +270,14 @@ ${coins.toLocaleString()} سکه
 
 <p>
 
-به مبلغ:
-
-${selectedPrice.toLocaleString()} تومان
+قیمت:
+${finalPrice.toLocaleString()} تومان
 
 </p>
 
 
 
-<button onclick="showPayment()">
+<button onclick="openPay()">
 
 پرداخت
 
@@ -297,20 +296,15 @@ ${selectedPrice.toLocaleString()} تومان
 
 
 
-
-function showPayment(){
-
-
-document.getElementById(
-"paymentBox"
-).style.display="block";
+function openPay(){
 
 
+document.getElementById("payment").style.display="block";
 
-document.getElementById(
-"priceText"
-).innerHTML =
-selectedPrice.toLocaleString()
+
+document.getElementById("price").innerHTML =
+
+finalPrice.toLocaleString()
 +
 " تومان";
 
@@ -319,6 +313,14 @@ selectedPrice.toLocaleString()
 
 
 
+
+function sendPay(){
+
+
+document.getElementById("msg").style.display="block";
+
+
+}
 
 
 
@@ -334,21 +336,6 @@ navigator.clipboard.writeText(
 alert(
 "شماره کارت کپی شد"
 );
-
-
-}
-
-
-
-
-
-
-function sendPayment(){
-
-
-document.getElementById(
-"message"
-).style.display="block";
 
 
 }
