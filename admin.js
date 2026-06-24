@@ -1,274 +1,17 @@
-const ADMIN_PASSWORD = "123456";
+let users = JSON.parse(
+localStorage.getItem("users")
+) || [];
 
 
 
 
-function loginAdmin(){
 
-
-let pass =
-document.getElementById("adminPass").value;
-
-
-
-if(pass !== ADMIN_PASSWORD){
-
-alert("رمز اشتباه است");
-
-return;
-
-}
-
-
-
-document.getElementById("loginBox").style.display="none";
-
-document.getElementById("panel").style.display="block";
-
-
-showAll();
-
-
-}
-
-
-
-
-
-
-
-function showAll(){
-
-showCharge();
-
-showWithdraw();
-
-}
-
-
-
-
-
-
-
-// =====================
-// شارژ ها
-// =====================
-
-
-function showCharge(){
-
-
-
-let requests =
-
-JSON.parse(localStorage.getItem("walletRequests")) || [];
-
-
-
-let box =
-
-document.getElementById("chargeRequests");
-
-
-
-box.innerHTML="";
-
-
-
-if(requests.length===0){
-
-box.innerHTML="درخواستی نیست";
-
-return;
-
-}
-
-
-
-
-
-requests.forEach((item,index)=>{
-
-
-
-box.innerHTML += `
-
-
-<div class="request-box">
-
-
-<h3>
-
-👤 ${item.user}
-
-</h3>
-
-
-
-<p>
-
-🪙 ${item.coins.toLocaleString()} سکه
-
-</p>
-
-
-
-<p>
-
-${item.status}
-
-</p>
-
-
-
-
-<button onclick="acceptCharge(${index})">
-
-✅ تایید
-
-</button>
-
-
-
-<button onclick="rejectCharge(${index})">
-
-❌ رد
-
-</button>
-
-
-
-</div>
-
-
-`;
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-
-function acceptCharge(index){
-
-
-
-let requests =
-
-JSON.parse(localStorage.getItem("walletRequests")) || [];
-
-
-
-let request = requests[index];
-
-
-
-
-
-
-let users =
-
-JSON.parse(localStorage.getItem("users")) || [];
-
-
-
-
-
-
-let userIndex = users.findIndex(
-
-u=>u.id === request.userId
-
-);
-
-
-
-
-
-
-if(userIndex === -1){
-
-alert("کاربر پیدا نشد");
-
-return;
-
-}
-
-
-
-
-
-
-
-users[userIndex].coins += request.coins;
-
-
-
-
-
-
-
-users[userIndex].history.unshift(
-
-"شارژ تایید شد +"+request.coins+" 🪙"
-
-);
-
-
-
-
-
-
+function saveUsers(){
 
 localStorage.setItem(
-
 "users",
-
 JSON.stringify(users)
-
 );
-
-
-
-
-
-
-
-request.status="تایید شده";
-
-
-
-
-
-
-localStorage.setItem(
-
-"walletRequests",
-
-JSON.stringify(requests)
-
-);
-
-
-
-
-
-
-
-showCharge();
-
-
 
 }
 
@@ -276,71 +19,14 @@ showCharge();
 
 
 
+function showUsers(){
 
 
+let box = document.getElementById("users");
 
 
-function rejectCharge(index){
-
-
-
-let requests =
-
-JSON.parse(localStorage.getItem("walletRequests")) || [];
-
-
-
-
-requests[index].status="رد شده";
-
-
-
-
-
-localStorage.setItem(
-
-"walletRequests",
-
-JSON.stringify(requests)
-
-);
-
-
-
-
-
-showCharge();
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =====================
-// برداشت ها
-// =====================
-
-
-function showWithdraw(){
-
-
-
-let requests =
-
-JSON.parse(localStorage.getItem("withdrawRequests")) || [];
-
-
-
-let box =
-
-document.getElementById("withdrawRequests");
+if(!box)
+return;
 
 
 
@@ -348,11 +34,62 @@ box.innerHTML="";
 
 
 
-if(requests.length===0){
+users.forEach((user,index)=>{
 
-box.innerHTML="درخواستی نیست";
 
-return;
+box.innerHTML +=
+
+`
+
+<div class="box">
+
+<h3>
+${user.username}
+</h3>
+
+
+<p>
+🪙 موجودی:
+${user.coins.toLocaleString()}
+</p>
+
+
+<p>
+🎮 بازی:
+${user.games}
+</p>
+
+
+<p>
+🏆 برد:
+${user.wins}
+</p>
+
+
+
+<button onclick="addCoin(${index})">
+
++10000 سکه
+
+</button>
+
+
+
+<button onclick="removeCoin(${index})">
+
+-10000 سکه
+
+</button>
+
+
+</div>
+
+`;
+
+
+
+});
+
 
 }
 
@@ -362,25 +99,65 @@ return;
 
 
 
-requests.forEach((item,index)=>{
 
 
-box.innerHTML += `
+function showRequests(){
 
 
-<div class="request-box">
+
+let box = document.getElementById("requests");
+
+
+
+if(!box)
+return;
+
+
+
+box.innerHTML="";
+
+
+
+let found=false;
+
+
+
+
+
+users.forEach((user)=>{
+
+
+
+if(user.requests){
+
+
+
+user.requests.forEach((req,index)=>{
+
+
+found=true;
+
+
+
+box.innerHTML +=
+
+`
+
+<div class="box">
 
 
 <h3>
 
-👤 ${item.user}
+${user.username}
 
 </h3>
 
 
 <p>
 
-💳 ${item.card}
+نوع:
+
+${req.type}
 
 </p>
 
@@ -388,7 +165,9 @@ box.innerHTML += `
 
 <p>
 
-💰 ${item.money.toLocaleString()} تومان
+مبلغ:
+
+${req.amount.toLocaleString()}
 
 </p>
 
@@ -396,30 +175,46 @@ box.innerHTML += `
 
 <p>
 
-${item.status}
+وضعیت:
+
+${req.status}
 
 </p>
 
 
 
-<button onclick="acceptWithdraw(${index})">
+${
+req.status=="در انتظار تایید"
 
-✅ پرداخت شد
+?
+
+`
+
+<button onclick="acceptRequest('${user.id}',${index})">
+
+تایید
 
 </button>
 
 
 
-<button onclick="rejectWithdraw(${index})">
+<button onclick="rejectRequest('${user.id}',${index})">
 
-❌ رد
+رد
 
 </button>
+
+`
+
+:
+
+""
+
+}
 
 
 
 </div>
-
 
 `;
 
@@ -433,52 +228,21 @@ ${item.status}
 
 
 
+});
 
 
 
 
 
 
-function acceptWithdraw(index){
+
+if(!found){
+
+box.innerHTML="درخواستی وجود ندارد";
+
+}
 
 
-
-let requests =
-
-JSON.parse(localStorage.getItem("withdrawRequests")) || [];
-
-
-
-let request = requests[index];
-
-
-
-
-
-let users =
-
-JSON.parse(localStorage.getItem("users")) || [];
-
-
-
-
-
-let userIndex = users.findIndex(
-
-u=>u.id === request.userId
-
-);
-
-
-
-
-
-
-if(userIndex === -1){
-
-alert("کاربر پیدا نشد");
-
-return;
 
 }
 
@@ -486,70 +250,100 @@ return;
 
 
 
-if(users[userIndex].coins < request.money){
+
+
+
+
+function acceptRequest(id,index){
+
+
+
+let user = users.find(
+
+u=>u.id==id
+
+);
+
+
+
+let req=user.requests[index];
+
+
+
+
+
+
+
+if(req.status!="در انتظار تایید")
+
+return;
+
+
+
+
+
+
+
+
+if(req.type=="شارژ"){
+
+
+
+user.coins += req.amount;
+
+
+
+}
+
+
+
+
+
+
+if(req.type=="برداشت"){
+
+
+
+if(user.coins >= req.amount){
+
+
+user.coins -= req.amount;
+
+
+}
+
+else{
+
 
 alert("موجودی کاربر کافی نیست");
 
 return;
 
+
+}
+
+
+
 }
 
 
 
 
 
-users[userIndex].coins -= request.money;
+
+req.status="تایید شد";
 
 
 
 
 
-
-users[userIndex].history.unshift(
-
-"برداشت تایید شد -"+request.money+" 🪙"
-
-);
+saveUsers();
 
 
 
+showUsers();
 
-
-
-localStorage.setItem(
-
-"users",
-
-JSON.stringify(users)
-
-);
-
-
-
-
-
-
-request.status="تایید شده";
-
-
-
-
-
-
-localStorage.setItem(
-
-"withdrawRequests",
-
-JSON.stringify(requests)
-
-);
-
-
-
-
-
-
-showWithdraw();
+showRequests();
 
 
 
@@ -561,32 +355,94 @@ showWithdraw();
 
 
 
-function rejectWithdraw(index){
+
+
+function rejectRequest(id,index){
 
 
 
-let requests =
+let user = users.find(
 
-JSON.parse(localStorage.getItem("withdrawRequests")) || [];
-
-
-
-requests[index].status="رد شده";
-
-
-
-localStorage.setItem(
-
-"withdrawRequests",
-
-JSON.stringify(requests)
+u=>u.id==id
 
 );
 
 
 
-showWithdraw();
+
+
+user.requests[index].status="رد شد";
 
 
 
-  }
+
+
+saveUsers();
+
+
+
+showRequests();
+
+
+
+}
+
+
+
+
+
+
+
+
+function addCoin(index){
+
+
+
+users[index].coins +=10000;
+
+
+saveUsers();
+
+
+showUsers();
+
+
+}
+
+
+
+
+
+
+
+function removeCoin(index){
+
+
+
+if(users[index].coins>=10000){
+
+
+users[index].coins-=10000;
+
+
+}
+
+
+
+saveUsers();
+
+
+showUsers();
+
+
+}
+
+
+
+
+
+
+
+showUsers();
+
+showRequests();
