@@ -1,65 +1,30 @@
-let risk = "normal";
+// بازی استاد کارت
+
 
 let bet = 0;
 
 let profit = 0;
 
+let stage = 0;
+
+let multiplier = 1;
+
 let playing = false;
 
-let selectedCards = [];
-
-let totalMultiplier = 1;
 
 
+const multipliers = [
 
-let data = JSON.parse(localStorage.getItem("royalData")) || {
+1.27,
+1.61,
+2,
+2.5,
+3.2,
+4.1,
+5.2,
+6.7
 
-    coins:100000,
-    wins:0,
-    games:0,
-    record:0,
-    history:[]
-
-};
-
-
-
-
-function save(){
-
-    localStorage.setItem(
-        "royalData",
-        JSON.stringify(data)
-    );
-
-}
-
-
-
-
-function update(){
-
-    document.getElementById("coins").innerHTML =
-    data.coins.toLocaleString();
-
-}
-
-
-update();
-
-
-
-
-
-
-
-function setRisk(type){
-
-    risk = type;
-
-}
-
-
+];
 
 
 
@@ -69,203 +34,148 @@ function setRisk(type){
 function startGame(){
 
 
-    if(playing)
-    return;
 
+bet = Number(
+document.getElementById("bet").value
+);
 
 
-    bet = Number(
-        document.getElementById("bet").value
-    );
 
+if(bet < 10000){
 
+alert("حداقل ورود 10000 سکه است");
 
-    if(!bet || bet<=0){
+return;
 
-        alert("مبلغ را وارد کنید");
-        return;
+}
 
-    }
 
 
 
-    if(bet > data.coins){
+let user =
+JSON.parse(localStorage.getItem("user"));
 
-        alert("موجودی کافی نیست");
-        return;
 
-    }
 
+if(!user || user.coins < bet){
 
+alert("موجودی کافی نیست");
 
-    data.coins -= bet;
+return;
 
+}
 
 
-    data.games++;
 
 
+user.coins -= bet;
 
-    profit = 0;
 
-    selectedCards = [];
+localStorage.setItem(
+"user",
+JSON.stringify(user)
+);
 
-    totalMultiplier = 1;
 
 
-    playing = true;
 
+profit = bet;
 
+stage = 0;
 
+multiplier = 1;
 
+playing = true;
 
-    document.getElementById("betView").innerHTML =
-    bet.toLocaleString();
 
 
 
-    document.getElementById("profit").innerHTML =
-    0;
+document.getElementById("startBox").style.display="none";
 
+document.getElementById("gameBox").style.display="block";
 
 
-    document.getElementById("multi").innerHTML =
-    "×1";
 
+createCards();
 
 
 
+}
 
-    let cards;
 
 
 
-    if(risk=="safe"){
 
+function createCards(){
 
-        cards=[
 
-        "×1",
-        "×1.5",
-        "×2",
-        "×3",
-        "POUCH",
-        "BOMB"
 
-        ];
+let box =
+document.getElementById("cards");
 
 
-    }
+box.innerHTML="";
 
 
-    else if(risk=="hard"){
 
 
-        cards=[
+let cards = [
 
-        "BOMB",
-        "BOMB",
-        "×3",
-        "×5",
-        "×8",
-        "POUCH"
+"bomb",
+"bomb",
+"empty",
 
-        ];
+"win",
+"win",
+"win"
 
+];
 
-    }
 
 
-    else{
+cards.sort(()=>Math.random()-0.5);
 
 
-        cards=[
 
-        "BOMB",
-        "BOMB",
-        "POUCH",
-        "×1",
-        "×2",
-        "×3"
 
-        ];
 
-    }
+cards.forEach(type=>{
 
 
 
+let card =
+document.createElement("div");
 
 
-    cards.sort(()=>Math.random()-0.5);
 
+card.className="card";
 
 
+card.innerHTML="🂠";
 
 
-    let box =
-    document.getElementById("cards");
 
 
+card.onclick=function(){
 
-    box.innerHTML="";
 
+openCard(card,type);
 
 
+};
 
 
-    cards.forEach((item)=>{
 
+box.appendChild(card);
 
-        box.innerHTML += `
 
-        <div class="card">
 
+});
 
-            <div class="inner"
-            onclick="chooseCard(this,'${item}')">
 
 
-                <div class="front">
+updateInfo();
 
-                RG
-
-                </div>
-
-
-                <div class="back">
-
-                ${item}
-
-                </div>
-
-
-            </div>
-
-
-        </div>
-
-        `;
-
-
-    });
-
-
-
-
-
-    document.getElementById("cashout").disabled=false;
-
-
-
-    document.getElementById("message").innerHTML=
-
-    "کارت انتخاب کنید";
-
-
-
-    save();
-
-    update();
 
 
 }
@@ -277,185 +187,145 @@ function startGame(){
 
 
 
+function openCard(card,type){
 
-function chooseCard(card,value){
 
+if(!playing) return;
 
 
-    if(!playing)
-    return;
+if(card.classList.contains("open"))
+return;
 
 
 
-    let parent = card.parentElement;
+card.classList.add("open");
 
 
 
-    if(parent.classList.contains("open"))
-    return;
 
 
+if(type==="bomb"){
 
-    parent.classList.add("open");
 
 
+card.classList.add("bomb");
 
+card.innerHTML="💣";
 
 
 
+profit=0;
 
-    if(value=="BOMB"){
 
+document.getElementById("profit").innerHTML=0;
 
-        parent.classList.add("bomb");
 
 
-        profit=0;
+playing=false;
 
 
-        playing=false;
 
+alert("بمب خورد! سود از بین رفت");
 
-        document.getElementById("cashout").disabled=true;
 
 
+return;
 
-        document.getElementById("message").innerHTML=
 
-        `
-        💣 BOMB
+}
 
-        <br>
 
-        بازی تمام شد
 
-        `;
 
 
-        return;
 
+if(type==="empty"){
 
-    }
 
 
+card.classList.add("empty");
 
+card.innerHTML="❌";
 
 
 
+return;
 
 
-    if(value=="POUCH"){
+}
 
 
-        document.getElementById("message").innerHTML=
 
-        `
-        کارت پوچ شد
 
-        `;
 
 
-        return;
 
-    }
+if(type==="win"){
 
 
 
+card.classList.add("win");
 
 
 
+let multi =
+multipliers[stage];
 
-    let multi =
-    Number(value.replace("×",""));
 
 
+multiplier*=multi;
 
-    selectedCards.push(multi);
 
+profit =
+Math.floor(bet * multiplier);
 
 
-    totalMultiplier *= multi;
 
+card.innerHTML =
+"×"+multi;
 
 
 
-    profit =
-    Math.floor(
-        bet * totalMultiplier
-    );
+stage++;
 
 
 
 
-    document.getElementById("multi").innerHTML =
+updateInfo();
 
-    "×"+totalMultiplier;
 
 
 
 
+if(stage >= 8){
 
-    document.getElementById("profit").innerHTML =
 
-    profit.toLocaleString();
+playing=false;
 
 
+alert("تبریک! همه مراحل تمام شد");
 
 
 
-    parent.classList.add("win");
+}
 
 
 
+setTimeout(()=>{
 
 
-    let list="";
+if(playing){
 
+createCards();
 
+}
 
-    selectedCards.forEach((x,index)=>{
 
+},800);
 
-        list +=
 
-        `
-        کارت ${index+1}: ×${x}
-        <br>
-        `;
 
-
-    });
-
-
-
-
-
-    document.getElementById("message").innerHTML=
-
-    `
-
-    ✨ برد
-
-
-    <br><br>
-
-    ${list}
-
-
-    <br>
-
-    مجموع ضریب:
-    ×${totalMultiplier}
-
-
-    <br><br>
-
-
-    مجموع سود:
-    ${profit.toLocaleString()} 🪙
-
-
-    `;
+}
 
 
 
@@ -472,65 +342,87 @@ function cashOut(){
 
 
 
-    if(!playing)
-    return;
+if(!playing && profit<=0){
+
+return;
+
+}
 
 
 
 
-    data.coins += profit;
+let user =
+JSON.parse(localStorage.getItem("user"));
 
 
 
-    data.wins++;
+if(user){
 
 
 
-    if(profit > data.record)
-
-    data.record = profit;
+user.coins += profit;
 
 
 
-
-    data.history.unshift(
-
-    "Card Master + "+profit+" 🪙"
-
-    );
+localStorage.setItem(
+"user",
+JSON.stringify(user)
+);
 
 
 
+alert(
+"برداشت شد: "+profit+" سکه"
+);
 
-    playing=false;
-
-
-
-    document.getElementById("cashout").disabled=true;
-
-
-
-
-    document.getElementById("message").innerHTML=
-
-    `
-
-    💰 برداشت موفق
-
-
-    <br>
-
-
-    ${profit.toLocaleString()} 🪙
-
-    `;
-
-
-
-
-    save();
-
-    update();
 
 
 }
+
+
+
+playing=false;
+
+
+
+}
+
+
+
+
+
+function updateInfo(){
+
+
+
+document.getElementById("level").innerHTML =
+stage+1;
+
+
+
+document.getElementById("multi").innerHTML =
+multiplier.toFixed(2)+"×";
+
+
+
+document.getElementById("profit").innerHTML =
+profit.toLocaleString();
+
+
+
+let user =
+JSON.parse(localStorage.getItem("user"));
+
+
+
+if(user){
+
+
+document.getElementById("balance").innerHTML =
+"🪙 "+user.coins.toLocaleString();
+
+
+}
+
+
+    }
