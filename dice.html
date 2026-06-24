@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>نبرد تاس - شرط‌بندی ماهان</title>
+<title>استاد کارت - شرط‌بندی ماهان</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -19,7 +19,7 @@
 <header>
 
 <h1>
-🎲 نبرد تاس
+🃏 استاد کارت
 </h1>
 
 
@@ -34,6 +34,7 @@
 
 
 
+
 <div class="box">
 
 
@@ -42,15 +43,23 @@
 </h2>
 
 
-<input id="bet" type="number" placeholder="تعداد سکه">
+<input 
+id="bet"
+type="number"
+placeholder="تعداد سکه">
+
 
 
 <br><br>
 
 
-<button onclick="startDice()">
+
+<button onclick="startCard()">
+
 شروع بازی
+
 </button>
+
 
 
 </div>
@@ -61,36 +70,61 @@
 
 
 
+
 <div class="box">
-
-
-<h1 id="dice">
-🎲
-</h1>
 
 
 <h2>
-نتیجه:
-<span id="result">-</span>
+کارت شما
 </h2>
 
 
+
+<div id="card" class="card">
+
+❓
+
+</div>
+
+
+
+
 <h3>
+
 ضریب:
-×<span id="multi">1</span>
+
+×<span id="multi">
+
+1
+
+</span>
+
 </h3>
+
+
 
 
 <h3>
+
 سود:
-<span id="profit">0</span>
+
+<span id="profit">
+
+0
+
+</span>
+
 🪙
+
 </h3>
 
 
 
-<button onclick="takeDiceProfit()">
+
+<button onclick="takeCardProfit()">
+
 برداشت سود
+
 </button>
 
 
@@ -105,9 +139,13 @@
 
 <div class="box">
 
+
 <p id="history">
+
 بازی شروع نشده
+
 </p>
+
 
 </div>
 
@@ -120,7 +158,9 @@
 <a href="games.html">
 
 <button>
+
 بازگشت
+
 </button>
 
 </a>
@@ -129,23 +169,29 @@
 
 
 
+
 <nav>
+
 
 <a href="index.html">
 خانه
 </a>
 
+
 <a href="games.html">
 بازی‌ها
 </a>
+
 
 <a href="wallet.html">
 کیف پول
 </a>
 
+
 <a href="profile.html">
 پروفایل
 </a>
+
 
 </nav>
 
@@ -153,8 +199,10 @@
 
 
 
+
 <script src="app.js"></script>
-<script src="dice.js"></script>
+<script src="card.js"></script>
+
 
 
 </body>
