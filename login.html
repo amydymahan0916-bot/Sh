@@ -1,113 +1,85 @@
-function register(){
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
 
+<head>
 
-let username =
-document.getElementById("username").value.trim();
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>ورود</title>
 
+<link rel="stylesheet" href="style.css">
 
-let password =
-document.getElementById("password").value.trim();
+</head>
 
 
+<body>
 
 
-if(!username || !password){
+<header>
 
-alert("نام کاربری و رمز را وارد کنید");
-return;
+<h1>
+ورود به حساب
+</h1>
 
-}
+</header>
 
 
 
+<div class="box">
 
-let users =
-JSON.parse(localStorage.getItem("users")) || [];
 
+<h2>
+ورود
+</h2>
 
 
+<input 
+id="username"
+type="text"
+placeholder="نام کاربری">
 
 
-let check =
-users.find(
-u => u.username === username
-);
 
+<br><br>
 
 
+<input
+id="password"
+type="password"
+placeholder="رمز عبور">
 
 
-if(check){
 
-alert("این نام کاربری قبلا ثبت شده");
-return;
+<br><br>
 
-}
 
+<button onclick="login()">
 
+ورود
 
+</button>
 
 
-let user = {
 
+<p>
 
-id:Date.now(),
+حساب ندارید؟
 
+<a href="register.html">
+ثبت نام
+</a>
 
-username:username,
+</p>
 
 
-password:password,
+</div>
 
 
-coins:100000,
 
+<script src="login.js"></script>
 
-wins:0,
 
+</body>
 
-games:0,
-
-
-record:0,
-
-
-history:[]
-
-
-
-};
-
-
-
-
-
-
-users.push(user);
-
-
-
-
-
-localStorage.setItem(
-
-"users",
-
-JSON.stringify(users)
-
-);
-
-
-
-
-
-alert("ثبت نام موفق بود");
-
-
-
-location.href="login.html";
-
-
-
-}
+</html>
