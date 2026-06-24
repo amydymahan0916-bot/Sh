@@ -1,24 +1,32 @@
-let bet = 0;
-let multiplier = 1;
-let profit = 0;
-let playing = false;
-let cardCount = 0;
+// استاد کارت - شرط بندی ماهان
+
+
+let cardBet = 0;
+let cardMulti = 1;
+let cardProfit = 0;
+let cardStarted = false;
 
 
 
+function startCard(){
 
-function startGame(){
 
-
-bet = Number(
+cardBet = Number(
 document.getElementById("bet").value
 );
 
 
 
-if(bet <= 0){
+if(cardBet <= 0){
 
 alert("مبلغ بازی را وارد کنید");
+return;
+
+}
+
+
+
+if(!removeCoins(cardBet)){
 
 return;
 
@@ -26,50 +34,105 @@ return;
 
 
 
-if(!removeCoins(bet)){
+cardMulti = 1;
+cardProfit = 0;
+cardStarted = true;
 
+
+
+document.getElementById("multi").innerHTML = "1";
+document.getElementById("profit").innerHTML = "0";
+
+document.getElementById("history").innerHTML =
+"کارت خود را انتخاب کنید";
+
+
+
+let box =
+document.getElementById("card");
+
+
+box.innerHTML = "❓";
+
+}
+
+
+
+
+function openCard(){
+
+
+if(!cardStarted){
+
+alert("اول بازی را شروع کنید");
 return;
 
 }
 
 
 
-multiplier = 1;
+let cards = [
 
-profit = bet;
+"⭐",
+"💎",
+"🔥",
+"💰",
+"❌",
+"👑"
 
-cardCount = 0;
+];
 
-playing = true;
 
+let result =
+cards[Math.floor(Math.random()*cards.length)];
+
+
+
+document.getElementById("card").innerHTML =
+result;
+
+
+
+if(result=="❌"){
+
+
+document.getElementById("history").innerHTML =
+"باختی!";
+
+
+
+cardStarted=false;
+
+
+return;
+
+
+}
+
+
+
+cardMulti += 1;
+
+
+
+cardProfit =
+cardBet * cardMulti;
 
 
 
 document.getElementById("multi").innerHTML =
-multiplier;
+cardMulti;
 
 
 
 document.getElementById("profit").innerHTML =
-profit.toLocaleString();
-
+cardProfit.toLocaleString();
 
 
 
 document.getElementById("history").innerHTML =
-"بازی شروع شد<br>کارت انتخاب کن 🃏";
+"کارت بعدی را انتخاب کن";
 
-
-
-
-
-document.querySelectorAll(".card").forEach(card=>{
-
-card.innerHTML="🂠";
-
-card.classList.remove("open");
-
-});
 
 
 }
@@ -77,138 +140,29 @@ card.classList.remove("open");
 
 
 
+function takeCardProfit(){
 
 
+if(cardProfit <= 0){
 
-function pickCard(card){
-
-
-
-if(!playing){
-
-alert("اول بازی را شروع کن");
-
+alert("سودی برای برداشت ندارید");
 return;
 
 }
 
 
 
+addCoins(cardProfit);
 
-cardCount++;
 
 
+document.getElementById("history").innerHTML =
+"سود دریافت شد";
 
 
-let win = Math.random() > 0.35;
 
+cardStarted=false;
+cardProfit=0;
 
 
-card.classList.add("open");
-
-
-
-
-if(win){
-
-
-
-multiplier++;
-
-
-profit = bet * multiplier;
-
-
-
-card.innerHTML="⭐";
-
-
-
-document.getElementById("multi").innerHTML =
-multiplier;
-
-
-
-document.getElementById("profit").innerHTML =
-profit.toLocaleString();
-
-
-
-
-document.getElementById("history").innerHTML +=
-
-"<br>کارت "+cardCount+
-" موفق ✔️ ضریب ×"+
-multiplier;
-
-
-
-}
-
-else{
-
-
-card.innerHTML="💀";
-
-
-
-document.getElementById("history").innerHTML +=
-
-"<br>کارت "+cardCount+
-" باخت ❌";
-
-
-
-document.getElementById("profit").innerHTML=0;
-
-
-
-playing=false;
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-function takeProfit(){
-
-
-
-if(!playing){
-
-alert("بازی فعالی ندارید");
-
-return;
-
-}
-
-
-
-addCoins(profit);
-
-
-
-document.getElementById("history").innerHTML +=
-
-"<br>سود برداشت شد ✅";
-
-
-
-alert(
-"سود شما اضافه شد: "+profit+" 🪙"
-);
-
-
-
-playing=false;
-
-
-
-}
+  }
