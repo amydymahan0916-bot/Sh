@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>شکار گنج</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>
+💣 شکار گنج
+</h1>
+
+
+<div class="coin">
+🪙 39,780
+</div>
+
+
+</header>
+
+
+
+
+
+
+<div class="box">
+
+
+<h2>
+مبلغ بازی
+</h2>
+
+
+<input 
+id="bet"
+type="number"
+placeholder="تعداد سکه">
+
+
+
+<br><br>
+
+
+
+<button onclick="startMine()">
+
+شروع بازی
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+<div class="box">
+
+
+<h2>
+ضریب:
+×<span id="multi">1</span>
+
+</h2>
+
+
+<h3>
+
+جایزه:
+<span id="profit">
+0
+</span>
+
+🪙
+
+</h3>
+
+
+
+<button onclick="takeMineProfit()">
+
+برداشت جایزه
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="mineBox">
+
+
+<div class="mineCell" onclick="openCell(this,0)">
+?
+</div>
+
+
+<div class="mineCell" onclick="openCell(this,1)">
+?
+</div>
+
+
+<div class="mineCell" onclick="openCell(this,2)">
+?
+</div>
+
+
+<div class="mineCell" onclick="openCell(this,3)">
+?
+</div>
+
+
+<div class="mineCell" onclick="openCell(this,4)">
+?
+</div>
+
+
+<div class="mineCell" onclick="openCell(this,5)">
+?
+</div>
+
+
+<div class="mineCell" onclick="openCell(this,6)">
+?
+</div>
+
+
+<div class="mineCell" onclick="openCell(this,7)">
+?
+</div>
+
+
+<div class="mineCell" onclick="openCell(this,8)">
+?
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="box">
+
+<p id="history">
+
+بازی شروع نشده
+
+</p>
+
+</div>
+
+
+
+
+
+
+<a href="games.html">
+
+<button>
+
+بازگشت
+
+</button>
+
+</a>
+
+
+
+
+
+
+<script src="mine.js"></script>
+
+
+</body>
+
+</html>

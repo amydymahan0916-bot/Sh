@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>نبرد تاس</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>
+🎲 نبرد تاس
+</h1>
+
+
+<div class="coin">
+🪙 39,780
+</div>
+
+
+</header>
+
+
+
+
+
+<div class="box">
+
+
+<h2>
+مبلغ بازی
+</h2>
+
+
+<input 
+id="bet"
+type="number"
+placeholder="تعداد سکه">
+
+
+
+<br><br>
+
+
+<button onclick="startDice()">
+
+شروع بازی
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="box">
+
+
+<h1 id="dice">
+
+🎲
+
+</h1>
+
+
+<h2>
+
+نتیجه:
+<span id="result">
+-
+</span>
+
+</h2>
+
+
+<h3>
+
+ضریب:
+×<span id="multi">
+1
+
+</span>
+
+</h3>
+
+
+<h3>
+
+سود:
+
+<span id="profit">
+
+0
+
+</span>
+
+🪙
+
+</h3>
+
+
+
+<button onclick="takeDiceProfit()">
+
+برداشت سود
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="box">
+
+
+<p id="history">
+
+بازی شروع نشده
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<a href="games.html">
+
+<button>
+بازگشت
+</button>
+
+</a>
+
+
+
+
+
+
+<script src="dice.js"></script>
+
+
+</body>
+
+</html>
