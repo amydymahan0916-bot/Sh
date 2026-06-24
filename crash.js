@@ -1,131 +1,220 @@
-let crashBet = 0;
+let data =
+JSON.parse(localStorage.getItem("royalData")) || {
 
-let crashMulti = 1;
+    coins:0,
+    wins:0,
+    games:0,
+    record:0,
+    history:[]
 
-let crashProfit = 0;
-
-let crashPlaying = false;
-
-let crashTimer;
-
-let crashLimit;
-
+};
 
 
 
+let bet = 0;
 
-function startCrash(){
+let multiplier = 1;
 
+let playing = false;
 
+let crashPoint = 0;
 
-crashBet =
-Number(
-document.getElementById("bet").value
-);
-
-
-
-if(crashBet<=0){
-
-alert("مبلغ بازی را وارد کنید");
-
-return;
-
-}
+let timer;
 
 
 
-if(!removeCoins(crashBet)){
 
-return;
+
+function save(){
+
+    localStorage.setItem(
+        "royalData",
+        JSON.stringify(data)
+    );
 
 }
 
 
 
 
-crashMulti=1;
 
-crashProfit=crashBet;
-
-crashPlaying=true;
+function update(){
 
 
-
-crashLimit =
-(Math.random()*8)+1.5;
+    data =
+    JSON.parse(localStorage.getItem("royalData")) || data;
 
 
 
-document.getElementById("history").innerHTML =
-"پرواز شروع شد 🚀";
-
-
-
-clearInterval(crashTimer);
-
-
-
-crashTimer=setInterval(()=>{
-
-
-
-crashMulti += 0.1;
-
-
-
-document.getElementById("multi").innerHTML =
-crashMulti.toFixed(2);
-
-
-
-crashProfit =
-Math.floor(
-crashBet * crashMulti
-);
-
-
-
-document.getElementById("profit").innerHTML =
-crashProfit.toLocaleString();
-
-
-
-
-
-if(crashMulti >= crashLimit){
-
-
-clearInterval(crashTimer);
-
-
-
-document.getElementById("rocket").innerHTML=
-"💥";
-
-
-
-document.getElementById("history").innerHTML =
-"هواپیما سقوط کرد ❌";
-
-
-document.getElementById("profit").innerHTML=0;
-
-
-
-crashPlaying=false;
-
+    document.getElementById("coins").innerHTML =
+    data.coins.toLocaleString();
 
 
 }
 
 
 
-},300);
+update();
+
+
+
+
+
+
+
+
+function startFly(){
+
+
+    if(playing)
+    return;
+
+
+
+    bet =
+    Number(
+    document.getElementById("bet").value
+    );
+
+
+
+    if(bet < 10000){
+
+        alert("حداقل ورود 10000 سکه است");
+        return;
+
+    }
+
+
+
+
+    data =
+    JSON.parse(localStorage.getItem("royalData")) || data;
+
+
+
+
+    if(bet > data.coins){
+
+        alert("موجودی کافی نیست");
+        return;
+
+    }
+
+
+
+
+
+    data.coins -= bet;
+
+    data.games++;
+
+
+
+    multiplier = 1;
+
+    playing = true;
+
+
+
+
+
+    // ضریب سقوط تصادفی
+
+    crashPoint =
+    Number(
+    (Math.random()*6+1).toFixed(2)
+    );
+
+
+
+
+
+    document.getElementById("betView").innerHTML =
+    bet.toLocaleString();
+
+
+
+    document.getElementById("cashout").disabled=false;
+
+
+
+    document.getElementById("message").innerHTML =
+    "🚀 پرواز شروع شد";
+
+
+
+
+
+    let chart =
+    document.querySelector(".chart");
+
+
+
+    if(chart){
+
+        chart.classList.remove("crash");
+
+    }
+
+
+
+
+
+
+    timer = setInterval(()=>{
+
+
+
+        multiplier += 0.01;
+
+
+
+        document.getElementById("multi").innerHTML =
+        multiplier.toFixed(2)+"×";
+
+
+
+        document.getElementById("multiplier").innerHTML =
+        multiplier.toFixed(2)+"×";
+
+
+
+
+
+        let profit =
+        Math.floor(
+        bet * multiplier
+        );
+
+
+
+        document.getElementById("profit").innerHTML =
+        profit.toLocaleString();
+
+
+
+
+
+        if(multiplier >= crashPoint){
+
+
+            crash();
+
+
+        }
+
+
+
+
+
+    },80);
+
 
 
 
 }
+
 
 
 
@@ -137,39 +226,152 @@ crashPlaying=false;
 function cashOut(){
 
 
-if(!crashPlaying){
 
-alert("پروازی فعال نیست");
+    if(!playing)
+    return;
 
-return;
+
+
+    clearInterval(timer);
+
+
+
+    let reward =
+    Math.floor(
+    bet * multiplier
+    );
+
+
+
+
+
+    data.coins += reward;
+
+
+
+    data.wins++;
+
+
+
+    if(reward > data.record){
+
+        data.record = reward;
+
+    }
+
+
+
+
+
+    data.history.unshift(
+
+        "پرواز ضریب + "+
+        reward+
+        " 🪙"
+
+    );
+
+
+
+
+
+    playing=false;
+
+
+
+    document.getElementById("cashout").disabled=true;
+
+
+
+
+    document.getElementById("message").innerHTML =
+
+    `
+    💰 برداشت موفق
+
+    <br><br>
+
+    ضریب:
+    ${multiplier.toFixed(2)}×
+
+    <br>
+
+    دریافت:
+    ${reward.toLocaleString()} 🪙
+
+    `;
+
+
+
+    save();
+
+    update();
+
 
 }
 
 
 
 
-clearInterval(crashTimer);
 
 
 
-addCoins(crashProfit);
+
+
+function crash(){
 
 
 
-document.getElementById("history").innerHTML =
-"سود برداشت شد ✅";
+    clearInterval(timer);
 
 
 
-alert(
-"سود شما: "+
-crashProfit+
-" 🪙"
-);
+    playing=false;
 
 
 
-crashPlaying=false;
+    document.getElementById("cashout").disabled=true;
+
+
+
+
+    let chart =
+    document.querySelector(".chart");
+
+
+
+    if(chart){
+
+        chart.classList.add("crash");
+
+    }
+
+
+
+
+
+    document.getElementById("message").innerHTML =
+
+
+    `
+    💥 سقوط کرد
+
+    <br><br>
+
+    ضریب:
+    ${multiplier.toFixed(2)}×
+
+    <br>
+
+    شرط از بین رفت
+
+    `;
+
+
+
+    save();
+
+    update();
 
 
 
