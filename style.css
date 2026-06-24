@@ -16,16 +16,20 @@ body{
 }
 
 
-/* هدر */
+
+/* Header */
 
 header{
 
+    width:100%;
     height:75px;
-    background:#0c0c0c;
+    background:#111;
     border-bottom:1px solid #333;
+
     display:flex;
-    align-items:center;
     justify-content:space-between;
+    align-items:center;
+
     padding:15px 20px;
 
 }
@@ -34,9 +38,10 @@ header{
 header h1{
 
     color:#ffd700;
-    font-size:22px;
+    font-size:24px;
 
 }
+
 
 
 
@@ -44,23 +49,33 @@ header h1{
 
     background:#181818;
     border:1px solid #ffd700;
-    border-radius:25px;
-    padding:8px 18px;
+
     color:#ffd700;
+
+    padding:8px 18px;
+
+    border-radius:30px;
 
 }
 
 
 
-/* باکس ها */
+
+
+
+/* Box */
 
 .box{
 
     width:92%;
     margin:20px auto;
+
     background:#101010;
+
     border:1px solid #292929;
+
     border-radius:20px;
+
     padding:20px;
 
 }
@@ -76,18 +91,30 @@ header h1{
 
 
 
+
+
+
 input{
 
     width:85%;
+
     padding:14px;
-    border-radius:15px;
-    border:1px solid #555;
+
     background:#050505;
+
     color:white;
+
+    border:1px solid #555;
+
+    border-radius:15px;
+
     text-align:center;
-    font-size:16px;
+
+    font-size:17px;
 
 }
+
+
 
 
 
@@ -95,11 +122,19 @@ input{
 button{
 
     background:#ffd700;
+
     color:#000;
+
     border:0;
-    padding:12px 30px;
+
     border-radius:25px;
+
+    padding:13px 35px;
+
     font-weight:bold;
+
+    font-size:16px;
+
     cursor:pointer;
 
 }
@@ -116,36 +151,98 @@ button:hover{
 
 
 
+
+
+/* اطلاعات بازی */
+
+
+#multi{
+
+    color:#ffd700;
+
+    font-size:30px;
+
+}
+
+
+#profit{
+
+    color:#00ff99;
+
+    font-size:25px;
+
+}
+
+
+#stage{
+
+    color:#ffd700;
+
+}
+
+
+
+
+
+
+
 /* کارت ها */
 
 
 .cards{
 
     width:92%;
-    margin:20px auto;
+
+    margin:25px auto;
+
     display:grid;
+
     grid-template-columns:repeat(3,1fr);
+
     gap:15px;
 
 }
 
 
 
+
 .card{
 
     height:130px;
-    background:linear-gradient(145deg,#202020,#070707);
+
+    background:
+
+    linear-gradient(145deg,#252525,#080808);
+
+
     border:2px solid #ffd700;
-    border-radius:18px;
+
+    border-radius:20px;
+
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
+
+
     font-size:45px;
+
+
     cursor:pointer;
-    transition:.4s;
-    box-shadow:0 0 10px #000;
+
+
+    transition:.3s;
+
+
+    box-shadow:
+
+    0 0 15px #000;
+
 
 }
+
 
 
 
@@ -157,37 +254,38 @@ button:hover{
 
 
 
+
+
 .card.open{
 
     background:#ffd700;
+
     color:#000;
-    transform:rotateY(180deg);
 
 }
 
 
 
 
-/* اطلاعات بازی */
-
-
-#multi,
-#profit{
-
-    color:#ffd700;
-    font-size:25px;
-
-}
 
 
 
+
+
+/* پیام */
 
 #history{
 
     color:#ccc;
+
     line-height:2;
 
+    font-size:17px;
+
 }
+
+
+
 
 
 
@@ -199,14 +297,26 @@ button:hover{
 nav{
 
     position:fixed;
+
     bottom:0;
+
     right:0;
+
     width:100%;
+
     height:65px;
+
+
     background:#111;
+
+
     border-top:1px solid #333;
+
+
     display:flex;
+
     justify-content:space-around;
+
     align-items:center;
 
 }
@@ -216,7 +326,9 @@ nav{
 nav a{
 
     color:white;
+
     text-decoration:none;
+
     font-size:14px;
 
 }
@@ -232,14 +344,16 @@ nav a:hover{
 
 
 
-/* موبایل */
+
+
+
+
 
 @media(max-width:600px){
 
 
 .cards{
 
-    grid-template-columns:repeat(3,1fr);
     gap:10px;
 
 }
@@ -249,6 +363,7 @@ nav a:hover{
 .card{
 
     height:100px;
+
     font-size:35px;
 
 }
@@ -260,6 +375,7 @@ nav a:hover{
     width:95%;
 
 }
+
 
 
 }
