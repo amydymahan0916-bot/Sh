@@ -1,11 +1,14 @@
-const ADMIN_PASSWORD = "4200821461";
+const ADMIN_PASSWORD = "123456";
+
 
 
 
 function loginAdmin(){
 
 
-let pass = document.getElementById("adminPass").value;
+let pass =
+document.getElementById("adminPass").value;
+
 
 
 if(pass !== ADMIN_PASSWORD){
@@ -17,6 +20,7 @@ return;
 }
 
 
+
 document.getElementById("loginBox").style.display="none";
 
 document.getElementById("panel").style.display="block";
@@ -26,6 +30,7 @@ showAll();
 
 
 }
+
 
 
 
@@ -46,19 +51,23 @@ showWithdraw();
 
 
 
-// =================
-// شارژ حساب
-// =================
+// =====================
+// شارژ ها
+// =====================
 
 
 function showCharge(){
 
 
+
 let requests =
+
 JSON.parse(localStorage.getItem("walletRequests")) || [];
 
 
+
 let box =
+
 document.getElementById("chargeRequests");
 
 
@@ -69,7 +78,7 @@ box.innerHTML="";
 
 if(requests.length===0){
 
-box.innerHTML="درخواستی وجود ندارد";
+box.innerHTML="درخواستی نیست";
 
 return;
 
@@ -82,6 +91,7 @@ return;
 requests.forEach((item,index)=>{
 
 
+
 box.innerHTML += `
 
 
@@ -89,21 +99,25 @@ box.innerHTML += `
 
 
 <h3>
+
 👤 ${item.user}
+
 </h3>
 
 
+
 <p>
-🪙 مقدار:
-${item.coins.toLocaleString()}
-سکه
+
+🪙 ${item.coins.toLocaleString()} سکه
+
 </p>
 
 
 
 <p>
-وضعیت:
+
 ${item.status}
+
 </p>
 
 
@@ -135,7 +149,10 @@ ${item.status}
 });
 
 
+
 }
+
+
 
 
 
@@ -148,17 +165,41 @@ function acceptCharge(index){
 
 
 let requests =
+
 JSON.parse(localStorage.getItem("walletRequests")) || [];
 
 
 
-let req = requests[index];
+let request = requests[index];
 
 
 
-if(req.status !== "در انتظار تایید"){
 
-alert("قبلاً بررسی شده");
+
+
+let users =
+
+JSON.parse(localStorage.getItem("users")) || [];
+
+
+
+
+
+
+let userIndex = users.findIndex(
+
+u=>u.id === request.userId
+
+);
+
+
+
+
+
+
+if(userIndex === -1){
+
+alert("کاربر پیدا نشد");
 
 return;
 
@@ -168,32 +209,23 @@ return;
 
 
 
-let data =
-JSON.parse(localStorage.getItem("royalData")) || {
 
-coins:0,
-wins:0,
-games:0,
-record:0,
-history:[]
 
-};
+users[userIndex].coins += request.coins;
 
 
 
 
 
-data.coins += req.coins;
 
 
+users[userIndex].history.unshift(
 
-data.history.unshift(
-
-"شارژ تایید شد + "+
-req.coins+
-" 🪙"
+"شارژ تایید شد +"+request.coins+" 🪙"
 
 );
+
+
 
 
 
@@ -201,9 +233,9 @@ req.coins+
 
 localStorage.setItem(
 
-"royalData",
+"users",
 
-JSON.stringify(data)
+JSON.stringify(users)
 
 );
 
@@ -211,7 +243,12 @@ JSON.stringify(data)
 
 
 
-req.status="تایید شده";
+
+
+request.status="تایید شده";
+
+
+
 
 
 
@@ -225,11 +262,16 @@ JSON.stringify(requests)
 
 
 
+
+
+
+
 showCharge();
 
 
 
 }
+
 
 
 
@@ -241,12 +283,17 @@ showCharge();
 function rejectCharge(index){
 
 
+
 let requests =
+
 JSON.parse(localStorage.getItem("walletRequests")) || [];
 
 
 
+
 requests[index].status="رد شده";
+
+
 
 
 
@@ -260,7 +307,10 @@ JSON.stringify(requests)
 
 
 
+
+
 showCharge();
+
 
 
 }
@@ -273,9 +323,9 @@ showCharge();
 
 
 
-// =================
-// برداشت
-// =================
+// =====================
+// برداشت ها
+// =====================
 
 
 function showWithdraw(){
@@ -283,11 +333,13 @@ function showWithdraw(){
 
 
 let requests =
+
 JSON.parse(localStorage.getItem("withdrawRequests")) || [];
 
 
 
 let box =
+
 document.getElementById("withdrawRequests");
 
 
@@ -298,11 +350,13 @@ box.innerHTML="";
 
 if(requests.length===0){
 
-box.innerHTML="درخواستی وجود ندارد";
+box.innerHTML="درخواستی نیست";
 
 return;
 
 }
+
+
 
 
 
@@ -318,36 +372,39 @@ box.innerHTML += `
 
 
 <h3>
+
 👤 ${item.user}
+
 </h3>
 
 
-
 <p>
-💳 کارت:
-${item.card}
+
+💳 ${item.card}
+
 </p>
 
 
 
 <p>
-💰 مبلغ:
-${item.money.toLocaleString()}
-تومان
+
+💰 ${item.money.toLocaleString()} تومان
+
 </p>
 
 
 
 <p>
-وضعیت:
+
 ${item.status}
+
 </p>
 
 
 
 <button onclick="acceptWithdraw(${index})">
 
-✅ تایید پرداخت
+✅ پرداخت شد
 
 </button>
 
@@ -365,6 +422,7 @@ ${item.status}
 
 
 `;
+
 
 
 });
@@ -386,71 +444,73 @@ function acceptWithdraw(index){
 
 
 let requests =
+
 JSON.parse(localStorage.getItem("withdrawRequests")) || [];
 
 
 
-let req=requests[index];
-
-
-
-if(req.status !== "در انتظار تایید"){
-
-alert("قبلاً بررسی شده");
-
-return;
-
-}
+let request = requests[index];
 
 
 
 
 
-let data =
-JSON.parse(localStorage.getItem("royalData")) || {
+let users =
 
-coins:0,
-wins:0,
-games:0,
-record:0,
-history:[]
-
-};
+JSON.parse(localStorage.getItem("users")) || [];
 
 
 
 
 
+let userIndex = users.findIndex(
 
-let coins = req.money;
-
-
-
-
-
-if(data.coins < coins){
-
-alert("موجودی کافی نیست");
-
-return;
-
-}
-
-
-
-
-
-data.coins -= coins;
-
-
-
-data.history.unshift(
-
-"برداشت تایید شد - "+
-coins+
-" 🪙"
+u=>u.id === request.userId
 
 );
+
+
+
+
+
+
+if(userIndex === -1){
+
+alert("کاربر پیدا نشد");
+
+return;
+
+}
+
+
+
+
+
+if(users[userIndex].coins < request.money){
+
+alert("موجودی کاربر کافی نیست");
+
+return;
+
+}
+
+
+
+
+
+users[userIndex].coins -= request.money;
+
+
+
+
+
+
+users[userIndex].history.unshift(
+
+"برداشت تایید شد -"+request.money+" 🪙"
+
+);
+
 
 
 
@@ -458,9 +518,9 @@ coins+
 
 localStorage.setItem(
 
-"royalData",
+"users",
 
-JSON.stringify(data)
+JSON.stringify(users)
 
 );
 
@@ -468,7 +528,9 @@ JSON.stringify(data)
 
 
 
-req.status="تایید شده";
+
+request.status="تایید شده";
+
 
 
 
@@ -485,6 +547,8 @@ JSON.stringify(requests)
 
 
 
+
+
 showWithdraw();
 
 
@@ -497,12 +561,12 @@ showWithdraw();
 
 
 
-
-
 function rejectWithdraw(index){
 
 
+
 let requests =
+
 JSON.parse(localStorage.getItem("withdrawRequests")) || [];
 
 
