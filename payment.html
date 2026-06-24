@@ -27,8 +27,6 @@
 
 
 
-
-
 <div class="box">
 
 
@@ -37,26 +35,13 @@
 </h2>
 
 
-
-<h2 id="cardNumber">
-
+<h2 id="card">
 6037997194784360
-
 </h2>
 
 
-
-<p>
-ماهان امیدی
-</p>
-
-
-
-
 <button onclick="copyCard()">
-
 کپی شماره کارت
-
 </button>
 
 
@@ -65,36 +50,26 @@
 
 
 
-
 <p>
-
 تعداد سکه:
-
-<span id="payCoins">
+<span id="coinsShow">
 0
 </span>
-
 </p>
-
 
 
 
 <p>
-
 مبلغ:
-
-<span id="payAmount">
+<span id="moneyShow">
 0
 </span>
-
 تومان
-
 </p>
 
 
 
-
-<button onclick="sendPay()">
+<button onclick="payDone()">
 
 پرداخت کردم
 
@@ -102,41 +77,10 @@
 
 
 
-<h3 id="message"></h3>
-
+<h3 id="msg"></h3>
 
 
 </div>
-
-
-
-
-
-
-<nav>
-
-
-<a href="index.html">
-خانه
-</a>
-
-
-<a href="games.html">
-بازی‌ها
-</a>
-
-
-<a href="wallet.html">
-کیف پول
-</a>
-
-
-<a href="profile.html">
-پروفایل
-</a>
-
-
-</nav>
 
 
 
@@ -148,19 +92,19 @@
 let coins =
 localStorage.getItem("buyCoins");
 
-let price =
+
+let money =
 localStorage.getItem("payPrice");
 
 
 
-document.getElementById("payCoins").innerHTML =
+document.getElementById("coinsShow").innerHTML =
 Number(coins).toLocaleString();
 
 
 
-document.getElementById("payAmount").innerHTML =
-Number(price).toLocaleString();
-
+document.getElementById("moneyShow").innerHTML =
+Number(money).toLocaleString();
 
 
 
@@ -175,7 +119,7 @@ navigator.clipboard.writeText(
 );
 
 
-alert("شماره کارت کپی شد");
+alert("کپی شد");
 
 
 }
@@ -185,19 +129,50 @@ alert("شماره کارت کپی شد");
 
 
 
+function payDone(){
 
-function sendPay(){
+
+let user =
+JSON.parse(localStorage.getItem("user"));
 
 
-document.getElementById("message").innerHTML =
-"پرداخت شما برای پشتیبانی ارسال گردید در اسرع وقت حساب شما شارژ میشود در صورت صحت پرداخت";
+
+if(user){
+
+
+user.coins += Number(coins);
+
+
+
+localStorage.setItem(
+"user",
+JSON.stringify(user)
+);
+
+
+
+alert("سکه ها اضافه شد");
+
+
+location.href="index.html";
+
+
+}else{
+
+
+document.getElementById("msg").innerHTML =
+"ابتدا وارد حساب شوید";
+
+
+}
 
 
 
 }
+
+
 
 </script>
-
 
 
 </body>
