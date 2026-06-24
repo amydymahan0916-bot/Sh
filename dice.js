@@ -11,6 +11,8 @@ history:[]
 
 
 
+
+
 function save(){
 
 localStorage.setItem(
@@ -39,8 +41,8 @@ data.coins.toLocaleString();
 }
 
 
-
 update();
+
 
 
 
@@ -59,13 +61,16 @@ document.getElementById("bet").value
 
 
 
-if(!bet || bet < 10000){
+
+
+if(bet < 10000){
 
 alert("حداقل ورود 10000 سکه است");
 
 return;
 
 }
+
 
 
 
@@ -88,85 +93,11 @@ return;
 
 
 
-data.coins -= bet;
 
+data.coins -= bet;
 
 data.games++;
 
-
-
-
-
-let d1 =
-Math.floor(Math.random()*6)+1;
-
-
-let d2 =
-Math.floor(Math.random()*6)+1;
-
-
-let d3 =
-Math.floor(Math.random()*6)+1;
-
-
-
-
-
-let dice1 =
-document.getElementById("dice1");
-
-
-let dice2 =
-document.getElementById("dice2");
-
-
-let dice3 =
-document.getElementById("dice3");
-
-
-
-
-
-dice1.classList.add("roll");
-
-dice2.classList.add("roll");
-
-dice3.classList.add("roll");
-
-
-
-
-setTimeout(()=>{
-
-
-
-dice1.classList.remove("roll");
-
-dice2.classList.remove("roll");
-
-dice3.classList.remove("roll");
-
-
-
-
-dice1.innerHTML =
-getDice(d1);
-
-
-dice2.innerHTML =
-getDice(d2);
-
-
-dice3.innerHTML =
-getDice(d3);
-
-
-
-
-
-
-let total =
-d1+d2+d3;
 
 
 
@@ -176,8 +107,93 @@ bet.toLocaleString();
 
 
 
+
+
+let dice1 =
+Math.floor(Math.random()*6)+1;
+
+
+let dice2 =
+Math.floor(Math.random()*6)+1;
+
+
+let dice3 =
+Math.floor(Math.random()*6)+1;
+
+
+
+
+
+
+let d1 =
+document.getElementById("dice1");
+
+
+let d2 =
+document.getElementById("dice2");
+
+
+let d3 =
+document.getElementById("dice3");
+
+
+
+
+
+d1.classList.add("rolling");
+
+d2.classList.add("rolling");
+
+d3.classList.add("rolling");
+
+
+
+
+d1.innerHTML="🎲";
+
+d2.innerHTML="🎲";
+
+d3.innerHTML="🎲";
+
+
+
+
+
+
+setTimeout(()=>{
+
+
+
+d1.classList.remove("rolling");
+
+d2.classList.remove("rolling");
+
+d3.classList.remove("rolling");
+
+
+
+
+d1.innerHTML=getDice(dice1);
+
+d2.innerHTML=getDice(dice2);
+
+d3.innerHTML=getDice(dice3);
+
+
+
+
+
+let total =
+dice1+dice2+dice3;
+
+
+
+
 document.getElementById("result").innerHTML =
 total;
+
+
+
 
 
 
@@ -197,19 +213,11 @@ data.wins++;
 
 
 
-if(reward > data.record)
-
-data.record = reward;
-
-
-
-
 data.history.unshift(
 
 "نبرد تاس + "+reward+" 🪙"
 
 );
-
 
 
 
@@ -227,13 +235,8 @@ document.getElementById("message").innerHTML=
 
 <br>
 
-جمع تاس:
-${total}
-
-<br>
-
 دریافت:
-${reward.toLocaleString()} 🪙
+${reward.toLocaleString()} سکه
 
 `;
 
@@ -253,16 +256,12 @@ document.getElementById("profit").innerHTML =
 document.getElementById("message").innerHTML=
 
 `
-💥 باخت
+💥 باختی
 
 <br>
 
 جمع تاس:
 ${total}
-
-<br>
-
-پول از بین رفت
 
 `;
 
@@ -280,7 +279,9 @@ update();
 
 
 
-},1000);
+
+},1200);
+
 
 
 
@@ -296,26 +297,19 @@ update();
 function getDice(number){
 
 
-
 let dice={
 
 1:"⚀",
-
 2:"⚁",
-
 3:"⚂",
-
 4:"⚃",
-
 5:"⚄",
-
 6:"⚅"
 
 };
 
 
-
 return dice[number];
 
 
-  }
+}
