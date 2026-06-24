@@ -1,55 +1,91 @@
 *{
-box-sizing:border-box;
-font-family:tahoma, sans-serif;
+    box-sizing:border-box;
+    font-family:tahoma, sans-serif;
 }
 
 
 body{
 
-margin:0;
-background:#070707;
-color:white;
-direction:rtl;
-text-align:center;
-padding-bottom:80px;
+    margin:0;
+    background:#050505;
+    color:white;
+    direction:rtl;
+    text-align:center;
+    padding-bottom:80px;
 
 }
 
 
+/* هدر */
 
 header{
 
-height:80px;
-padding:15px 25px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-background:#0d0d0d;
-border-bottom:1px solid #333;
+    height:75px;
+    background:#0c0c0c;
+    border-bottom:1px solid #333;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:15px 20px;
 
 }
-
 
 
 header h1{
 
-font-size:25px;
-color:#ffd700;
-margin:0;
+    color:#ffd700;
+    font-size:22px;
 
 }
-
 
 
 
 .coin{
 
-background:#181818;
-border:1px solid #ffd700;
-color:#ffd700;
-padding:10px 18px;
-border-radius:30px;
-font-size:15px;
+    background:#181818;
+    border:1px solid #ffd700;
+    border-radius:25px;
+    padding:8px 18px;
+    color:#ffd700;
+
+}
+
+
+
+/* باکس ها */
+
+.box{
+
+    width:92%;
+    margin:20px auto;
+    background:#101010;
+    border:1px solid #292929;
+    border-radius:20px;
+    padding:20px;
+
+}
+
+
+
+.box h2{
+
+    color:#ffd700;
+
+}
+
+
+
+
+input{
+
+    width:85%;
+    padding:14px;
+    border-radius:15px;
+    border:1px solid #555;
+    background:#050505;
+    color:white;
+    text-align:center;
+    font-size:16px;
 
 }
 
@@ -58,14 +94,13 @@ font-size:15px;
 
 button{
 
-background:#ffd700;
-color:#000;
-border:0;
-padding:12px 25px;
-border-radius:20px;
-cursor:pointer;
-font-size:15px;
-font-weight:bold;
+    background:#ffd700;
+    color:#000;
+    border:0;
+    padding:12px 30px;
+    border-radius:25px;
+    font-weight:bold;
+    cursor:pointer;
 
 }
 
@@ -73,7 +108,7 @@ font-weight:bold;
 
 button:hover{
 
-transform:scale(1.05);
+    transform:scale(1.05);
 
 }
 
@@ -81,9 +116,76 @@ transform:scale(1.05);
 
 
 
-a{
+/* کارت ها */
 
-text-decoration:none;
+
+.cards{
+
+    width:92%;
+    margin:20px auto;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+
+}
+
+
+
+.card{
+
+    height:130px;
+    background:linear-gradient(145deg,#202020,#070707);
+    border:2px solid #ffd700;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:45px;
+    cursor:pointer;
+    transition:.4s;
+    box-shadow:0 0 10px #000;
+
+}
+
+
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+
+
+.card.open{
+
+    background:#ffd700;
+    color:#000;
+    transform:rotateY(180deg);
+
+}
+
+
+
+
+/* اطلاعات بازی */
+
+
+#multi,
+#profit{
+
+    color:#ffd700;
+    font-size:25px;
+
+}
+
+
+
+
+#history{
+
+    color:#ccc;
+    line-height:2;
 
 }
 
@@ -91,175 +193,21 @@ text-decoration:none;
 
 
 
-.hero{
-
-margin:25px auto;
-width:90%;
-padding:35px 15px;
-border-radius:25px;
-background:linear-gradient(145deg,#191919,#050505);
-border:1px solid #333;
-
-}
-
-
-
-
-.hero h2{
-
-color:#ffd700;
-font-size:28px;
-
-}
-
-
-
-
-.box{
-
-width:90%;
-margin:20px auto;
-background:#111;
-padding:20px;
-border-radius:20px;
-border:1px solid #292929;
-
-}
-
-
-
-
-
-.games{
-
-width:95%;
-margin:auto;
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:15px;
-
-}
-
-
-
-
-
-.game{
-
-background:#111;
-border:1px solid #333;
-border-radius:20px;
-padding:15px;
-min-height:190px;
-transition:.3s;
-
-}
-
-
-
-
-.game:hover{
-
-border-color:#ffd700;
-transform:translateY(-5px);
-
-}
-
-
-
-
-
-.game h2{
-
-font-size:45px;
-margin:5px;
-
-}
-
-
-
-.game h3{
-
-margin:10px;
-color:#ffd700;
-
-}
-
-
-
-
-.game p{
-
-font-size:13px;
-color:#ccc;
-
-}
-
-
-
-
-
-input{
-
-width:85%;
-padding:14px;
-background:#080808;
-border:1px solid #555;
-border-radius:15px;
-color:white;
-text-align:center;
-
-}
-
-
-
-
-/* شکار گنج */
-
-
-.mineBox{
-
-display:grid;
-grid-template-columns:repeat(3,90px);
-gap:12px;
-justify-content:center;
-
-}
-
-
-
-.mineCell{
-
-height:90px;
-background:#151515;
-border:2px solid #ffd700;
-border-radius:15px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:30px;
-
-}
-
-
-
-
-
-/* منو پایین */
+/* منوی پایین */
 
 
 nav{
 
-position:fixed;
-bottom:0;
-right:0;
-width:100%;
-height:65px;
-background:#111;
-border-top:1px solid #333;
-display:flex;
-justify-content:space-around;
-align-items:center;
+    position:fixed;
+    bottom:0;
+    right:0;
+    width:100%;
+    height:65px;
+    background:#111;
+    border-top:1px solid #333;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
 
 }
 
@@ -267,8 +215,9 @@ align-items:center;
 
 nav a{
 
-color:white;
-font-size:14px;
+    color:white;
+    text-decoration:none;
+    font-size:14px;
 
 }
 
@@ -276,66 +225,41 @@ font-size:14px;
 
 nav a:hover{
 
-color:#ffd700;
+    color:#ffd700;
 
 }
 
 
 
 
+/* موبایل */
 
-.gold{
-
-color:#ffd700;
-
-}
+@media(max-width:600px){
 
 
+.cards{
 
-
-@media(max-width:700px){
-
-
-.games{
-
-grid-template-columns:repeat(3,1fr);
-gap:8px;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
 
 }
 
 
 
-.game{
+.card{
 
-padding:8px;
-min-height:160px;
-
-}
-
-
-
-.game h2{
-
-font-size:35px;
+    height:100px;
+    font-size:35px;
 
 }
 
 
 
-.game h3{
+.box{
 
-font-size:14px;
-
-}
-
-
-
-.game p{
-
-font-size:11px;
+    width:95%;
 
 }
 
 
-
-  }
+      }
