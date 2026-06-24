@@ -9,7 +9,7 @@
 
 <title>نبرد تاس</title>
 
-<link rel="stylesheet" href="dice.css">
+<link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -18,23 +18,16 @@
 
 
 
-<div class="table">
-
-
-
 <header>
 
 <h1>
-🎲 نبرد تاس
+نبرد تاس
 </h1>
 
 
-<div class="balance">
+<div class="coin">
 
-🪙
-<span id="coins">
-0
-</span>
+🪙 <span id="coins">0</span>
 
 </div>
 
@@ -45,56 +38,18 @@
 
 
 
-
-
-<div class="info">
-
-
-<div>
-
-ورودی
-
-<strong id="betView">
-0
-</strong>
-
-</div>
+<div class="box">
 
 
 
-<div>
-
-نتیجه
-
-<strong id="result">
--
-</strong>
-
-</div>
-
-
-
-<div>
-
-سود
-
-<strong id="profit">
-0
-</strong>
-
-</div>
-
-
-
-</div>
+<h2>
+🎲 میز تاس
+</h2>
 
 
 
 
-
-
-
-<div class="dice-area">
+<div class="dice-table">
 
 
 
@@ -123,24 +78,30 @@
 
 
 
-
-<div class="control">
-
+<div class="box">
 
 
-<input 
-id="bet"
-type="number"
-placeholder="مبلغ ورود"
->
+
+<p>
+
+مبلغ ورود
+
+</p>
+
+
+
+<input id="bet" type="number" placeholder="حداقل 10000">
+
+
 
 
 
 <button onclick="rollDice()">
 
-🎲 پرتاب تاس
+پرتاب تاس
 
 </button>
+
 
 
 
@@ -151,7 +112,55 @@ placeholder="مبلغ ورود"
 
 
 
-<div class="message" id="message">
+<div class="game-info">
+
+
+<p>
+
+ورودی:
+
+<span id="betView">
+0
+</span>
+
+</p>
+
+
+
+<p>
+
+جمع تاس:
+
+<span id="result">
+-
+</span>
+
+</p>
+
+
+
+
+<p>
+
+سود:
+
+<span id="profit">
+0
+</span>
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div id="message">
 
 آماده بازی
 
@@ -160,6 +169,40 @@ placeholder="مبلغ ورود"
 
 
 </div>
+
+
+
+
+
+
+
+<nav>
+
+
+<a href="index.html">
+خانه
+</a>
+
+
+<a href="games.html">
+بازی‌ها
+</a>
+
+
+<a href="wallet.html">
+کیف پول
+</a>
+
+
+<a href="profile.html">
+پروفایل
+</a>
+
+
+
+</nav>
+
+
 
 
 
