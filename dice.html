@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>پرواز ضریب</title>
+<title>نبرد تاس</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -21,19 +21,13 @@
 <header>
 
 <h1>
-🚀 پرواز ضریب
+نبرد تاس
 </h1>
-
 
 
 <div class="coin">
 
-🪙
-
-<span id="coins">
-0
-</span>
-
+🪙 <span id="coins">0</span>
 
 </div>
 
@@ -44,43 +38,40 @@
 
 
 
-
-
 <div class="box">
 
 
 
 <h2>
-Crash Game
+🎲 میز تاس
 </h2>
 
 
 
 
-
-<div class="chart">
-
+<div class="dice-table">
 
 
-<div id="rocket">
 
-🚀
-
+<div class="dice" id="dice1">
+⚄
 </div>
 
 
 
+<div class="dice" id="dice2">
+⚄
+</div>
 
-<div id="multiplier">
 
-1.00×
 
+<div class="dice" id="dice3">
+⚄
 </div>
 
 
 
 </div>
-
 
 
 
@@ -91,41 +82,30 @@ Crash Game
 
 
 
-<input 
-id="bet"
-type="number"
-placeholder="حداقل ورود 10000 سکه"
->
+<p>
+
+مبلغ ورود
+
+</p>
 
 
 
-<br><br>
-
-
-
-<button onclick="startFly()">
-
-🚀 شروع پرواز
-
-</button>
+<input id="bet" type="number" placeholder="حداقل 10000">
 
 
 
 
-<button 
-id="cashout"
-onclick="cashOut()"
-disabled
->
 
-💰 برداشت سود
+<button onclick="rollDice()">
+
+پرتاب تاس
 
 </button>
+
 
 
 
 </div>
-
 
 
 
@@ -135,35 +115,27 @@ disabled
 <div class="game-info">
 
 
-
 <p>
 
 ورودی:
 
 <span id="betView">
-
 0
-
 </span>
 
 </p>
-
-
 
 
 
 <p>
 
-ضریب:
+جمع تاس:
 
-<span id="multi">
-
-1.00×
-
+<span id="result">
+-
 </span>
 
 </p>
-
 
 
 
@@ -173,15 +145,10 @@ disabled
 سود:
 
 <span id="profit">
-
 0
-
 </span>
 
-🪙
-
 </p>
-
 
 
 
@@ -193,7 +160,7 @@ disabled
 
 
 
-<div id="message" class="message-box">
+<div id="message">
 
 آماده بازی
 
@@ -201,11 +168,7 @@ disabled
 
 
 
-
-
-
 </div>
-
 
 
 
@@ -217,33 +180,22 @@ disabled
 
 
 <a href="index.html">
-
 خانه
-
 </a>
-
 
 
 <a href="games.html">
-
 بازی‌ها
-
 </a>
-
 
 
 <a href="wallet.html">
-
 کیف پول
-
 </a>
 
 
-
 <a href="profile.html">
-
 پروفایل
-
 </a>
 
 
@@ -256,7 +208,7 @@ disabled
 
 
 
-<script src="crash.js"></script>
+<script src="dice.js"></script>
 
 
 </body>
