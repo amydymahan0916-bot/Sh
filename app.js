@@ -1,81 +1,75 @@
-let coins = localStorage.getItem("coins");
+// سیستم سکه شرط‌بندی ماهان
+
+
+let coins = localStorage.getItem("mahanCoins");
 
 
 if(coins === null){
 
-    coins = 39780;
+coins = 10000;
 
-    localStorage.setItem(
-        "coins",
-        coins
-    );
-
-}
-else{
-
-    coins = Number(coins);
+localStorage.setItem(
+"mahanCoins",
+coins
+);
 
 }
 
 
 
+function getCoins(){
 
-function updateCoins(){
-
-    document.querySelectorAll(".coin").forEach(item=>{
-
-        item.innerHTML =
-        "🪙 " + coins.toLocaleString();
-
-    });
+return Number(
+localStorage.getItem("mahanCoins")
+);
 
 }
 
 
 
 
-function removeCoins(amount){
 
-    if(coins >= amount){
+function showCoins(){
 
-        coins -= amount;
 
-        localStorage.setItem(
-            "coins",
-            coins
-        );
+let elements =
+document.querySelectorAll(".coin");
 
-        updateCoins();
 
-        return true;
+elements.forEach(item=>{
 
-    }
-    else{
+item.innerHTML =
+"🪙 " +
+getCoins().toLocaleString();
 
-        alert("سکه کافی ندارید");
+});
 
-        return false;
-
-    }
 
 }
-
 
 
 
 
 function addCoins(amount){
 
-    coins += amount;
+
+let current =
+getCoins();
 
 
-    localStorage.setItem(
-        "coins",
-        coins
-    );
+current += Number(amount);
 
 
-    updateCoins();
+
+localStorage.setItem(
+"mahanCoins",
+current
+);
+
+
+
+showCoins();
+
 
 }
 
@@ -83,10 +77,104 @@ function addCoins(amount){
 
 
 
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
 
-    updateCoins();
 
-});
+function removeCoins(amount){
+
+
+let current =
+getCoins();
+
+
+
+if(current < amount){
+
+
+alert(
+"سکه کافی ندارید"
+);
+
+
+return false;
+
+
+}
+
+
+
+current -= Number(amount);
+
+
+
+localStorage.setItem(
+"mahanCoins",
+current
+);
+
+
+
+showCoins();
+
+
+
+return true;
+
+
+}
+
+
+
+
+
+
+
+function copyCard(){
+
+
+let card =
+"6037997194784360";
+
+
+navigator.clipboard.writeText(card);
+
+
+
+alert(
+"شماره کارت کپی شد"
+);
+
+
+
+}
+
+
+
+
+
+
+
+function paymentDone(){
+
+
+
+alert(
+"پرداخت شما برای پشتیبانی ارسال گردید، در اسرع وقت حساب شما شارژ میشود."
+);
+
+
+
+}
+
+
+
+
+
+
+
+window.onload=function(){
+
+
+showCoins();
+
+
+}
