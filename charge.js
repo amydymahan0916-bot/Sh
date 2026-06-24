@@ -1,9 +1,12 @@
-let currentUser = 
-JSON.parse(localStorage.getItem("currentUser"));
+let data =
+
+JSON.parse(
+localStorage.getItem("currentUser")
+);
 
 
 
-if(!currentUser){
+if(!data){
 
 alert("ابتدا وارد حساب شوید");
 
@@ -15,32 +18,54 @@ location.href="login.html";
 
 
 
-document.getElementById("coins").innerHTML =
 
-currentUser.coins.toLocaleString();
-
+function saveUser(){
 
 
+localStorage.setItem(
 
+"currentUser",
 
+JSON.stringify(data)
 
-
-
-function copyCard(){
-
-
-
-let card =
-
-document.getElementById("cardNumber").innerText;
+);
 
 
 
-navigator.clipboard.writeText(card);
+let users =
+
+JSON.parse(
+
+localStorage.getItem("users")
+
+) || [];
 
 
 
-alert("شماره کارت کپی شد");
+let index = users.findIndex(
+
+u=>u.id===data.id
+
+);
+
+
+
+if(index !== -1){
+
+users[index]=data;
+
+}
+
+
+
+localStorage.setItem(
+
+"users",
+
+JSON.stringify(users)
+
+);
+
 
 
 }
@@ -52,14 +77,17 @@ alert("شماره کارت کپی شد");
 
 
 
-function sendCharge(){
+
+function submitCharge(){
 
 
 
 let amount =
 
 Number(
+
 document.getElementById("amount").value
+
 );
 
 
@@ -67,7 +95,7 @@ document.getElementById("amount").value
 
 
 
-if(!amount || amount < 10000){
+if(amount < 10000){
 
 
 alert("حداقل شارژ 10000 سکه است");
@@ -83,60 +111,48 @@ return;
 
 
 
-let requests =
 
-JSON.parse(localStorage.getItem("walletRequests")) || [];
-
+if(!data.requests){
 
 
+data.requests=[];
+
+
+}
 
 
 
 
-let request = {
 
 
-id:Date.now(),
 
 
-userId:currentUser.id,
+data.requests.push({
 
 
-user:currentUser.username,
+type:"شارژ",
 
 
-coins:amount,
+amount:amount,
 
 
 status:"در انتظار تایید",
 
 
-date:new Date().toLocaleString("fa-IR")
+date:new Date().toLocaleString("fa")
 
 
 
-};
-
-
-
-
-
-
-
-requests.push(request);
+});
 
 
 
 
 
 
-localStorage.setItem(
 
-"walletRequests",
 
-JSON.stringify(requests)
-
-);
+saveUser();
 
 
 
@@ -148,136 +164,10 @@ alert("درخواست شارژ ثبت شد");
 
 
 
-document.getElementById("amount").value="";
 
 
-
-showRequests();
+location.href="wallet.html";
 
 
 
 }
-
-
-
-
-
-
-
-
-
-function showRequests(){
-
-
-
-let requests =
-
-JSON.parse(localStorage.getItem("walletRequests")) || [];
-
-
-
-
-let box =
-
-document.getElementById("requests");
-
-
-
-
-
-
-box.innerHTML="";
-
-
-
-
-
-
-
-let myRequests = requests.filter(
-
-item => item.userId === currentUser.id
-
-);
-
-
-
-
-
-
-if(myRequests.length===0){
-
-
-box.innerHTML="درخواستی وجود ندارد";
-
-return;
-
-
-}
-
-
-
-
-
-
-
-myRequests.forEach(item=>{
-
-
-box.innerHTML += `
-
-
-<div class="request-box">
-
-
-<p>
-
-🪙 مقدار:
-
-${item.coins.toLocaleString()}
-
-سکه
-
-</p>
-
-
-
-<p>
-
-وضعیت:
-
-${item.status}
-
-</p>
-
-
-
-<p>
-
-تاریخ:
-
-${item.date}
-
-</p>
-
-
-</div>
-
-
-`;
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-showRequests();
