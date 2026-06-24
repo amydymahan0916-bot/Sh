@@ -9,7 +9,6 @@
 
 <title>استاد کارت</title>
 
-<link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="card.css">
 
 </head>
@@ -18,15 +17,39 @@
 <body>
 
 
-<header>
-
-<h1>
-استاد کارت
-</h1>
+<div class="particles"></div>
 
 
-<div class="coin" id="balance">
-🪙 0
+
+<div class="game-container">
+
+
+
+<header class="game-header">
+
+
+<div class="logo">
+
+<h1>استاد کارت</h1>
+
+<span>MAHAN GAME</span>
+
+</div>
+
+
+
+
+<div class="balance-box">
+
+<div>
+موجودی
+</div>
+
+<b>
+🪙 <span id="coins">0</span>
+</b>
+
+
 </div>
 
 
@@ -36,88 +59,143 @@
 
 
 
-<div class="box" id="startBox">
+<section class="game-info">
 
 
-<h2>
-شروع بازی
-</h2>
+<div class="info-box">
+
+<span>
+ورودی
+</span>
+
+<strong id="betView">
+0
+</strong>
+
+</div>
 
 
 
-<p>
-حداقل ورود: 10000 سکه
-</p>
+<div class="info-box">
+
+<span>
+سود
+</span>
+
+<strong id="profit">
+0
+</strong>
+
+</div>
+
+
+
+
+<div class="info-box">
+
+<span>
+ضریب
+</span>
+
+<strong id="multi">
+×1
+</strong>
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<section class="control-panel">
 
 
 
 <input 
 id="bet"
 type="number"
-placeholder="مقدار ورود"
+placeholder="حداقل ورود 10000 سکه"
 >
 
 
 
-<br><br>
+
+<div class="risk-panel">
+
+
+<button onclick="setRisk('safe')">
+SAFE
+</button>
+
+
+<button onclick="setRisk('normal')">
+NORMAL
+</button>
+
+
+<button onclick="setRisk('hard')">
+ELITE
+</button>
+
+
+</div>
+
+
+
+
+
+<button class="start-btn" onclick="startGame()">
+
+🎴 شروع بازی
+
+</button>
+
+
+</section>
+
+
+
+
+
+
+
+
+<section id="cards" class="cards-table">
+
+
+</section>
+
+
+
+
+
+
+
+
+<div class="action-panel">
+
+
+<button 
+id="cashout"
+onclick="cashOut()"
+disabled
+>
+
+💰 برداشت سود
+
+</button>
+
+
 
 
 <button onclick="startGame()">
-شروع بازی
-</button>
 
-
-</div>
-
-
-
-
-
-
-
-<div class="box gameBox" id="gameBox" style="display:none;">
-
-
-<h2>
-مرحله:
-<span id="level">
-1
-</span>
-از 8
-</h2>
-
-
-
-<h3>
-ضریب فعلی:
-<span id="multi">
-1
-</span>
-</h3>
-
-
-
-<div class="cards" id="cards">
-
-
-</div>
-
-
-
-
-<h2>
-سود فعلی:
-<span id="profit">
-0
-</span>
-</h2>
-
-
-
-
-<button onclick="cashOut()">
-
-برداشت سود
+🔄 بازی دوباره
 
 </button>
 
@@ -130,34 +208,26 @@ placeholder="مقدار ورود"
 
 
 
-<nav>
+<div id="message" class="message-box">
 
-<a href="index.html">
-خانه
-</a>
+آماده بازی
 
-
-<a href="games.html">
-بازی‌ها
-</a>
-
-
-<a href="profile.html">
-پروفایل
-</a>
-
-
-</nav>
+</div>
 
 
 
 
 
+</div>
 
-<script src="app.js"></script>
+
+
+
+
 <script src="card.js"></script>
 
 
 </body>
+
 
 </html>
