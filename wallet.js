@@ -1,55 +1,72 @@
 let data =
-JSON.parse(localStorage.getItem("royalData")) || {
 
-    coins:0,
-    wins:0,
-    games:0,
-    record:0,
-    history:[]
+JSON.parse(
 
-};
+localStorage.getItem("currentUser")
+
+);
 
 
 
+if(!data){
 
-let withdraws =
+alert("ابتدا وارد حساب شوید");
 
-JSON.parse(localStorage.getItem("withdrawRequests")) || [];
+location.href="login.html";
 
-
+}
 
 
 
 
 
-function update(){
 
 
 
-data =
-JSON.parse(localStorage.getItem("royalData")) || data;
+function saveUser(){
 
 
 
+let users =
 
-document.getElementById("list").innerHTML="";
-
-
-
-let list =
-document.getElementById("list");
+JSON.parse(localStorage.getItem("users")) || [];
 
 
 
+let index = users.findIndex(
 
-if(withdraws.length == 0){
+u=>u.id===data.id
+
+);
 
 
-list.innerHTML =
-"درخواستی وجود ندارد";
+
+if(index!==-1){
+
+users[index]=data;
+
+}
 
 
-return;
+
+localStorage.setItem(
+
+"users",
+
+JSON.stringify(users)
+
+);
+
+
+
+localStorage.setItem(
+
+"currentUser",
+
+JSON.stringify(data)
+
+);
+
 
 
 }
@@ -58,41 +75,92 @@ return;
 
 
 
-withdraws.forEach(item=>{
 
 
 
-list.innerHTML +=
+function updateWallet(){
+
+
+
+data =
+
+JSON.parse(
+
+localStorage.getItem("currentUser")
+
+) || data;
+
+
+
+
+
+
+
+document.getElementById("coins").innerHTML =
+
+data.coins.toLocaleString();
+
+
+
+
+
+
+document.getElementById("balance").innerHTML =
+
+data.coins.toLocaleString();
+
+
+
+
+
+
+
+let history =
+
+document.getElementById("history");
+
+
+
+
+
+
+if(!data.requests || data.requests.length==0){
+
+
+history.innerHTML=
+
+"درخواستی وجود ندارد";
+
+
+}
+
+else{
+
+
+history.innerHTML="";
+
+
+
+
+
+data.requests.slice().reverse().forEach(item=>{
+
+
+history.innerHTML +=
 
 `
 
-<div class="request-box">
-
-
 <p>
 
-💳 کارت:
+${item.type}
 
-${item.card}
+<br>
 
-</p>
+مبلغ:
 
+${item.amount.toLocaleString()}
 
-
-<p>
-
-💰 مبلغ:
-
-${item.money.toLocaleString()}
-
-تومان
-
-</p>
-
-
-
-
-<p>
+<br>
 
 وضعیت:
 
@@ -100,152 +168,17 @@ ${item.status}
 
 </p>
 
-
-
-</div>
-
+<hr>
 
 `;
-
 
 
 });
 
 
 
-
 }
 
-
-
-
-
-
-
-
-
-function sendWithdraw(){
-
-
-
-let card =
-
-document.getElementById("card").value;
-
-
-
-
-
-let money =
-
-Number(
-document.getElementById("money").value
-);
-
-
-
-
-
-
-if(card.length !== 16){
-
-
-alert("شماره کارت صحیح نیست");
-
-return;
-
-
-}
-
-
-
-
-
-
-
-if(!money || money < 10000){
-
-
-alert("حداقل برداشت 10000 تومان است");
-
-return;
-
-
-}
-
-
-
-
-
-
-
-
-let request = {
-
-
-
-id:Date.now(),
-
-
-
-user:"ماهان",
-
-
-
-card:card,
-
-
-
-money:money,
-
-
-
-status:"در انتظار تایید"
-
-
-
-};
-
-
-
-
-
-
-
-withdraws.push(request);
-
-
-
-
-
-
-localStorage.setItem(
-
-"withdrawRequests",
-
-JSON.stringify(withdraws)
-
-);
-
-
-
-
-
-
-
-document.getElementById("card").value="";
-
-document.getElementById("money").value="";
-
-
-
-
-
-alert("درخواست برداشت ثبت شد");
-
-
-
-update();
 
 
 
@@ -256,6 +189,4 @@ update();
 
 
 
-
-
-update();
+updateWallet();
