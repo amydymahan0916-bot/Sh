@@ -1,14 +1,17 @@
+let money = 0;
+
 let bet = 0;
 
-let stage = 0;
-
 let profit = 0;
+
+let currentMulti = 1;
+
+let stage = 0;
 
 let playing = false;
 
 
 const multipliers = [
-
 1.27,
 1.61,
 2,
@@ -17,13 +20,11 @@ const multipliers = [
 4.1,
 5.2,
 6.7
-
 ];
 
 
 
-const chances = [
-
+const safeChance = [
 75,
 65,
 50,
@@ -32,72 +33,62 @@ const chances = [
 35,
 25,
 18
-
 ];
 
 
 
 
 
-function startCard(){
+function setMode(mode){
+
+console.log(mode);
+
+}
 
 
-bet = Number(
-document.getElementById("bet").value
-);
 
 
 
-if(bet < 10000){
+function startGame(){
 
-alert("حداقل ورود 10000 سکه است");
+
+let amount = Number(document.getElementById("amount").value);
+
+
+
+if(amount < 10000){
+
+alert("حداقل مبلغ بازی 10000 است");
+
 return;
 
 }
 
 
 
-if(!removeCoins(bet)){
+bet = amount;
 
-return;
+profit = amount;
 
-}
-
-
+currentMulti = 1;
 
 stage = 0;
 
-profit = bet;
-
-playing = true;
+playing=true;
 
 
 
-document.getElementById("history").innerHTML =
-"کارت را انتخاب کن";
+document.getElementById("bet").innerHTML=bet;
 
+document.getElementById("profit").innerHTML=profit;
 
-
-document.getElementById("stage").innerHTML =
-stage;
-
-
-
-document.getElementById("multi").innerHTML =
-"1";
-
-
-
-document.getElementById("profit").innerHTML =
-profit.toLocaleString();
-
+document.getElementById("multi").innerHTML="1×";
 
 
 createCards();
 
 
 }
-
 
 
 
@@ -108,97 +99,60 @@ createCards();
 function createCards(){
 
 
-
-let box = document.getElementById("cards");
+let box=document.getElementById("cards");
 
 box.innerHTML="";
 
 
 
-for(let i=0;i<6;i++){
-
-
-let card=document.createElement("div");
-
-
-card.className="card";
-
-
-card.innerHTML="❓";
-
-
-
-card.onclick=function(){
-
-selectCard(card);
-
-};
+let cards=[
+"bomb",
+"bomb",
+"pouch",
+multipliers[stage],
+"empty",
+"empty"
+];
 
 
 
-box.appendChild(card);
+cards.sort(()=>Math.random()-0.5);
+
+
+
+cards.forEach(item=>{
+
+
+let div=document.createElement("div");
+
+
+div.className="card";
+
+
+div.innerHTML="RG";
+
+
+
+div.onclick=function(){
+
+
+if(!playing)return;
+
+
+
+openCard(div,item);
 
 
 }
 
 
 
-}
+box.appendChild(div);
 
 
 
+});
 
-
-
-
-
-
-function selectCard(card){
-
-
-
-if(!playing) return;
-
-
-let chance =
-Math.random()*100;
-
-
-
-let safe =
-chances[stage];
-
-
-
-let result;
-
-
-
-if(chance <= safe){
-
-
-
-let type =
-Math.floor(Math.random()*3);
-
-
-
-if(type==0){
-
-result="⭐";
-
-}else{
-
-result="⭐";
-
-}
-
-
-
-}else{
-
-
-result="💣";
 
 
 }
@@ -208,39 +162,113 @@ result="💣";
 
 
 
-card.innerHTML=result;
 
-
-card.style.pointerEvents="none";
-
+function openCard(card,type){
 
 
 
+if(card.classList.contains("open"))return;
 
 
-if(result=="💣"){
+
+card.classList.add("open");
 
 
-document.getElementById("history").innerHTML =
-"💣 باختی! موجودی بازی صفر شد";
+
+if(type==="bomb"){
+
+
+card.classList.add("bomb");
+
+card.innerHTML="BOMB 💣";
+
 
 
 profit=0;
 
 
-document.getElementById("profit").innerHTML="0";
+document.getElementById("profit").innerHTML=0;
+
+
+document.getElementById("resultTitle").innerHTML=
+"باخت 💣";
+
+
+document.getElementById("resultText").innerHTML=
+"بمب خورد، سود از بین رفت";
+
 
 
 playing=false;
 
-
 return;
-
 
 }
 
 
 
+
+
+if(type==="pouch"){
+
+
+card.innerHTML="POUCH";
+
+
+return;
+
+}
+
+
+
+
+
+if(type==="empty"){
+
+
+card.innerHTML="RG";
+
+
+return;
+
+}
+
+
+
+
+
+card.innerHTML=type+"×";
+
+
+
+currentMulti*=Number(type);
+
+
+profit=Math.floor(bet*currentMulti);
+
+
+
+document.getElementById("multi").innerHTML=
+currentMulti.toFixed(2)+"×";
+
+
+document.getElementById("profit").innerHTML=
+profit;
+
+
+
+document.getElementById("resultTitle").innerHTML=
+"برد ✨";
+
+
+document.getElementById("resultText").innerHTML=
+`
+کارت ${stage+1}: ${type}×
+<br>
+ضریب فعلی: ${currentMulti.toFixed(2)}×
+<br>
+سود: 🪙 ${profit}
+`;
 
 
 
@@ -249,50 +277,7 @@ stage++;
 
 
 
-profit =
-Math.floor(bet * multipliers[stage-1]);
-
-
-
-
-document.getElementById("stage").innerHTML =
-stage;
-
-
-
-document.getElementById("multi").innerHTML =
-multipliers[stage-1];
-
-
-
-document.getElementById("profit").innerHTML =
-profit.toLocaleString();
-
-
-
-
-if(stage>=8){
-
-
-document.getElementById("history").innerHTML =
-"🎉 تمام مراحل را بردی";
-
-
-playing=false;
-
-
-return;
-
-}
-
-
-
-
-
-document.getElementById("history").innerHTML =
-"مرحله بعد آماده است";
-
-
+if(stage<8){
 
 setTimeout(()=>{
 
@@ -301,6 +286,16 @@ createCards();
 },700);
 
 
+}else{
+
+
+playing=false;
+
+
+}
+
+
+
 
 }
 
@@ -311,36 +306,61 @@ createCards();
 
 
 
-
-function cashOut(){
-
-
-
-if(!playing && profit<=0){
-
-return;
-
-}
+function cashout(){
 
 
 
 if(profit>0){
 
 
-addCoins(profit);
+money+=profit;
 
 
-
-document.getElementById("history").innerHTML =
-"سود دریافت شد";
+document.getElementById("money").innerHTML=money;
 
 
-}
+document.getElementById("resultText").innerHTML=
+`
+برداشت موفق 💰
+<br>
+🪙 ${profit}
+`;
 
 
 
 playing=false;
 
+
+
+}
+
+}
+
+
+
+
+
+
+
+
+function resetGame(){
+
+
+stage=0;
+
+profit=0;
+
+currentMulti=1;
+
+playing=false;
+
+
+
+document.getElementById("cards").innerHTML="";
+
+document.getElementById("profit").innerHTML=0;
+
+document.getElementById("multi").innerHTML="1×";
 
 
 }
