@@ -4,6 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>ثبت نام</title>
@@ -16,41 +17,54 @@
 <body>
 
 
-<header>
+<div class="box">
+
 
 <h1>
 ثبت نام
 </h1>
 
-</header>
 
 
-
-<div class="box">
-
-
-<h2>
-ساخت حساب جدید
-</h2>
-
-
-
-<input id="username" placeholder="نام کاربری">
+<input 
+id="username"
+placeholder="نام کاربری"
+>
 
 
 
 <br><br>
 
 
+
+<input 
+id="password"
+type="password"
+placeholder="رمز عبور"
+>
+
+
+
+<br><br>
+
+
+
 <button onclick="register()">
 
-ثبت نام
+ساخت حساب
 
 </button>
 
 
 
-<p id="msg"></p>
+<br><br>
+
+
+<a href="login.html">
+
+ورود به حساب
+
+</a>
 
 
 </div>
@@ -58,18 +72,8 @@
 
 
 
-<nav>
 
-<a href="index.html">خانه</a>
-
-<a href="login.html">ورود</a>
-
-</nav>
-
-
-
-
-<script src="app.js"></script>
+<script src="register.js"></script>
 
 
 </body>
