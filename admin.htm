@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>پنل ادمین</title>
+<title>پنل مدیریت</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -21,7 +21,7 @@
 <header>
 
 <h1>
-👑 پنل مدیریت
+👑 پنل مدیریت ماهان
 </h1>
 
 </header>
@@ -31,23 +31,61 @@
 
 
 
-<div class="box">
+<div class="box" id="loginBox">
 
 
 <h2>
-درخواست‌های افزایش موجودی
+ورود ادمین
 </h2>
+
+
+
+<input 
+id="adminPass"
+type="password"
+placeholder="رمز عبور"
+>
+
+
+
+<br><br>
+
+
+
+<button onclick="loginAdmin()">
+
+ورود
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="box" id="panel" style="display:none;">
+
+
+<h2>
+درخواست‌های پرداخت
+</h2>
+
 
 
 <div id="requests">
 
-درخواستی وجود ندارد
-
 </div>
 
 
 
 </div>
+
+
 
 
 
