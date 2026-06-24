@@ -4,15 +4,13 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>استاد کارت</title>
+<title>Card Master Elite</title>
 
 <link rel="stylesheet" href="card.css">
 
 </head>
-
 
 <body>
 
@@ -20,38 +18,28 @@
 <div class="particles"></div>
 
 
-
 <div class="game-container">
-
 
 
 <header class="game-header">
 
-
 <div class="logo">
 
-<h1>استاد کارت</h1>
-
-<span>MAHAN GAME</span>
+<h1> CARD MASTER </h1>
+<span>ELITE</span>
 
 </div>
-
-
 
 
 <div class="balance-box">
 
-<div>
-موجودی
-</div>
+<div>موجودی</div>
 
 <b>
-🪙 <span id="coins">0</span>
+🪙 <span id="coins">100000</span>
 </b>
 
-
 </div>
-
 
 </header>
 
@@ -63,44 +51,20 @@
 
 
 <div class="info-box">
-
-<span>
-ورودی
-</span>
-
-<strong id="betView">
-0
-</strong>
-
+<span>ورودی</span>
+<strong id="betView">0</strong>
 </div>
 
 
-
 <div class="info-box">
-
-<span>
-سود
-</span>
-
-<strong id="profit">
-0
-</strong>
-
+<span>سود</span>
+<strong id="profit">0</strong>
 </div>
 
 
-
-
 <div class="info-box">
-
-<span>
-ضریب
-</span>
-
-<strong id="multi">
-×1
-</strong>
-
+<span>ضریب</span>
+<strong id="multi">×1</strong>
 </div>
 
 
@@ -111,22 +75,14 @@
 
 
 
-
 <section class="control-panel">
 
 
-
-<input 
-id="bet"
-type="number"
-placeholder="حداقل ورود 10000 سکه"
->
-
+<input id="bet" type="number" placeholder="مبلغ بازی">
 
 
 
 <div class="risk-panel">
-
 
 <button onclick="setRisk('safe')">
 SAFE
@@ -148,7 +104,6 @@ ELITE
 
 
 
-
 <button class="start-btn" onclick="startGame()">
 
 🎴 شروع بازی
@@ -156,9 +111,8 @@ ELITE
 </button>
 
 
+
 </section>
-
-
 
 
 
@@ -167,10 +121,7 @@ ELITE
 
 <section id="cards" class="cards-table">
 
-
 </section>
-
-
 
 
 
@@ -180,17 +131,11 @@ ELITE
 <div class="action-panel">
 
 
-<button 
-id="cashout"
-onclick="cashOut()"
-disabled
->
+<button id="cashout" onclick="cashOut()" disabled>
 
 💰 برداشت سود
 
 </button>
-
-
 
 
 <button onclick="startGame()">
@@ -206,8 +151,6 @@ disabled
 
 
 
-
-
 <div id="message" class="message-box">
 
 آماده بازی
@@ -216,6 +159,8 @@ disabled
 
 
 
+
+<div id="winCoins" class="coins-effect"></div>
 
 
 </div>
@@ -228,6 +173,5 @@ disabled
 
 
 </body>
-
 
 </html>
