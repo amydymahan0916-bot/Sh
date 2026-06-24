@@ -13,8 +13,6 @@ location.href="login.html";
 
 
 
-
-
 let bet = 0;
 
 let multiplier = 1;
@@ -31,8 +29,13 @@ let timer;
 
 
 
+function saveUser(){
 
-function save(){
+
+localStorage.setItem(
+"currentUser",
+JSON.stringify(data)
+);
 
 
 
@@ -44,7 +47,7 @@ JSON.parse(localStorage.getItem("users")) || [];
 
 let index = users.findIndex(
 
-u => u.id === data.id
+u=>u.id === data.id
 
 );
 
@@ -52,11 +55,9 @@ u => u.id === data.id
 
 if(index !== -1){
 
-users[index] = data;
+users[index]=data;
 
 }
-
-
 
 
 
@@ -65,16 +66,6 @@ localStorage.setItem(
 "users",
 
 JSON.stringify(users)
-
-);
-
-
-
-localStorage.setItem(
-
-"currentUser",
-
-JSON.stringify(data)
 
 );
 
@@ -93,21 +84,27 @@ JSON.stringify(data)
 function update(){
 
 
-
 data =
 
 JSON.parse(localStorage.getItem("currentUser")) || data;
 
 
 
-document.getElementById("coins").innerHTML =
+let coin = document.getElementById("coins");
+
+
+
+if(coin){
+
+coin.innerHTML =
 
 data.coins.toLocaleString();
+
+}
 
 
 
 }
-
 
 
 
@@ -124,9 +121,11 @@ update();
 function startFly(){
 
 
+
 if(playing)
 
 return;
+
 
 
 
@@ -143,11 +142,14 @@ document.getElementById("bet").value
 
 
 
+
 if(bet < 10000){
+
 
 alert("حداقل ورود 10000 سکه است");
 
 return;
+
 
 }
 
@@ -159,11 +161,14 @@ return;
 
 if(bet > data.coins){
 
+
 alert("موجودی کافی نیست");
 
 return;
 
+
 }
+
 
 
 
@@ -179,8 +184,8 @@ data.games++;
 
 
 
-
 multiplier = 1;
+
 
 playing = true;
 
@@ -202,6 +207,7 @@ Number(
 
 
 
+
 document.getElementById("betView").innerHTML =
 
 bet.toLocaleString();
@@ -214,8 +220,6 @@ document.getElementById("cashout").disabled=false;
 
 
 
-
-
 document.getElementById("message").innerHTML =
 
 "🚀 پرواز شروع شد";
@@ -225,23 +229,8 @@ document.getElementById("message").innerHTML =
 
 
 
-let chart =
 
-document.querySelector(".chart");
-
-
-
-if(chart){
-
-chart.classList.remove("crash");
-
-}
-
-
-
-
-
-save();
+saveUser();
 
 update();
 
@@ -254,9 +243,9 @@ timer = setInterval(()=>{
 
 
 
-
-
 multiplier += 0.01;
+
+
 
 
 
@@ -270,10 +259,15 @@ multiplier.toFixed(2)+"×";
 
 
 
+if(document.getElementById("multiplier")){
+
+
 document.getElementById("multiplier").innerHTML =
 
 multiplier.toFixed(2)+"×";
 
+
+}
 
 
 
@@ -287,8 +281,6 @@ Math.floor(
 bet * multiplier
 
 );
-
-
 
 
 
@@ -311,10 +303,6 @@ crash();
 
 
 }
-
-
-
-
 
 
 
@@ -345,7 +333,11 @@ return;
 
 
 
+
+
 clearInterval(timer);
+
+
 
 
 
@@ -358,6 +350,7 @@ Math.floor(
 bet * multiplier
 
 );
+
 
 
 
@@ -385,11 +378,13 @@ data.record = reward;
 
 
 
+
 data.history.unshift(
 
-"پرواز ضریب + "+reward+" 🪙"
+"پرواز + "+reward+" 🪙"
 
 );
+
 
 
 
@@ -400,8 +395,6 @@ playing=false;
 
 
 
-
-
 document.getElementById("cashout").disabled=true;
 
 
@@ -409,8 +402,8 @@ document.getElementById("cashout").disabled=true;
 
 
 
-document.getElementById("message").innerHTML =
 
+document.getElementById("message").innerHTML =
 
 `
 
@@ -434,7 +427,9 @@ ${reward.toLocaleString()} 🪙
 
 
 
-save();
+
+
+saveUser();
 
 update();
 
@@ -462,8 +457,8 @@ playing=false;
 
 
 
-
 document.getElementById("cashout").disabled=true;
+
 
 
 
@@ -487,8 +482,8 @@ chart.classList.add("crash");
 
 
 
-document.getElementById("message").innerHTML =
 
+document.getElementById("message").innerHTML =
 
 `
 
@@ -511,10 +506,10 @@ ${multiplier.toFixed(2)}×
 
 
 
-save();
+saveUser();
 
 update();
 
 
 
-                    }
+  }
