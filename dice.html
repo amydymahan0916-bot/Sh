@@ -4,10 +4,9 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>نبرد تاس</title>
+<title>نبرد تاس - شرط‌بندی ماهان</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -25,7 +24,7 @@
 
 
 <div class="coin">
-🪙 39,780
+🪙 0
 </div>
 
 
@@ -43,20 +42,14 @@
 </h2>
 
 
-<input 
-id="bet"
-type="number"
-placeholder="تعداد سکه">
-
+<input id="bet" type="number" placeholder="تعداد سکه">
 
 
 <br><br>
 
 
 <button onclick="startDice()">
-
 شروع بازی
-
 </button>
 
 
@@ -72,53 +65,32 @@ placeholder="تعداد سکه">
 
 
 <h1 id="dice">
-
 🎲
-
 </h1>
 
 
 <h2>
-
 نتیجه:
-<span id="result">
--
-</span>
-
+<span id="result">-</span>
 </h2>
 
 
 <h3>
-
 ضریب:
-×<span id="multi">
-1
-
-</span>
-
+×<span id="multi">1</span>
 </h3>
 
 
 <h3>
-
 سود:
-
-<span id="profit">
-
-0
-
-</span>
-
+<span id="profit">0</span>
 🪙
-
 </h3>
 
 
 
 <button onclick="takeDiceProfit()">
-
 برداشت سود
-
 </button>
 
 
@@ -133,13 +105,9 @@ placeholder="تعداد سکه">
 
 <div class="box">
 
-
 <p id="history">
-
 بازی شروع نشده
-
 </p>
-
 
 </div>
 
@@ -161,7 +129,31 @@ placeholder="تعداد سکه">
 
 
 
+<nav>
 
+<a href="index.html">
+خانه
+</a>
+
+<a href="games.html">
+بازی‌ها
+</a>
+
+<a href="wallet.html">
+کیف پول
+</a>
+
+<a href="profile.html">
+پروفایل
+</a>
+
+</nav>
+
+
+
+
+
+<script src="app.js"></script>
 <script src="dice.js"></script>
 
 
