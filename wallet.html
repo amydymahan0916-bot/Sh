@@ -4,6 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>کیف پول</title>
@@ -16,17 +17,25 @@
 <body>
 
 
+
 <header>
 
 <h1>
-کیف پول
+💰 کیف پول
 </h1>
 
-<div class="coin" id="walletBalance">
-🪙 0
+
+<div class="coin">
+
+🪙 <span id="coins">0</span>
+
 </div>
 
+
 </header>
+
+
+
 
 
 
@@ -35,43 +44,36 @@
 
 
 <h2>
-خرید سکه
+افزایش موجودی
 </h2>
 
 
+
 <p>
-هر ۱۰٬۰۰۰ سکه = ۱۰٬۰۰۰ تومان
+هر ۱۰,۰۰۰ سکه = ۱۰,۰۰۰ تومان
 </p>
 
 
 
+
 <input 
-id="coins"
+id="amount"
 type="number"
 placeholder="تعداد سکه"
-oninput="calcPrice()"
 >
 
 
 
-<h2 class="gold">
-
-مبلغ:
-<span id="price">
-0
-</span>
-
-تومان
-
-</h2>
+<br><br>
 
 
 
-<button onclick="goPay()">
+<button onclick="sendRequest()">
 
-ادامه پرداخت
+ثبت درخواست پرداخت
 
 </button>
+
 
 
 </div>
@@ -80,7 +82,37 @@ oninput="calcPrice()"
 
 
 
+
+
+
+<div class="box">
+
+
+<h2>
+درخواست‌های من
+</h2>
+
+
+
+<div id="requests">
+
+درخواستی وجود ندارد
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
 <nav>
+
 
 <a href="index.html">
 خانه
@@ -101,12 +133,13 @@ oninput="calcPrice()"
 پروفایل
 </a>
 
+
 </nav>
 
 
 
 
-<script src="app.js"></script>
+
 <script src="wallet.js"></script>
 
 
