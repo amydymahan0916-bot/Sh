@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>کیف پول</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>
+کیف پول
+</h1>
+
+
+<div class="coin">
+🪙 39,780
+</div>
+
+
+</header>
+
+
+
+
+
+<div class="box">
+
+
+<h2>
+خرید سکه 🪙
+</h2>
+
+
+<p>
+هر 1000 سکه = 10,000 تومان
+</p>
+
+
+
+<input 
+id="coinInput"
+type="number"
+placeholder="تعداد سکه مورد نظر">
+
+
+
+<br><br>
+
+
+<button onclick="calculatePrice()">
+
+محاسبه قیمت
+
+</button>
+
+
+
+<div id="result">
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="paymentBox" class="box" style="display:none;">
+
+
+<h2>
+پرداخت
+</h2>
+
+
+
+<p>
+مبلغ پرداختی:
+</p>
+
+
+<h3 id="priceText" class="gold">
+
+</h3>
+
+
+
+
+<p>
+شماره کارت:
+</p>
+
+
+
+<h2 id="cardNumber">
+
+6037 9971 9478 4360
+
+</h2>
+
+
+
+
+<p>
+به نام:
+</p>
+
+
+<h3 class="gold">
+
+ماهان امیدی
+
+</h3>
+
+
+
+
+<button onclick="copyCard()">
+
+کپی شماره کارت
+
+</button>
+
+
+
+<br><br>
+
+
+
+<button onclick="sendPayment()">
+
+پرداخت کردم
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div id="message" class="box" style="display:none;">
+
+
+<h3 class="gold">
+
+درخواست ارسال شد
+
+</h3>
+
+
+<p>
+
+پرداخت شما برای پشتیبانی ارسال گردید.
+در اسرع وقت حساب شما شارژ میشود
+در صورت صحت پرداخت.
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<nav>
+
+
+<a href="index.html">
+خانه
+</a>
+
+
+<a href="games.html">
+بازی‌ها
+</a>
+
+
+<a href="wallet.html">
+کیف پول
+</a>
+
+
+<a href="profile.html">
+پروفایل
+</a>
+
+
+</nav>
+
+
+
+
+
+
+
+<script src="app.js"></script>
+
+
+<script>
+
+
+let selectedPrice = 0;
+
+
+
+function calculatePrice(){
+
+
+let coins =
+Number(
+document.getElementById("coinInput").value
+);
+
+
+
+if(coins < 1000){
+
+
+alert("حداقل 1000 سکه وارد کنید");
+
+return;
+
+}
+
+
+
+
+selectedPrice =
+(coins / 1000) * 10000;
+
+
+
+document.getElementById("result").innerHTML =
+
+
+`
+
+<div class="box">
+
+<h3>
+
+${coins.toLocaleString()} سکه
+
+</h3>
+
+
+<p>
+
+به مبلغ:
+
+${selectedPrice.toLocaleString()} تومان
+
+</p>
+
+
+
+<button onclick="showPayment()">
+
+پرداخت
+
+</button>
+
+
+</div>
+
+`;
+
+
+
+}
+
+
+
+
+
+
+function showPayment(){
+
+
+document.getElementById(
+"paymentBox"
+).style.display="block";
+
+
+
+document.getElementById(
+"priceText"
+).innerHTML =
+selectedPrice.toLocaleString()
++
+" تومان";
+
+
+}
+
+
+
+
+
+
+
+function copyCard(){
+
+
+navigator.clipboard.writeText(
+"6037997194784360"
+);
+
+
+alert(
+"شماره کارت کپی شد"
+);
+
+
+}
+
+
+
+
+
+
+function sendPayment(){
+
+
+document.getElementById(
+"message"
+).style.display="block";
+
+
+}
+
+
+
+</script>
+
+
+
+</body>
+
+</html>
