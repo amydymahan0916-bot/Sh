@@ -1,202 +1,11 @@
-*{
-    box-sizing:border-box;
-    font-family:tahoma, sans-serif;
-}
+/* بخش بازی های صفحه خانه */
 
-
-body{
-
-    margin:0;
-    background:#050505;
-    color:white;
-    direction:rtl;
-    text-align:center;
-    padding-bottom:80px;
-
-}
-
-
-
-/* Header */
-
-header{
-
-    width:100%;
-    height:75px;
-    background:#111;
-    border-bottom:1px solid #333;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    padding:15px 20px;
-
-}
-
-
-header h1{
-
-    color:#ffd700;
-    font-size:24px;
-
-}
-
-
-
-
-.coin{
-
-    background:#181818;
-    border:1px solid #ffd700;
-
-    color:#ffd700;
-
-    padding:8px 18px;
-
-    border-radius:30px;
-
-}
-
-
-
-
-
-
-/* Box */
-
-.box{
+.games{
 
     width:92%;
-    margin:20px auto;
-
-    background:#101010;
-
-    border:1px solid #292929;
-
-    border-radius:20px;
-
-    padding:20px;
-
-}
-
-
-
-.box h2{
-
-    color:#ffd700;
-
-}
-
-
-
-
-
-
-
-input{
-
-    width:85%;
-
-    padding:14px;
-
-    background:#050505;
-
-    color:white;
-
-    border:1px solid #555;
-
-    border-radius:15px;
-
-    text-align:center;
-
-    font-size:17px;
-
-}
-
-
-
-
-
-
-button{
-
-    background:#ffd700;
-
-    color:#000;
-
-    border:0;
-
-    border-radius:25px;
-
-    padding:13px 35px;
-
-    font-weight:bold;
-
-    font-size:16px;
-
-    cursor:pointer;
-
-}
-
-
-
-button:hover{
-
-    transform:scale(1.05);
-
-}
-
-
-
-
-
-
-
-/* اطلاعات بازی */
-
-
-#multi{
-
-    color:#ffd700;
-
-    font-size:30px;
-
-}
-
-
-#profit{
-
-    color:#00ff99;
-
-    font-size:25px;
-
-}
-
-
-#stage{
-
-    color:#ffd700;
-
-}
-
-
-
-
-
-
-
-/* کارت ها */
-
-
-.cards{
-
-    width:92%;
-
     margin:25px auto;
 
     display:grid;
-
     grid-template-columns:repeat(3,1fr);
 
     gap:15px;
@@ -205,177 +14,114 @@ button:hover{
 
 
 
+.game{
 
-.card{
+    background:#101010;
 
-    height:130px;
-
-    background:
-
-    linear-gradient(145deg,#252525,#080808);
-
-
-    border:2px solid #ffd700;
+    border:1px solid #ffd700;
 
     border-radius:20px;
 
+    padding:15px 5px;
+
+    min-height:140px;
 
     display:flex;
 
-    align-items:center;
+    flex-direction:column;
 
     justify-content:center;
 
-
-    font-size:45px;
-
-
-    cursor:pointer;
-
+    align-items:center;
 
     transition:.3s;
 
+}
 
-    box-shadow:
 
-    0 0 15px #000;
 
+.game:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 0 15px #ffd700;
 
 }
 
 
 
+.game h2{
 
-.card:hover{
+    font-size:35px;
 
-    transform:translateY(-8px);
-
-}
-
-
-
-
-
-.card.open{
-
-    background:#ffd700;
-
-    color:#000;
+    margin:5px;
 
 }
 
 
 
-
-
-
-
-
-
-/* پیام */
-
-#history{
-
-    color:#ccc;
-
-    line-height:2;
-
-    font-size:17px;
-
-}
-
-
-
-
-
-
-
-
-/* منوی پایین */
-
-
-nav{
-
-    position:fixed;
-
-    bottom:0;
-
-    right:0;
-
-    width:100%;
-
-    height:65px;
-
-
-    background:#111;
-
-
-    border-top:1px solid #333;
-
-
-    display:flex;
-
-    justify-content:space-around;
-
-    align-items:center;
-
-}
-
-
-
-nav a{
-
-    color:white;
-
-    text-decoration:none;
-
-    font-size:14px;
-
-}
-
-
-
-nav a:hover{
+.game h3{
 
     color:#ffd700;
 
+    font-size:14px;
+
+    margin:5px;
+
+}
+
+
+
+.game a{
+
+    text-decoration:none;
+
+    color:white;
+
 }
 
 
 
 
 
-
-
-
+/* برای موبایل */
 
 @media(max-width:600px){
 
 
-.cards{
+.games{
 
-    gap:10px;
+    grid-template-columns:repeat(3,1fr);
 
-}
-
-
-
-.card{
-
-    height:100px;
-
-    font-size:35px;
+    gap:8px;
 
 }
 
 
 
-.box{
+.game{
 
-    width:95%;
+    min-height:110px;
+
+    border-radius:15px;
 
 }
 
+
+
+.game h2{
+
+    font-size:28px;
+
+}
+
+
+
+.game h3{
+
+    font-size:12px;
+
+}
 
 
 }
