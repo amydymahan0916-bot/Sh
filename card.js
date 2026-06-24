@@ -1,20 +1,13 @@
-// بازی استاد کارت
-
+// بازی استاد کارت -
 
 let bet = 0;
-
 let profit = 0;
-
 let stage = 0;
-
 let multiplier = 1;
-
 let playing = false;
 
 
-
 const multipliers = [
-
 1.27,
 1.61,
 2,
@@ -23,16 +16,25 @@ const multipliers = [
 4.1,
 5.2,
 6.7
+];
 
+
+const safeChance = [
+75,
+65,
+50,
+45,
+40,
+35,
+25,
+18
 ];
 
 
 
 
 
-
 function startGame(){
-
 
 
 bet = Number(
@@ -44,11 +46,9 @@ document.getElementById("bet").value
 if(bet < 10000){
 
 alert("حداقل ورود 10000 سکه است");
-
 return;
 
 }
-
 
 
 
@@ -60,11 +60,9 @@ JSON.parse(localStorage.getItem("user"));
 if(!user || user.coins < bet){
 
 alert("موجودی کافی نیست");
-
 return;
 
 }
-
 
 
 
@@ -78,7 +76,6 @@ JSON.stringify(user)
 
 
 
-
 profit = bet;
 
 stage = 0;
@@ -86,7 +83,6 @@ stage = 0;
 multiplier = 1;
 
 playing = true;
-
 
 
 
@@ -99,15 +95,15 @@ document.getElementById("gameBox").style.display="block";
 createCards();
 
 
-
 }
 
 
 
 
 
-function createCards(){
 
+
+function createCards(){
 
 
 let box =
@@ -119,21 +115,64 @@ box.innerHTML="";
 
 
 
-let cards = [
-
-"bomb",
-"bomb",
-"empty",
-
-"win",
-"win",
-"win"
-
-];
+let cards = [];
 
 
 
-cards.sort(()=>Math.random()-0.5);
+for(let i=0;i<6;i++){
+
+cards.push("empty");
+
+}
+
+
+
+// سه کارت ضریب
+let winPositions = [];
+
+while(winPositions.length < 3){
+
+let r = Math.floor(Math.random()*6);
+
+if(!winPositions.includes(r)){
+
+winPositions.push(r);
+
+}
+
+}
+
+
+
+winPositions.forEach(i=>{
+
+cards[i]="win";
+
+});
+
+
+
+// دو بمب
+let bombCount = 0;
+
+
+while(bombCount < 2){
+
+
+let r = Math.floor(Math.random()*6);
+
+
+
+if(cards[r]=="empty"){
+
+cards[r]="bomb";
+
+bombCount++;
+
+}
+
+
+}
 
 
 
@@ -142,10 +181,8 @@ cards.sort(()=>Math.random()-0.5);
 cards.forEach(type=>{
 
 
-
 let card =
 document.createElement("div");
-
 
 
 card.className="card";
@@ -155,12 +192,9 @@ card.innerHTML="🂠";
 
 
 
-
 card.onclick=function(){
 
-
 openCard(card,type);
-
 
 };
 
@@ -177,7 +211,6 @@ box.appendChild(card);
 updateInfo();
 
 
-
 }
 
 
@@ -190,11 +223,14 @@ updateInfo();
 function openCard(card,type){
 
 
-if(!playing) return;
+
+if(!playing)return;
+
 
 
 if(card.classList.contains("open"))
 return;
+
 
 
 
@@ -204,7 +240,20 @@ card.classList.add("open");
 
 
 
-if(type==="bomb"){
+let chance =
+safeChance[stage];
+
+
+
+let random =
+Math.floor(Math.random()*100)+1;
+
+
+
+
+// شانس خوردن بمب واقعی
+
+if(random > chance){
 
 
 
@@ -217,15 +266,11 @@ card.innerHTML="💣";
 profit=0;
 
 
-document.getElementById("profit").innerHTML=0;
+document.getElementById("profit").innerHTML="0";
 
 
 
-playing=false;
-
-
-
-alert("بمب خورد! سود از بین رفت");
+loseGame();
 
 
 
@@ -239,8 +284,29 @@ return;
 
 
 
-if(type==="empty"){
+if(type=="bomb"){
 
+
+card.classList.add("bomb");
+
+card.innerHTML="💣";
+
+
+loseGame();
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+if(type=="empty"){
 
 
 card.classList.add("empty");
@@ -248,7 +314,6 @@ card.classList.add("empty");
 card.innerHTML="❌";
 
 
-
 return;
 
 
@@ -260,7 +325,7 @@ return;
 
 
 
-if(type==="win"){
+if(type=="win"){
 
 
 
@@ -290,21 +355,17 @@ stage++;
 
 
 
-
 updateInfo();
 
 
 
+if(stage>=8){
 
 
-if(stage >= 8){
+winGame();
 
 
-playing=false;
-
-
-alert("تبریک! همه مراحل تمام شد");
-
+return;
 
 
 }
@@ -314,14 +375,10 @@ alert("تبریک! همه مراحل تمام شد");
 setTimeout(()=>{
 
 
-if(playing){
-
 createCards();
 
-}
 
-
-},800);
+},700);
 
 
 
@@ -342,12 +399,7 @@ function cashOut(){
 
 
 
-if(!playing && profit<=0){
-
-return;
-
-}
-
+if(profit<=0)return;
 
 
 
@@ -359,15 +411,19 @@ JSON.parse(localStorage.getItem("user"));
 if(user){
 
 
-
 user.coins += profit;
-
 
 
 localStorage.setItem(
 "user",
 JSON.stringify(user)
 );
+
+
+updateStats("win");
+
+
+}
 
 
 
@@ -377,6 +433,30 @@ alert(
 
 
 
+playing=false;
+
+
+}
+
+
+
+
+
+
+
+
+function loseGame(){
+
+
+let user =
+JSON.parse(localStorage.getItem("user"));
+
+
+
+if(user){
+
+updateStats("lose");
+
 }
 
 
@@ -384,8 +464,57 @@ alert(
 playing=false;
 
 
+alert(
+"بمب خورد! سود از بین رفت"
+);
+
 
 }
+
+
+
+
+
+
+
+
+function winGame(){
+
+
+let user =
+JSON.parse(localStorage.getItem("user"));
+
+
+
+if(user){
+
+user.coins += profit;
+
+
+localStorage.setItem(
+"user",
+JSON.stringify(user)
+);
+
+
+updateStats("win");
+
+
+}
+
+
+
+playing=false;
+
+
+alert(
+"تبریک! برنده شدید"
+);
+
+
+}
+
+
 
 
 
@@ -394,15 +523,12 @@ playing=false;
 function updateInfo(){
 
 
-
 document.getElementById("level").innerHTML =
 stage+1;
 
 
-
 document.getElementById("multi").innerHTML =
 multiplier.toFixed(2)+"×";
-
 
 
 document.getElementById("profit").innerHTML =
@@ -417,12 +543,10 @@ JSON.parse(localStorage.getItem("user"));
 
 if(user){
 
-
 document.getElementById("balance").innerHTML =
 "🪙 "+user.coins.toLocaleString();
-
 
 }
 
 
-    }
+}
