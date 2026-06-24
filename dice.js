@@ -1,5 +1,8 @@
 let data =
-JSON.parse(localStorage.getItem("currentUser"));
+
+JSON.parse(
+localStorage.getItem("currentUser")
+);
 
 
 
@@ -17,19 +20,30 @@ location.href="login.html";
 
 
 
-function save(){
+function saveUser(){
+
+
+localStorage.setItem(
+
+"currentUser",
+
+JSON.stringify(data)
+
+);
 
 
 
 let users =
 
-JSON.parse(localStorage.getItem("users")) || [];
+JSON.parse(
+localStorage.getItem("users")
+) || [];
 
 
 
 let index = users.findIndex(
 
-u=>u.id === data.id
+u=>u.id===data.id
 
 );
 
@@ -43,23 +57,11 @@ users[index]=data;
 
 
 
-
-
 localStorage.setItem(
 
 "users",
 
 JSON.stringify(users)
-
-);
-
-
-
-localStorage.setItem(
-
-"currentUser",
-
-JSON.stringify(data)
 
 );
 
@@ -79,13 +81,25 @@ function update(){
 
 data =
 
-JSON.parse(localStorage.getItem("currentUser")) || data;
+JSON.parse(
+localStorage.getItem("currentUser")
+) || data;
 
 
 
-document.getElementById("coins").innerHTML =
+let coin =
+
+document.getElementById("coins");
+
+
+
+if(coin){
+
+coin.innerHTML =
 
 data.coins.toLocaleString();
+
+}
 
 
 
@@ -93,8 +107,8 @@ data.coins.toLocaleString();
 
 
 
-
 update();
+
 
 
 
@@ -110,10 +124,9 @@ function rollDice(){
 let bet =
 
 Number(
-
 document.getElementById("bet").value
-
 );
+
 
 
 
@@ -122,9 +135,11 @@ document.getElementById("bet").value
 
 if(bet < 10000){
 
+
 alert("حداقل ورود 10000 سکه است");
 
 return;
+
 
 }
 
@@ -136,9 +151,11 @@ return;
 
 if(bet > data.coins){
 
+
 alert("موجودی کافی نیست");
 
 return;
+
 
 }
 
@@ -149,6 +166,7 @@ return;
 
 
 data.coins -= bet;
+
 
 data.games++;
 
@@ -161,7 +179,6 @@ data.games++;
 document.getElementById("betView").innerHTML =
 
 bet.toLocaleString();
-
 
 
 
@@ -190,13 +207,12 @@ Math.floor(Math.random()*6)+1;
 
 
 
+
 let d1 =
 document.getElementById("dice1");
 
-
 let d2 =
 document.getElementById("dice2");
-
 
 let d3 =
 document.getElementById("dice3");
@@ -216,12 +232,21 @@ d3.classList.add("rolling");
 
 
 
-
 d1.innerHTML="🎲";
 
 d2.innerHTML="🎲";
 
 d3.innerHTML="🎲";
+
+
+
+
+
+
+
+saveUser();
+
+update();
 
 
 
@@ -238,7 +263,6 @@ d1.classList.remove("rolling");
 d2.classList.remove("rolling");
 
 d3.classList.remove("rolling");
-
 
 
 
@@ -288,7 +312,6 @@ bet*2;
 
 
 
-
 data.coins += reward;
 
 
@@ -315,10 +338,9 @@ data.record = reward;
 
 data.history.unshift(
 
-"نبرد تاس + "+reward+" 🪙"
+"🎲 نبرد تاس + "+reward+" 🪙"
 
 );
-
 
 
 
@@ -335,19 +357,23 @@ reward.toLocaleString();
 
 
 
-
-
 document.getElementById("message").innerHTML=
 
 `
 
 🎉 بردی
 
+<br><br>
+
+جمع تاس:
+
+${total}
+
 <br>
 
 دریافت:
 
-${reward.toLocaleString()} سکه
+${reward.toLocaleString()} 🪙
 
 `;
 
@@ -369,14 +395,13 @@ document.getElementById("profit").innerHTML=
 
 
 
-
 document.getElementById("message").innerHTML=
 
 `
 
 💥 باختی
 
-<br>
+<br><br>
 
 جمع تاس:
 
@@ -393,7 +418,8 @@ ${total}
 
 
 
-save();
+
+saveUser();
 
 update();
 
@@ -401,8 +427,8 @@ update();
 
 
 
-
 },1200);
+
 
 
 
@@ -416,16 +442,23 @@ update();
 
 
 
+
 function getDice(number){
 
 
-let dice={
+
+let dice = {
 
 1:"⚀",
+
 2:"⚁",
+
 3:"⚂",
+
 4:"⚃",
+
 5:"⚄",
+
 6:"⚅"
 
 };
@@ -435,4 +468,4 @@ let dice={
 return dice[number];
 
 
-                        }
+}
