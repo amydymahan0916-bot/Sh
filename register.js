@@ -1,23 +1,30 @@
 function register(){
 
 
+
 let username =
-document.getElementById("username").value;
+
+document.getElementById("username").value.trim();
 
 
 
 let password =
-document.getElementById("password").value;
+
+document.getElementById("password").value.trim();
 
 
 
 
 
-if(!username || !password){
 
-alert("همه فیلدها را پر کنید");
+
+if(username=="" || password==""){
+
+
+alert("نام کاربری و رمز را وارد کنید");
 
 return;
+
 
 }
 
@@ -25,18 +32,27 @@ return;
 
 
 
+
+
 let users =
 
-JSON.parse(localStorage.getItem("users")) || [];
+JSON.parse(
+
+localStorage.getItem("users")
+
+) || [];
 
 
 
 
 
 
-let exist = users.find(
 
-u=>u.username===username
+let exists =
+
+users.find(
+
+u => u.username === username
 
 );
 
@@ -45,11 +61,14 @@ u=>u.username===username
 
 
 
-if(exist){
+
+if(exists){
+
 
 alert("این نام کاربری قبلا ثبت شده");
 
 return;
+
 
 }
 
@@ -59,28 +78,41 @@ return;
 
 
 
-let newUser = {
 
 
-username:username,
+let user = {
 
 
-password:password,
+id: Date.now(),
+
+
+
+username: username,
+
+
+
+password: password,
+
 
 
 coins:100000,
 
 
+
 wins:0,
+
 
 
 games:0,
 
 
+
 record:0,
 
 
+
 history:[]
+
 
 
 };
@@ -90,7 +122,10 @@ history:[]
 
 
 
-users.push(newUser);
+
+
+users.push(user);
+
 
 
 
@@ -110,11 +145,29 @@ JSON.stringify(users)
 
 
 
+
+
+localStorage.setItem(
+
+"currentUser",
+
+JSON.stringify(user)
+
+);
+
+
+
+
+
+
+
 alert("ثبت نام موفق");
 
 
 
-location.href="login.html";
+
+
+location.href="index.html";
 
 
 
