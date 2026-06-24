@@ -1,36 +1,67 @@
-let diceBet = 0;
+let data =
+JSON.parse(localStorage.getItem("royalData")) || {
 
-let diceProfit = 0;
+coins:0,
+wins:0,
+games:0,
+record:0,
+history:[]
 
-let diceMulti = 1;
-
-let dicePlaying = false;
-
-
-
-
-function startDice(){
+};
 
 
 
-diceBet =
+function save(){
+
+localStorage.setItem(
+"royalData",
+JSON.stringify(data)
+);
+
+}
+
+
+
+
+
+function update(){
+
+
+data =
+JSON.parse(localStorage.getItem("royalData")) || data;
+
+
+
+document.getElementById("coins").innerHTML =
+data.coins.toLocaleString();
+
+
+}
+
+
+
+update();
+
+
+
+
+
+
+
+function rollDice(){
+
+
+
+let bet =
 Number(
 document.getElementById("bet").value
 );
 
 
 
-if(diceBet <= 0){
+if(!bet || bet < 10000){
 
-alert("مبلغ بازی را وارد کنید");
-
-return;
-
-}
-
-
-
-if(!removeCoins(diceBet)){
+alert("حداقل ورود 10000 سکه است");
 
 return;
 
@@ -38,142 +69,253 @@ return;
 
 
 
-dicePlaying = true;
+
+data =
+JSON.parse(localStorage.getItem("royalData")) || data;
 
 
 
-let number =
+
+
+if(bet > data.coins){
+
+alert("موجودی کافی نیست");
+
+return;
+
+}
+
+
+
+
+data.coins -= bet;
+
+
+data.games++;
+
+
+
+
+
+let d1 =
+Math.floor(Math.random()*6)+1;
+
+
+let d2 =
+Math.floor(Math.random()*6)+1;
+
+
+let d3 =
 Math.floor(Math.random()*6)+1;
 
 
 
-document.getElementById("dice").innerHTML =
-"🎲 "+number;
+
+
+let dice1 =
+document.getElementById("dice1");
+
+
+let dice2 =
+document.getElementById("dice2");
+
+
+let dice3 =
+document.getElementById("dice3");
+
+
+
+
+
+dice1.classList.add("roll");
+
+dice2.classList.add("roll");
+
+dice3.classList.add("roll");
+
+
+
+
+setTimeout(()=>{
+
+
+
+dice1.classList.remove("roll");
+
+dice2.classList.remove("roll");
+
+dice3.classList.remove("roll");
+
+
+
+
+dice1.innerHTML =
+getDice(d1);
+
+
+dice2.innerHTML =
+getDice(d2);
+
+
+dice3.innerHTML =
+getDice(d3);
+
+
+
+
+
+
+let total =
+d1+d2+d3;
+
+
+
+
+document.getElementById("betView").innerHTML =
+bet.toLocaleString();
 
 
 
 document.getElementById("result").innerHTML =
-number;
+total;
 
 
 
-if(number == 6){
+if(total >= 15){
 
 
-diceMulti = 10;
 
+let reward =
+bet*2;
 
-}
 
-else if(number >= 4){
 
+data.coins += reward;
 
-diceMulti = 3;
 
+data.wins++;
 
-}
 
-else if(number >= 2){
 
+if(reward > data.record)
 
-diceMulti = 1.5;
+data.record = reward;
 
 
-}
 
-else{
 
+data.history.unshift(
 
-diceMulti = 0;
+"نبرد تاس + "+reward+" 🪙"
 
-
-}
-
-
-
-
-
-
-if(diceMulti > 0){
-
-
-diceProfit =
-diceBet * diceMulti;
-
-
-
-document.getElementById("profit").innerHTML =
-diceProfit.toLocaleString();
-
-
-
-document.getElementById("multi").innerHTML =
-diceMulti;
-
-
-
-document.getElementById("history").innerHTML =
-
-"عدد تاس: "+number+
-"<br>برد ✔️";
-
-
-}
-
-else{
-
-
-document.getElementById("profit").innerHTML=0;
-
-
-document.getElementById("history").innerHTML =
-
-"عدد تاس: "+number+
-"<br>باخت ❌";
-
-
-dicePlaying=false;
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-function takeDiceProfit(){
-
-
-if(!dicePlaying){
-
-alert("بازی فعالی ندارید");
-
-return;
-
-}
-
-
-
-addCoins(diceProfit);
-
-
-
-alert(
-"سود شما اضافه شد: "+
-diceProfit+
-" 🪙"
 );
 
 
 
-dicePlaying=false;
+
+
+document.getElementById("profit").innerHTML =
+reward.toLocaleString();
+
+
+
+
+document.getElementById("message").innerHTML=
+
+`
+🎉 بردی
+
+<br>
+
+جمع تاس:
+${total}
+
+<br>
+
+دریافت:
+${reward.toLocaleString()} 🪙
+
+`;
+
 
 
 }
+
+else{
+
+
+
+document.getElementById("profit").innerHTML =
+0;
+
+
+
+document.getElementById("message").innerHTML=
+
+`
+💥 باخت
+
+<br>
+
+جمع تاس:
+${total}
+
+<br>
+
+پول از بین رفت
+
+`;
+
+
+
+}
+
+
+
+
+
+save();
+
+update();
+
+
+
+},1000);
+
+
+
+}
+
+
+
+
+
+
+
+
+function getDice(number){
+
+
+
+let dice={
+
+1:"⚀",
+
+2:"⚁",
+
+3:"⚂",
+
+4:"⚃",
+
+5:"⚄",
+
+6:"⚅"
+
+};
+
+
+
+return dice[number];
+
+
+  }
