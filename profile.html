@@ -4,10 +4,9 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>پروفایل - شرط‌بندی ماهان</title>
+<title>پروفایل</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -23,171 +22,81 @@
 پروفایل
 </h1>
 
-
-<div class="coin">
-🪙 0
-</div>
-
-
 </header>
 
 
 
 
-
-
-
 <div class="box">
 
 
 <h2>
-👤 حساب کاربری
+حساب کاربری
 </h2>
 
 
-
-<h3 class="gold">
-
-ماهان
-
-</h3>
-
-
-
 <p>
-
-سطح کاربر:
-<br>
-
-⭐ طلایی
-
+نام کاربر:
+<span class="gold" id="profileName">
+-
+</span>
 </p>
 
 
 
 <p>
-
 موجودی:
-
-</p>
-
-
-<h2 class="gold" id="myCoins">
-
+<span class="coin" id="profileCoins">
 🪙 0
+</span>
+</p>
 
-</h2>
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="box">
-
-
-<h2>
-آمار بازی
-</h2>
 
 
 
 <p>
-
-تعداد بازی‌ها:
-
-<span id="games">
+تعداد بازی:
+<span id="gamesCount">
 0
 </span>
-
 </p>
 
 
 
 <p>
-
-بردها:
-
-<span id="wins">
+برد:
+<span id="winsCount">
 0
 </span>
-
 </p>
 
 
 
 <p>
-
-باخت‌ها:
-
-<span id="lose">
+باخت:
+<span id="lossCount">
 0
 </span>
-
 </p>
 
 
 
-</div>
 
+<button onclick="logout()">
 
-
-
-
-
-
-
-<div class="box">
-
-
-<h2>
-امکانات
-</h2>
-
-
-
-<a href="games.html">
-
-<button>
-
-شروع بازی
+خروج از حساب
 
 </button>
 
-</a>
-
-
-<br><br>
-
-
-<a href="wallet.html">
-
-<button>
-
-خرید سکه
-
-</button>
-
-</a>
-
 
 
 </div>
-
-
-
 
 
 
 
 
 <nav>
-
 
 <a href="index.html">
 خانه
@@ -216,18 +125,38 @@
 
 
 
-
-
 <script src="app.js"></script>
-
 
 
 <script>
 
 
-document.getElementById("myCoins").innerHTML =
+let user = getUser();
 
-"🪙 " + getCoins().toLocaleString();
+
+
+if(user){
+
+
+document.getElementById("profileName").innerHTML=user.name;
+
+
+document.getElementById("profileCoins").innerHTML=
+"🪙 "+user.coins.toLocaleString();
+
+
+
+document.getElementById("gamesCount").innerHTML=user.games;
+
+
+document.getElementById("winsCount").innerHTML=user.wins;
+
+
+document.getElementById("lossCount").innerHTML=user.losses;
+
+
+
+}
 
 
 
