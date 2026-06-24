@@ -1,13 +1,23 @@
 let data =
-JSON.parse(localStorage.getItem("royalData")) || {
 
-    coins:0,
-    wins:0,
-    games:0,
-    record:0,
-    history:[]
+JSON.parse(
 
-};
+localStorage.getItem("currentUser")
+
+);
+
+
+
+if(!data){
+
+alert("ابتدا وارد حساب شوید");
+
+location.href="login.html";
+
+}
+
+
+
 
 
 
@@ -18,7 +28,14 @@ function updateProfile(){
 
 
 data =
-JSON.parse(localStorage.getItem("royalData")) || data;
+
+JSON.parse(
+
+localStorage.getItem("currentUser")
+
+) || data;
+
+
 
 
 
@@ -26,7 +43,20 @@ JSON.parse(localStorage.getItem("royalData")) || data;
 
 document.getElementById("coins").innerHTML =
 
-data.coins.toLocaleString();
+(data.coins || 0).toLocaleString();
+
+
+
+
+
+
+
+document.getElementById("username").innerHTML =
+
+data.username || "کاربر";
+
+
+
 
 
 
@@ -34,7 +64,9 @@ data.coins.toLocaleString();
 
 document.getElementById("games").innerHTML =
 
-data.games;
+data.games || 0;
+
+
 
 
 
@@ -42,7 +74,9 @@ data.games;
 
 document.getElementById("wins").innerHTML =
 
-data.wins;
+data.wins || 0;
+
+
 
 
 
@@ -50,7 +84,7 @@ data.wins;
 
 document.getElementById("record").innerHTML =
 
-data.record.toLocaleString();
+(data.record || 0).toLocaleString();
 
 
 
@@ -58,7 +92,8 @@ data.record.toLocaleString();
 
 
 
-// سطح کاربر
+
+
 
 let level = 1;
 
@@ -69,9 +104,11 @@ if(data.games >= 10)
 level=2;
 
 
+
 if(data.games >= 25)
 
 level=3;
+
 
 
 if(data.games >= 50)
@@ -79,9 +116,12 @@ if(data.games >= 50)
 level=4;
 
 
+
 if(data.games >= 100)
 
 level=5;
+
+
 
 
 
@@ -97,6 +137,8 @@ level;
 
 
 
+
+
 let historyBox =
 
 document.getElementById("history");
@@ -105,7 +147,10 @@ document.getElementById("history");
 
 
 
-if(data.history.length == 0){
+
+
+
+if(!data.history || data.history.length===0){
 
 
 historyBox.innerHTML =
@@ -118,12 +163,14 @@ historyBox.innerHTML =
 else{
 
 
+
 historyBox.innerHTML="";
 
 
 
-data.history.slice(0,10).forEach(item=>{
 
+
+data.history.slice(0,15).forEach(item=>{
 
 
 historyBox.innerHTML +=
@@ -136,6 +183,8 @@ ${item}
 
 </p>
 
+<hr>
+
 `;
 
 
@@ -143,7 +192,9 @@ ${item}
 });
 
 
+
 }
+
 
 
 
