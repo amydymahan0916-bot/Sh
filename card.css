@@ -1,9 +1,16 @@
 .gameBox{
 
-background:#111;
+width:90%;
+margin:25px auto;
+background:
+linear-gradient(145deg,#151515,#050505);
+
 border:1px solid #333;
-border-radius:25px;
+border-radius:35px;
 padding:25px;
+
+box-shadow:
+0 0 30px #000;
 
 }
 
@@ -12,57 +19,75 @@ padding:25px;
 .cards{
 
 width:90%;
-margin:25px auto;
+margin:30px auto;
 
 display:grid;
 grid-template-columns:repeat(3,1fr);
 
-gap:15px;
+gap:18px;
+
+perspective:1000px;
 
 }
+
+
 
 
 
 .card{
 
-height:170px;
+height:190px;
 
-background:
-
-linear-gradient(145deg,#222,#050505);
-
-border:2px solid #ffd700;
-
-border-radius:25px;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-font-size:35px;
-
-color:#ffd700;
+position:relative;
 
 cursor:pointer;
 
-transition:.3s;
+
+background:
+
+linear-gradient(
+135deg,
+#ffd700,
+#8c6500
+);
+
+
+border-radius:30px;
+
+border:3px solid #ffd700;
+
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+
+font-size:45px;
+
+color:#000;
+
+
+transform-style:preserve-3d;
+
+transition:.6s;
+
 
 box-shadow:
-0 0 10px #000;
+
+0 0 20px rgba(255,215,0,.25);
+
 
 }
 
 
 
+
 .card:hover{
 
-transform:translateY(-8px);
+transform:
+translateY(-8px)
+scale(1.03);
 
-box-shadow:
-
-0 0 20px #ffd700;
 
 }
 
@@ -72,46 +97,141 @@ box-shadow:
 
 .card.open{
 
-transform:rotateY(180deg);
+
+transform:
+
+rotateY(180deg);
+
 
 }
 
+
+
+
+.card.open::after{
+
+
+content:"";
+
+
+position:absolute;
+
+inset:0;
+
+
+border-radius:30px;
+
+
+background:#111;
+
+
+backface-visibility:hidden;
+
+
+}
 
 
 
 
 .card.win{
 
-background:#006b35;
 
-border-color:#00ff88;
+background:
+
+linear-gradient(
+135deg,
+#00ff88,
+#006b35
+);
+
 
 color:white;
 
+
+box-shadow:
+
+0 0 30px #00ff88;
+
+
 }
+
+
 
 
 
 .card.bomb{
 
-background:#800000;
 
-border-color:red;
+background:
+
+linear-gradient(
+135deg,
+#ff0000,
+#650000
+);
+
 
 color:white;
 
+
+box-shadow:
+
+0 0 30px red;
+
+
 }
+
 
 
 
 
 .card.empty{
 
-background:#333;
+
+background:
+
+linear-gradient(
+135deg,
+#333,
+#111
+);
+
 
 color:#aaa;
 
+
 }
+
+
+
+
+
+.card::before{
+
+
+content:"🂠";
+
+
+font-size:55px;
+
+
+}
+
+
+
+
+
+.card.win::before,
+.card.bomb::before,
+.card.empty::before{
+
+
+display:none;
+
+
+}
+
+
 
 
 
@@ -121,12 +241,39 @@ color:#aaa;
 #multi,
 #level{
 
+
 color:#ffd700;
 
-font-size:25px;
+font-weight:bold;
+
+font-size:28px;
+
 
 }
 
+
+
+
+
+
+button{
+
+
+transition:.3s;
+
+}
+
+
+
+button:hover{
+
+
+box-shadow:
+
+0 0 20px #ffd700;
+
+
+}
 
 
 
@@ -136,7 +283,9 @@ font-size:25px;
 
 .cards{
 
+
 gap:10px;
+
 
 }
 
@@ -144,11 +293,26 @@ gap:10px;
 
 .card{
 
-height:120px;
 
-font-size:25px;
+height:130px;
+
+border-radius:20px;
+
+font-size:30px;
+
 
 }
+
+
+
+.card::before{
+
+
+font-size:40px;
+
+
+}
+
 
 
 }
