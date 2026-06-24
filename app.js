@@ -1,147 +1,60 @@
-// سیستم سکه شرط‌بندی ماهان
+// سیستم کاربری سایت ماهان
 
 
-let coins = localStorage.getItem("mahanCoins");
+function register(){
 
 
-if(coins === null){
-
-coins = 10000;
-
-localStorage.setItem(
-"mahanCoins",
-coins
-);
-
-}
+let username = document.getElementById("username").value.trim();
 
 
 
-function getCoins(){
-
-return Number(
-localStorage.getItem("mahanCoins")
-);
-
-}
+if(username === ""){
 
 
+document.getElementById("msg").innerHTML =
+"نام کاربری را وارد کنید";
 
 
-
-function showCoins(){
-
-
-let elements =
-document.querySelectorAll(".coin");
-
-
-elements.forEach(item=>{
-
-item.innerHTML =
-"🪙 " +
-getCoins().toLocaleString();
-
-});
+return;
 
 
 }
 
 
 
+let user = {
 
-function addCoins(amount){
+name: username,
 
+coins: 0,
 
-let current =
-getCoins();
+games: 0,
 
+wins: 0,
 
-current += Number(amount);
+losses: 0
+
+};
 
 
 
 localStorage.setItem(
-"mahanCoins",
-current
+"user",
+JSON.stringify(user)
 );
 
 
 
-showCoins();
-
-
-}
-
+document.getElementById("msg").innerHTML =
+"ثبت نام موفق بود";
 
 
 
+setTimeout(()=>{
 
+window.location.href="index.html";
 
-
-function removeCoins(amount){
-
-
-let current =
-getCoins();
-
-
-
-if(current < amount){
-
-
-alert(
-"سکه کافی ندارید"
-);
-
-
-return false;
-
-
-}
-
-
-
-current -= Number(amount);
-
-
-
-localStorage.setItem(
-"mahanCoins",
-current
-);
-
-
-
-showCoins();
-
-
-
-return true;
-
-
-}
-
-
-
-
-
-
-
-function copyCard(){
-
-
-let card =
-"6037997194784360";
-
-
-navigator.clipboard.writeText(card);
-
-
-
-alert(
-"شماره کارت کپی شد"
-);
+},1000);
 
 
 
@@ -153,28 +66,12 @@ alert(
 
 
 
-function paymentDone(){
+function login(){
+
+
+let username =
+document.getElementById("loginUser").value.trim();
 
 
 
-alert(
-"پرداخت شما برای پشتیبانی ارسال گردید، در اسرع وقت حساب شما شارژ میشود."
-);
-
-
-
-}
-
-
-
-
-
-
-
-window.onload=function(){
-
-
-showCoins();
-
-
-}
+let user
