@@ -21,7 +21,7 @@
 <h1>🃏 استاد کارت</h1>
 
 <div class="coin">
-🪙 0
+🪙 <span id="coins">0</span>
 </div>
 
 </header>
@@ -31,15 +31,24 @@
 
 <div class="box">
 
-<h2>مبلغ بازی</h2>
 
-<input id="bet" type="number" placeholder="مقدار سکه">
+<h2>ورود بازی</h2>
+
+
+<input 
+id="bet"
+type="number"
+placeholder="حداقل 10000 سکه">
+
+
 
 <br><br>
+
 
 <button onclick="startCard()">
 شروع بازی
 </button>
+
 
 </div>
 
@@ -47,7 +56,15 @@
 
 
 
+
 <div class="box">
+
+
+<h2>
+مرحله:
+<span id="stage">0</span>/8
+</h2>
+
 
 <h2>
 ضریب:
@@ -55,13 +72,14 @@
 </h2>
 
 
+
 <h2>
-سود:
-<span id="profit">0</span>
-🪙
+موجودی بازی:
+<span id="profit">0</span> 🪙
 </h2>
 
 
+
 </div>
 
 
@@ -70,37 +88,8 @@
 
 
 
-<div class="cards">
 
-
-<div class="card" onclick="openCard(0)">
-?
-</div>
-
-
-<div class="card" onclick="openCard(1)">
-?
-</div>
-
-
-<div class="card" onclick="openCard(2)">
-?
-</div>
-
-
-<div class="card" onclick="openCard(3)">
-?
-</div>
-
-
-<div class="card" onclick="openCard(4)">
-?
-</div>
-
-
-<div class="card" onclick="openCard(5)">
-?
-</div>
+<div id="cards" class="cards">
 
 
 </div>
@@ -113,17 +102,21 @@
 
 <div class="box">
 
+
+<button onclick="cashOut()">
+
+برداشت سود
+
+</button>
+
+
 <p id="history">
 بازی شروع نشده
 </p>
 
 
-<button onclick="takeCardProfit()">
-برداشت سود
-</button>
-
-
 </div>
+
 
 
 
@@ -133,20 +126,35 @@
 
 <nav>
 
-<a href="index.html">خانه</a>
+<a href="index.html">
+خانه
+</a>
 
-<a href="games.html">بازی‌ها</a>
 
-<a href="wallet.html">کیف پول</a>
+<a href="games.html">
+بازی‌ها
+</a>
 
-<a href="profile.html">پروفایل</a>
+
+<a href="wallet.html">
+کیف پول
+</a>
+
+
+<a href="profile.html">
+پروفایل
+</a>
+
 
 </nav>
 
 
 
 
+
+
 <script src="app.js"></script>
+
 <script src="card.js"></script>
 
 
