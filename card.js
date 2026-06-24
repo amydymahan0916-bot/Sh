@@ -1,34 +1,61 @@
-// بازی استاد کارت -
+let risk = "normal";
 
 let bet = 0;
 let profit = 0;
-let stage = 0;
-let multiplier = 1;
 let playing = false;
 
-
-const multipliers = [
-1.27,
-1.61,
-2,
-2.5,
-3.2,
-4.1,
-5.2,
-6.7
-];
+let selectedCards = [];
+let totalMultiplier = 1;
 
 
-const safeChance = [
-75,
-65,
-50,
-45,
-40,
-35,
-25,
-18
-];
+// اتصال به موجودی سایت
+let data = JSON.parse(localStorage.getItem("royalData")) || {
+
+    coins:0,
+    wins:0,
+    games:0,
+    record:0,
+    history:[]
+
+};
+
+
+
+function save(){
+
+    localStorage.setItem(
+        "royalData",
+        JSON.stringify(data)
+    );
+
+}
+
+
+
+function update(){
+
+    data =
+    JSON.parse(localStorage.getItem("royalData")) || data;
+
+
+    document.getElementById("coins").innerHTML =
+    data.coins.toLocaleString();
+
+}
+
+
+
+update();
+
+
+
+
+
+function setRisk(type){
+
+    risk = type;
+
+}
 
 
 
@@ -37,178 +64,142 @@ const safeChance = [
 function startGame(){
 
 
-bet = Number(
-document.getElementById("bet").value
-);
+    data =
+    JSON.parse(localStorage.getItem("royalData")) || data;
 
 
+    if(playing)
+    return;
 
-if(bet < 10000){
 
-alert("حداقل ورود 10000 سکه است");
-return;
 
-}
+    bet =
+    Number(
+    document.getElementById("bet").value
+    );
 
 
 
-let user =
-JSON.parse(localStorage.getItem("user"));
+    if(!bet || bet < 10000){
 
+        alert("حداقل ورود 10000 سکه است");
+        return;
 
+    }
 
-if(!user || user.coins < bet){
 
-alert("موجودی کافی نیست");
-return;
 
-}
+    if(bet > data.coins){
 
+        alert("موجودی کافی نیست");
+        return;
 
+    }
 
-user.coins -= bet;
 
 
-localStorage.setItem(
-"user",
-JSON.stringify(user)
-);
+    data.coins -= bet;
 
+    data.games++;
 
 
-profit = bet;
+    profit = 0;
 
-stage = 0;
+    selectedCards=[];
 
-multiplier = 1;
+    totalMultiplier=1;
 
-playing = true;
 
+    playing=true;
 
 
-document.getElementById("startBox").style.display="none";
 
-document.getElementById("gameBox").style.display="block";
+    document.getElementById("betView").innerHTML =
+    bet.toLocaleString();
 
 
 
-createCards();
+    document.getElementById("profit").innerHTML =
+    "0";
 
 
-}
 
+    document.getElementById("multi").innerHTML =
+    "×1";
 
 
 
 
+    let cards=[
 
+        "BOMB",
+        "BOMB",
+        "POUCH",
+        "×1.27",
+        "×1.61",
+        "×2"
 
-function createCards(){
+    ];
 
 
-let box =
-document.getElementById("cards");
 
+    cards.sort(()=>Math.random()-0.5);
 
-box.innerHTML="";
 
 
+    let box =
+    document.getElementById("cards");
 
 
-let cards = [];
 
+    box.innerHTML="";
 
 
-for(let i=0;i<6;i++){
 
-cards.push("empty");
+    cards.forEach((item)=>{
 
-}
 
+        box.innerHTML +=`
 
+        <div class="card">
 
-// سه کارت ضریب
-let winPositions = [];
+        <div class="inner"
+        onclick="chooseCard(this,'${item}')">
 
-while(winPositions.length < 3){
 
-let r = Math.floor(Math.random()*6);
+        <div class="front">
+        RG
+        </div>
 
-if(!winPositions.includes(r)){
 
-winPositions.push(r);
+        <div class="back">
+        ${item}
+        </div>
 
-}
 
-}
+        </div>
 
+        </div>
 
+        `;
 
-winPositions.forEach(i=>{
 
-cards[i]="win";
+    });
 
-});
 
 
+    document.getElementById("cashout").disabled=false;
 
-// دو بمب
-let bombCount = 0;
 
 
-while(bombCount < 2){
+    document.getElementById("message").innerHTML=
+    "کارت انتخاب کنید";
 
 
-let r = Math.floor(Math.random()*6);
 
+    save();
 
-
-if(cards[r]=="empty"){
-
-cards[r]="bomb";
-
-bombCount++;
-
-}
-
-
-}
-
-
-
-
-
-cards.forEach(type=>{
-
-
-let card =
-document.createElement("div");
-
-
-card.className="card";
-
-
-card.innerHTML="🂠";
-
-
-
-card.onclick=function(){
-
-openCard(card,type);
-
-};
-
-
-
-box.appendChild(card);
-
-
-
-});
-
-
-
-updateInfo();
+    update();
 
 
 }
@@ -220,173 +211,165 @@ updateInfo();
 
 
 
-function openCard(card,type){
 
+function chooseCard(card,value){
 
 
-if(!playing)return;
 
+    if(!playing)
+    return;
 
 
-if(card.classList.contains("open"))
-return;
 
+    let parent =
+    card.parentElement;
 
 
 
-card.classList.add("open");
+    if(parent.classList.contains("open"))
+    return;
 
 
 
+    parent.classList.add("open");
 
 
-let chance =
-safeChance[stage];
 
 
 
-let random =
-Math.floor(Math.random()*100)+1;
+    if(value=="BOMB"){
 
 
+        profit=0;
 
 
-// شانس خوردن بمب واقعی
+        playing=false;
 
-if(random > chance){
 
 
+        document.getElementById("cashout").disabled=true;
 
-card.classList.add("bomb");
 
-card.innerHTML="💣";
 
+        document.getElementById("message").innerHTML=
 
+        `
+        💣 بمب خوردی
 
-profit=0;
+        <br>
 
+        بازی تمام شد
 
-document.getElementById("profit").innerHTML="0";
+        `;
 
 
 
-loseGame();
+        return;
 
 
+    }
 
-return;
 
 
-}
 
 
 
+    if(value=="POUCH"){
 
 
+        document.getElementById("message").innerHTML=
+        "کارت پوچ بود";
 
-if(type=="bomb"){
 
+        return;
 
-card.classList.add("bomb");
 
-card.innerHTML="💣";
+    }
 
 
-loseGame();
 
 
-return;
 
 
-}
 
+    let multi =
+    Number(
+    value.replace("×","")
+    );
 
 
 
+    selectedCards.push(multi);
 
 
 
-if(type=="empty"){
+    totalMultiplier *= multi;
 
 
-card.classList.add("empty");
 
-card.innerHTML="❌";
+    profit =
+    Math.floor(
+    bet * totalMultiplier
+    );
 
 
-return;
 
+    document.getElementById("multi").innerHTML=
+    "×"+totalMultiplier.toFixed(2);
 
-}
 
 
+    document.getElementById("profit").innerHTML=
+    profit.toLocaleString();
 
 
 
 
+    parent.classList.add("win");
 
-if(type=="win"){
 
 
 
-card.classList.add("win");
+    let text="";
 
 
 
-let multi =
-multipliers[stage];
+    selectedCards.forEach((x,i)=>{
 
 
+        text +=
 
-multiplier*=multi;
+        `
+        کارت ${i+1}: ×${x}
+        <br>
+        `;
 
 
-profit =
-Math.floor(bet * multiplier);
+    });
 
 
 
-card.innerHTML =
-"×"+multi;
+    document.getElementById("message").innerHTML=
 
+    `
 
+    برد موفق
 
-stage++;
+    <br><br>
 
+    ${text}
 
+    <br>
 
-updateInfo();
+    سود:
+    ${profit.toLocaleString()} 🪙
 
-
-
-if(stage>=8){
-
-
-winGame();
-
-
-return;
-
-
-}
-
-
-
-setTimeout(()=>{
-
-
-createCards();
-
-
-},700);
+    `;
 
 
 
 }
 
-
-
-}
 
 
 
@@ -399,154 +382,66 @@ function cashOut(){
 
 
 
-if(profit<=0)return;
+    if(!playing)
+    return;
 
 
 
-let user =
-JSON.parse(localStorage.getItem("user"));
+    data =
+    JSON.parse(localStorage.getItem("royalData")) || data;
 
 
 
-if(user){
 
+    data.coins += profit;
 
-user.coins += profit;
 
 
-localStorage.setItem(
-"user",
-JSON.stringify(user)
-);
+    data.wins++;
 
 
-updateStats("win");
 
+    if(profit > data.record)
 
-}
+    data.record=profit;
 
 
 
-alert(
-"برداشت شد: "+profit+" سکه"
-);
 
+    data.history.unshift(
 
+    "استاد کارت : "+profit+" 🪙"
 
-playing=false;
+    );
 
 
-}
 
+    playing=false;
 
 
 
+    document.getElementById("cashout").disabled=true;
 
 
 
 
-function loseGame(){
+    document.getElementById("message").innerHTML=
 
+    `
 
-let user =
-JSON.parse(localStorage.getItem("user"));
+    💰 برداشت موفق
 
+    <br>
 
+    ${profit.toLocaleString()} 🪙
 
-if(user){
+    `;
 
-updateStats("lose");
 
-}
 
+    save();
 
-
-playing=false;
-
-
-alert(
-"بمب خورد! سود از بین رفت"
-);
-
-
-}
-
-
-
-
-
-
-
-
-function winGame(){
-
-
-let user =
-JSON.parse(localStorage.getItem("user"));
-
-
-
-if(user){
-
-user.coins += profit;
-
-
-localStorage.setItem(
-"user",
-JSON.stringify(user)
-);
-
-
-updateStats("win");
-
-
-}
-
-
-
-playing=false;
-
-
-alert(
-"تبریک! برنده شدید"
-);
-
-
-}
-
-
-
-
-
-
-
-function updateInfo(){
-
-
-document.getElementById("level").innerHTML =
-stage+1;
-
-
-document.getElementById("multi").innerHTML =
-multiplier.toFixed(2)+"×";
-
-
-document.getElementById("profit").innerHTML =
-profit.toLocaleString();
-
-
-
-let user =
-JSON.parse(localStorage.getItem("user"));
-
-
-
-if(user){
-
-document.getElementById("balance").innerHTML =
-"🪙 "+user.coins.toLocaleString();
-
-}
+    update();
 
 
 }
