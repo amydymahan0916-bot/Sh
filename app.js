@@ -1,174 +1,10 @@
-// سیستم کاربری سایت ماهان
-
-
-function register(){
-
-
-let username = document.getElementById("username").value.trim();
-
-
-
-if(username === ""){
-
-
-document.getElementById("msg").innerHTML =
-"نام کاربری را وارد کنید";
-
-
-return;
-
-
-}
-
-
-
-let user = {
-
-name: username,
-
-coins: 0,
-
-games: 0,
-
-wins: 0,
-
-losses: 0
-
-};
-
-
-
-localStorage.setItem(
-"user",
-JSON.stringify(user)
-);
-
-
-
-document.getElementById("msg").innerHTML =
-"ثبت نام موفق بود";
-
-
-
-setTimeout(()=>{
-
-window.location.href="index.html";
-
-},1000);
-
-
-
-}
-
-
-
-
-
-
-
-function login(){
-
-
-let username =
-document.getElementById("loginUser").value.trim();
-
-
-
-let user =
-JSON.parse(localStorage.getItem("user"));
-
-
-
-if(user && user.name === username){
-
-
-
-document.getElementById("msg").innerHTML =
-"ورود موفق";
-
-
-
-setTimeout(()=>{
-
-window.location.href="index.html";
-
-},800);
-
-
-
-}else{
-
-
-document.getElementById("msg").innerHTML =
-"حسابی با این نام پیدا نشد";
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-function logout(){
-
-
-localStorage.removeItem("user");
-
-
-window.location.href="login.html";
-
-
-}
-
-
-
-
-
-
-
-
 function getUser(){
 
 
-let user =
-JSON.parse(localStorage.getItem("user"));
+return JSON.parse(
 
+localStorage.getItem("currentUser")
 
-
-return user;
-
-
-}
-
-
-
-
-
-
-
-function addCoins(amount){
-
-
-let user = getUser();
-
-
-
-if(user){
-
-
-user.coins += amount;
-
-
-localStorage.setItem(
-"user",
-JSON.stringify(user)
 );
 
 
@@ -176,97 +12,64 @@ JSON.stringify(user)
 
 
 
-}
+
+
+
+
+function saveUser(user){
+
+
+
+let users =
+
+JSON.parse(localStorage.getItem("users")) || [];
 
 
 
 
 
+let index =
 
+users.findIndex(
 
-function removeCoins(amount){
+u=>u.id===user.id
 
-
-let user = getUser();
-
-
-
-if(user && user.coins >= amount){
-
-
-
-user.coins -= amount;
-
-
-
-localStorage.setItem(
-"user",
-JSON.stringify(user)
 );
 
 
 
-return true;
 
 
-
-}
-
+if(index !== -1){
 
 
-alert("موجودی کافی نیست");
-
-
-return false;
-
+users[index]=user;
 
 
 }
 
 
-
-
-
-
-
-function updateStats(type){
-
-
-let user = getUser();
-
-
-
-if(!user) return;
-
-
-
-if(type=="win"){
-
-
-user.wins++;
-
-
-}
-
-
-
-if(type=="lose"){
-
-
-user.losses++;
-
-
-}
-
-
-
-user.games++;
 
 
 
 localStorage.setItem(
-"user",
+
+"users",
+
+JSON.stringify(users)
+
+);
+
+
+
+
+
+localStorage.setItem(
+
+"currentUser",
+
 JSON.stringify(user)
+
 );
 
 
@@ -280,10 +83,10 @@ JSON.stringify(user)
 
 
 
-function loadUser(){
+function updateCoins(){
 
 
-let user = getUser();
+let user=getUser();
 
 
 
@@ -292,55 +95,23 @@ if(!user) return;
 
 
 
+let coinBox =
 
-let coins =
-document.querySelectorAll(".coin");
-
-
-
-coins.forEach(item=>{
-
-
-item.innerHTML =
-"🪙 " + user.coins.toLocaleString();
-
-
-});
+document.getElementById("coins");
 
 
 
 
 
-let names =
-document.querySelectorAll(".gold");
+if(coinBox){
 
 
+coinBox.innerHTML =
 
-names.forEach(item=>{
-
-
-item.innerHTML =
-user.name;
-
-
-});
-
-
-
-let username =
-document.getElementById("profileName");
-
-
-
-if(username){
-
-
-username.innerHTML =
-user.name;
+user.coins.toLocaleString();
 
 
 }
-
 
 
 
@@ -350,4 +121,5 @@ user.name;
 
 
 
-window.onload = loadUser;
+
+updateCoins();
