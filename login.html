@@ -4,6 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>ورود</title>
@@ -16,30 +17,38 @@
 <body>
 
 
-<header>
+<div class="box">
+
 
 <h1>
 ورود
 </h1>
 
-</header>
 
 
-
-<div class="box">
-
-
-<h2>
-ورود به حساب
-</h2>
-
-
-
-<input id="loginUser" placeholder="نام کاربری">
+<input 
+id="username"
+placeholder="نام کاربری"
+>
 
 
 
 <br><br>
+
+
+
+
+<input 
+id="password"
+type="password"
+placeholder="رمز عبور"
+>
+
+
+
+<br><br>
+
+
 
 
 <button onclick="login()">
@@ -50,24 +59,14 @@
 
 
 
-<p id="msg"></p>
-
 
 </div>
 
 
 
-<nav>
-
-<a href="index.html">خانه</a>
-
-<a href="register.html">ثبت نام</a>
-
-</nav>
 
 
-
-<script src="app.js"></script>
+<script src="login.js"></script>
 
 
 </body>
