@@ -1,13 +1,17 @@
 let data =
-JSON.parse(localStorage.getItem("royalData")) || {
+JSON.parse(localStorage.getItem("currentUser"));
 
-coins:0,
-wins:0,
-games:0,
-record:0,
-history:[]
 
-};
+
+if(!data){
+
+alert("ابتدا وارد حساب شوید");
+
+location.href="login.html";
+
+}
+
+
 
 
 
@@ -15,12 +19,55 @@ history:[]
 
 function save(){
 
-localStorage.setItem(
-"royalData",
-JSON.stringify(data)
+
+
+let users =
+
+JSON.parse(localStorage.getItem("users")) || [];
+
+
+
+let index = users.findIndex(
+
+u=>u.id === data.id
+
 );
 
+
+
+if(index !== -1){
+
+users[index]=data;
+
 }
+
+
+
+
+
+localStorage.setItem(
+
+"users",
+
+JSON.stringify(users)
+
+);
+
+
+
+localStorage.setItem(
+
+"currentUser",
+
+JSON.stringify(data)
+
+);
+
+
+
+}
+
+
 
 
 
@@ -29,16 +76,22 @@ JSON.stringify(data)
 function update(){
 
 
+
 data =
-JSON.parse(localStorage.getItem("royalData")) || data;
+
+JSON.parse(localStorage.getItem("currentUser")) || data;
 
 
 
 document.getElementById("coins").innerHTML =
+
 data.coins.toLocaleString();
 
 
+
 }
+
+
 
 
 update();
@@ -55,9 +108,13 @@ function rollDice(){
 
 
 let bet =
+
 Number(
+
 document.getElementById("bet").value
+
 );
+
 
 
 
@@ -75,11 +132,6 @@ return;
 
 
 
-data =
-JSON.parse(localStorage.getItem("royalData")) || data;
-
-
-
 
 
 if(bet > data.coins){
@@ -94,6 +146,8 @@ return;
 
 
 
+
+
 data.coins -= bet;
 
 data.games++;
@@ -102,22 +156,33 @@ data.games++;
 
 
 
+
+
 document.getElementById("betView").innerHTML =
+
 bet.toLocaleString();
 
 
 
 
 
+
+
+
 let dice1 =
+
 Math.floor(Math.random()*6)+1;
+
 
 
 let dice2 =
+
 Math.floor(Math.random()*6)+1;
 
 
+
 let dice3 =
+
 Math.floor(Math.random()*6)+1;
 
 
@@ -140,6 +205,7 @@ document.getElementById("dice3");
 
 
 
+
 d1.classList.add("rolling");
 
 d2.classList.add("rolling");
@@ -149,11 +215,14 @@ d3.classList.add("rolling");
 
 
 
+
+
 d1.innerHTML="🎲";
 
 d2.innerHTML="🎲";
 
 d3.innerHTML="🎲";
+
 
 
 
@@ -173,6 +242,8 @@ d3.classList.remove("rolling");
 
 
 
+
+
 d1.innerHTML=getDice(dice1);
 
 d2.innerHTML=getDice(dice2);
@@ -183,14 +254,22 @@ d3.innerHTML=getDice(dice3);
 
 
 
+
+
 let total =
+
 dice1+dice2+dice3;
 
 
 
 
-document.getElementById("result").innerHTML =
+
+
+
+document.getElementById("result").innerHTML=
+
 total;
+
 
 
 
@@ -202,14 +281,35 @@ if(total >= 15){
 
 
 let reward =
+
 bet*2;
+
+
+
 
 
 
 data.coins += reward;
 
 
+
 data.wins++;
+
+
+
+
+
+
+
+if(reward > data.record){
+
+data.record = reward;
+
+}
+
+
+
+
 
 
 
@@ -222,8 +322,17 @@ data.history.unshift(
 
 
 
-document.getElementById("profit").innerHTML =
+
+
+
+
+document.getElementById("profit").innerHTML=
+
 reward.toLocaleString();
+
+
+
+
 
 
 
@@ -231,14 +340,18 @@ reward.toLocaleString();
 document.getElementById("message").innerHTML=
 
 `
+
 🎉 بردی
 
 <br>
 
 دریافت:
+
 ${reward.toLocaleString()} سکه
 
 `;
+
+
 
 
 
@@ -248,19 +361,25 @@ else{
 
 
 
-document.getElementById("profit").innerHTML =
+document.getElementById("profit").innerHTML=
+
 0;
+
+
+
 
 
 
 document.getElementById("message").innerHTML=
 
 `
+
 💥 باختی
 
 <br>
 
 جمع تاس:
+
 ${total}
 
 `;
@@ -273,9 +392,12 @@ ${total}
 
 
 
+
 save();
 
 update();
+
+
 
 
 
@@ -309,7 +431,8 @@ let dice={
 };
 
 
+
 return dice[number];
 
 
-}
+                        }
