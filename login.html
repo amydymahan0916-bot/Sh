@@ -1,74 +1,113 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>ورود</title>
-
-<link rel="stylesheet" href="style.css">
-
-</head>
+function register(){
 
 
-<body>
-
-
-<div class="box">
-
-
-<h1>
-ورود
-</h1>
+let username =
+document.getElementById("username").value.trim();
 
 
 
-<input 
-id="username"
-placeholder="نام کاربری"
->
-
-
-
-<br><br>
+let password =
+document.getElementById("password").value.trim();
 
 
 
 
-<input 
-id="password"
-type="password"
-placeholder="رمز عبور"
->
+if(!username || !password){
 
+alert("نام کاربری و رمز را وارد کنید");
+return;
 
-
-<br><br>
-
-
-
-
-<button onclick="login()">
-
-ورود
-
-</button>
+}
 
 
 
 
-</div>
+let users =
+JSON.parse(localStorage.getItem("users")) || [];
 
 
 
 
 
-<script src="login.js"></script>
+let check =
+users.find(
+u => u.username === username
+);
 
 
-</body>
 
-</html>
+
+
+if(check){
+
+alert("این نام کاربری قبلا ثبت شده");
+return;
+
+}
+
+
+
+
+
+let user = {
+
+
+id:Date.now(),
+
+
+username:username,
+
+
+password:password,
+
+
+coins:100000,
+
+
+wins:0,
+
+
+games:0,
+
+
+record:0,
+
+
+history:[]
+
+
+
+};
+
+
+
+
+
+
+users.push(user);
+
+
+
+
+
+localStorage.setItem(
+
+"users",
+
+JSON.stringify(users)
+
+);
+
+
+
+
+
+alert("ثبت نام موفق بود");
+
+
+
+location.href="login.html";
+
+
+
+}
