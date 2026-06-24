@@ -1,17 +1,22 @@
-let data =
+let currentUser = 
+JSON.parse(localStorage.getItem("currentUser"));
 
-JSON.parse(localStorage.getItem("royalData")) || {
 
-coins:0
 
-};
+if(!currentUser){
+
+alert("ابتدا وارد حساب شوید");
+
+location.href="login.html";
+
+}
 
 
 
 
 document.getElementById("coins").innerHTML =
 
-data.coins.toLocaleString();
+currentUser.coins.toLocaleString();
 
 
 
@@ -25,13 +30,16 @@ function sendWithdraw(){
 
 let card =
 
-document.getElementById("card").value;
+document.getElementById("card").value.trim();
+
 
 
 
 let money =
 
-Number(document.getElementById("money").value);
+Number(
+document.getElementById("money").value
+);
 
 
 
@@ -45,6 +53,20 @@ alert("همه اطلاعات را وارد کنید");
 
 return;
 
+}
+
+
+
+
+
+
+if(money <= 0){
+
+
+alert("مبلغ صحیح وارد کنید");
+
+return;
+
 
 }
 
@@ -52,7 +74,8 @@ return;
 
 
 
-if(money > data.coins){
+
+if(money > currentUser.coins){
 
 
 alert("موجودی کافی نیست");
@@ -77,23 +100,41 @@ JSON.parse(localStorage.getItem("withdrawRequests")) || [];
 
 
 
-requests.push({
+let request = {
 
 
-user:"ماهان",
+id: Date.now(),
 
 
-card:card,
+userId: currentUser.id,
 
 
-money:money,
+user: currentUser.username,
 
 
-status:"در انتظار تایید"
+card: card,
+
+
+money: money,
+
+
+status:"در انتظار تایید",
+
+
+date: new Date().toLocaleString("fa-IR")
 
 
 
-});
+};
+
+
+
+
+
+
+
+requests.push(request);
+
 
 
 
@@ -116,6 +157,9 @@ alert("درخواست برداشت ثبت شد");
 
 
 
+
+
+
 document.getElementById("card").value="";
 
 document.getElementById("money").value="";
@@ -134,6 +178,8 @@ showRequests();
 
 
 
+
+
 function showRequests(){
 
 
@@ -141,6 +187,7 @@ function showRequests(){
 let requests =
 
 JSON.parse(localStorage.getItem("withdrawRequests")) || [];
+
 
 
 
@@ -152,49 +199,100 @@ document.getElementById("requests");
 
 
 
+
 box.innerHTML="";
 
 
 
-if(requests.length===0){
+
+
+
+let myRequests = requests.filter(
+
+item => item.userId === currentUser.id
+
+);
+
+
+
+
+
+
+
+if(myRequests.length===0){
+
 
 box.innerHTML="درخواستی وجود ندارد";
 
 return;
 
+
 }
 
 
 
 
 
-requests.forEach(item=>{
+
+
+myRequests.forEach(item=>{
+
 
 
 box.innerHTML += `
 
 
+<div class="request-box">
+
+
 <p>
 
-💸 ${item.money.toLocaleString()} تومان
+💸 مبلغ:
 
-<br>
+${item.money.toLocaleString()}
+
+تومان
+
+</p>
+
+
+
+<p>
 
 وضعیت:
+
 ${item.status}
 
 </p>
 
-<hr>
+
+
+<p>
+
+تاریخ:
+
+${item.date}
+
+</p>
+
+
+
+</div>
 
 
 `;
 
 
+
 });
 
 
+
 }
+
+
+
+
 
 
 
