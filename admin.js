@@ -1,24 +1,20 @@
-const ADMIN_PASSWORD="4200821461";
-
-
+const ADMIN_PASSWORD = "4200821461";
 
 
 
 function loginAdmin(){
 
 
-let pass =
-document.getElementById("adminPass").value;
-
+let pass = document.getElementById("adminPass").value;
 
 
 if(pass !== ADMIN_PASSWORD){
 
 alert("رمز اشتباه است");
+
 return;
 
 }
-
 
 
 document.getElementById("loginBox").style.display="none";
@@ -30,7 +26,6 @@ showAll();
 
 
 }
-
 
 
 
@@ -51,8 +46,9 @@ showWithdraw();
 
 
 
-
-// درخواست شارژ
+// =================
+// شارژ حساب
+// =================
 
 
 function showCharge(){
@@ -60,7 +56,6 @@ function showCharge(){
 
 let requests =
 JSON.parse(localStorage.getItem("walletRequests")) || [];
-
 
 
 let box =
@@ -72,9 +67,9 @@ box.innerHTML="";
 
 
 
-if(requests.length==0){
+if(requests.length===0){
 
-box.innerHTML="درخواستی نیست";
+box.innerHTML="درخواستی وجود ندارد";
 
 return;
 
@@ -87,7 +82,7 @@ return;
 requests.forEach((item,index)=>{
 
 
-box.innerHTML+=`
+box.innerHTML += `
 
 
 <div class="request-box">
@@ -99,13 +94,18 @@ box.innerHTML+=`
 
 
 <p>
-🪙 ${item.coins.toLocaleString()} سکه
+🪙 مقدار:
+${item.coins.toLocaleString()}
+سکه
 </p>
+
 
 
 <p>
+وضعیت:
 ${item.status}
 </p>
+
 
 
 
@@ -131,12 +131,11 @@ ${item.status}
 `;
 
 
+
 });
 
 
 }
-
-
 
 
 
@@ -150,6 +149,22 @@ function acceptCharge(index){
 
 let requests =
 JSON.parse(localStorage.getItem("walletRequests")) || [];
+
+
+
+let req = requests[index];
+
+
+
+if(req.status !== "در انتظار تایید"){
+
+alert("قبلاً بررسی شده");
+
+return;
+
+}
+
+
 
 
 
@@ -167,13 +182,8 @@ history:[]
 
 
 
-let req=requests[index];
-
-
-
 
 data.coins += req.coins;
-
 
 
 
@@ -188,9 +198,13 @@ req.coins+
 
 
 
+
 localStorage.setItem(
+
 "royalData",
+
 JSON.stringify(data)
+
 );
 
 
@@ -216,6 +230,7 @@ showCharge();
 
 
 }
+
 
 
 
@@ -258,10 +273,13 @@ showCharge();
 
 
 
-// برداشت ها
+// =================
+// برداشت
+// =================
 
 
 function showWithdraw(){
+
 
 
 let requests =
@@ -278,9 +296,9 @@ box.innerHTML="";
 
 
 
-if(requests.length==0){
+if(requests.length===0){
 
-box.innerHTML="درخواستی نیست";
+box.innerHTML="درخواستی وجود ندارد";
 
 return;
 
@@ -293,49 +311,43 @@ return;
 requests.forEach((item,index)=>{
 
 
-
-box.innerHTML+=`
+box.innerHTML += `
 
 
 <div class="request-box">
 
 
 <h3>
-
 👤 ${item.user}
-
 </h3>
 
 
 
 <p>
-
-💳 ${item.card}
-
+💳 کارت:
+${item.card}
 </p>
 
 
 
 <p>
-
-💰 ${item.money.toLocaleString()} تومان
-
+💰 مبلغ:
+${item.money.toLocaleString()}
+تومان
 </p>
 
 
 
 <p>
-
+وضعیت:
 ${item.status}
-
 </p>
-
 
 
 
 <button onclick="acceptWithdraw(${index})">
 
-✅ پرداخت شد
+✅ تایید پرداخت
 
 </button>
 
@@ -352,12 +364,11 @@ ${item.status}
 </div>
 
 
-
 `;
 
 
-
 });
+
 
 
 }
@@ -379,6 +390,22 @@ JSON.parse(localStorage.getItem("withdrawRequests")) || [];
 
 
 
+let req=requests[index];
+
+
+
+if(req.status !== "در انتظار تایید"){
+
+alert("قبلاً بررسی شده");
+
+return;
+
+}
+
+
+
+
+
 let data =
 JSON.parse(localStorage.getItem("royalData")) || {
 
@@ -394,23 +421,21 @@ history:[]
 
 
 
-let req=requests[index];
+
+let coins = req.money;
 
 
-
-let coins=req.money;
 
 
 
 if(data.coins < coins){
 
-
 alert("موجودی کافی نیست");
 
 return;
 
-
 }
+
 
 
 
@@ -447,6 +472,8 @@ req.status="تایید شده";
 
 
 
+
+
 localStorage.setItem(
 
 "withdrawRequests",
@@ -457,7 +484,9 @@ JSON.stringify(requests)
 
 
 
+
 showWithdraw();
+
 
 
 }
@@ -493,6 +522,7 @@ JSON.stringify(requests)
 
 
 showWithdraw();
+
 
 
   }
