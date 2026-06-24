@@ -6,9 +6,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>استاد کارت - شرط‌بندی ماهان</title>
+<title>Card Master Elite</title>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="card.css">
 
 </head>
 
@@ -18,10 +18,16 @@
 
 <header>
 
-<h1>🃏 استاد کارت</h1>
+<h1>
+CARD MASTER
+<br>
+<span>ELITE</span>
+</h1>
 
-<div class="coin">
-🪙 <span id="coins">0</span>
+<div class="balance">
+موجودی
+<br>
+🪙 <b id="money">0</b>
 </div>
 
 </header>
@@ -29,61 +35,59 @@
 
 
 
-<div class="box">
+<div class="stats">
+
+<div>
+ورودی
+<strong id="bet">0</strong>
+</div>
+
+<div>
+سود
+<strong id="profit">0</strong>
+</div>
+
+<div>
+ضریب
+<strong id="multi">1×</strong>
+</div>
+
+</div>
 
 
-<h2>ورود بازی</h2>
-
-
-<input 
-id="bet"
-type="number"
-placeholder="حداقل 10000 سکه">
 
 
 
-<br><br>
+<div class="gameBox">
 
 
-<button onclick="startCard()">
-شروع بازی
+<input id="amount" placeholder="مبلغ بازی">
+
+
+<div class="levels">
+
+<button onclick="setMode('ELITE')">
+ELITE
+</button>
+
+<button onclick="setMode('NORMAL')">
+NORMAL
+</button>
+
+<button onclick="setMode('SAFE')">
+SAFE
+</button>
+
+</div>
+
+
+
+<button class="start" onclick="startGame()">
+شروع بازی 🎴
 </button>
 
 
 </div>
-
-
-
-
-
-
-<div class="box">
-
-
-<h2>
-مرحله:
-<span id="stage">0</span>/8
-</h2>
-
-
-<h2>
-ضریب:
-×<span id="multi">1</span>
-</h2>
-
-
-
-<h2>
-موجودی بازی:
-<span id="profit">0</span> 🪙
-</h2>
-
-
-
-</div>
-
-
-
 
 
 
@@ -98,22 +102,29 @@ placeholder="حداقل 10000 سکه">
 
 
 
-
-
-<div class="box">
-
-
-<button onclick="cashOut()">
-
-برداشت سود
-
+<button class="cash" onclick="cashout()">
+برداشت سود 💰
 </button>
 
 
-<p id="history">
-بازی شروع نشده
-</p>
 
+<button class="again" onclick="resetGame()">
+بازی دوباره 🔄
+</button>
+
+
+
+
+
+<div class="result">
+
+<h2 id="resultTitle">
+برد ✨
+</h2>
+
+<div id="resultText">
+
+</div>
 
 </div>
 
@@ -121,42 +132,7 @@ placeholder="حداقل 10000 سکه">
 
 
 
-
-
-
-<nav>
-
-<a href="index.html">
-خانه
-</a>
-
-
-<a href="games.html">
-بازی‌ها
-</a>
-
-
-<a href="wallet.html">
-کیف پول
-</a>
-
-
-<a href="profile.html">
-پروفایل
-</a>
-
-
-</nav>
-
-
-
-
-
-
-<script src="app.js"></script>
-
 <script src="card.js"></script>
-
 
 </body>
 
