@@ -1,6 +1,58 @@
+const ADMIN_PASSWORD = "123456";
+
+
+
 let requests =
 
 JSON.parse(localStorage.getItem("walletRequests")) || [];
+
+
+
+
+
+
+function loginAdmin(){
+
+
+
+let pass =
+
+document.getElementById("adminPass").value;
+
+
+
+
+
+if(pass !== ADMIN_PASSWORD){
+
+
+alert("رمز اشتباه است");
+
+return;
+
+
+}
+
+
+
+
+
+document.getElementById("loginBox").style.display="none";
+
+
+document.getElementById("panel").style.display="block";
+
+
+
+showRequests();
+
+
+
+}
+
+
+
+
 
 
 
@@ -10,17 +62,27 @@ function showRequests(){
 
 
 
+requests =
+
+JSON.parse(localStorage.getItem("walletRequests")) || [];
+
+
+
+
+
 let box =
+
 document.getElementById("requests");
 
 
 
 
 
-if(requests.length === 0){
+if(requests.length===0){
 
 
-box.innerHTML =
+box.innerHTML=
+
 "درخواستی وجود ندارد";
 
 
@@ -40,6 +102,7 @@ box.innerHTML="";
 
 
 
+
 requests.forEach((item,index)=>{
 
 
@@ -51,21 +114,24 @@ box.innerHTML +=
 <div class="request-box">
 
 
+
 <h3>
+
 👤 ${item.user}
+
 </h3>
+
 
 
 
 <p>
 
-🪙 مقدار:
+🪙 مقدار درخواست:
 
 ${item.coins.toLocaleString()}
 
-سکه
-
 </p>
+
 
 
 
@@ -101,11 +167,13 @@ ${item.status}
 
 </div>
 
+
 `;
 
 
 
 });
+
 
 
 
@@ -129,18 +197,38 @@ let request = requests[index];
 
 
 
+if(request.status !== "در انتظار تایید"){
+
+
+alert("این درخواست قبلاً بررسی شده");
+
+return;
+
+
+}
+
+
+
+
+
+
 let data =
 
 JSON.parse(localStorage.getItem("royalData")) || {
 
 
 coins:0,
+
 wins:0,
+
 games:0,
+
 record:0,
+
 history:[]
 
 };
+
 
 
 
@@ -154,11 +242,14 @@ data.coins += request.coins;
 
 data.history.unshift(
 
-"افزایش موجودی + "+
+"تایید پرداخت + "+
+
 request.coins+
+
 " 🪙"
 
 );
+
 
 
 
@@ -177,8 +268,8 @@ JSON.stringify(data)
 
 
 
-request.status =
-"تایید شده";
+request.status="تایید شده";
+
 
 
 
@@ -196,7 +287,7 @@ JSON.stringify(requests)
 
 
 
-alert("موجودی اضافه شد");
+alert("سکه اضافه شد");
 
 
 
@@ -218,8 +309,7 @@ function rejectRequest(index){
 
 
 
-requests[index].status =
-"رد شده";
+requests[index].status="رد شده";
 
 
 
@@ -245,12 +335,4 @@ showRequests();
 
 
 
-}
-
-
-
-
-
-
-
-showRequests();
+  }
