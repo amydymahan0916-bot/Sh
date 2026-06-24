@@ -4,6 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>پروفایل</title>
@@ -16,13 +17,27 @@
 <body>
 
 
+
 <header>
 
 <h1>
-پروفایل
+پروفایل کاربر
 </h1>
 
+
+<div class="coin">
+
+🪙 <span id="coins">
+0
+</span>
+
+</div>
+
+
 </header>
+
+
+
 
 
 
@@ -30,63 +45,42 @@
 <div class="box">
 
 
+
 <h2>
-حساب کاربری
+👤 حساب کاربری
 </h2>
 
 
+
 <p>
+
 نام کاربر:
-<span class="gold" id="profileName">
--
+
+<span class="gold">
+
+ماهان
+
 </span>
+
 </p>
 
-
-
-<p>
-موجودی:
-<span class="coin" id="profileCoins">
-🪙 0
-</span>
-</p>
 
 
 
 
 <p>
-تعداد بازی:
-<span id="gamesCount">
-0
+
+سطح:
+
+<span id="level">
+
+1
+
 </span>
+
 </p>
 
 
-
-<p>
-برد:
-<span id="winsCount">
-0
-</span>
-</p>
-
-
-
-<p>
-باخت:
-<span id="lossCount">
-0
-</span>
-</p>
-
-
-
-
-<button onclick="logout()">
-
-خروج از حساب
-
-</button>
 
 
 
@@ -96,26 +90,129 @@
 
 
 
+
+
+<div class="box">
+
+
+<h2>
+آمار بازی
+</h2>
+
+
+
+
+<p>
+
+🎮 تعداد بازی:
+
+<span id="games">
+
+0
+
+</span>
+
+</p>
+
+
+
+
+<p>
+
+🏆 تعداد برد:
+
+<span id="wins">
+
+0
+
+</span>
+
+</p>
+
+
+
+
+<p>
+
+🔥 بیشترین برد:
+
+<span id="record">
+
+0
+
+</span>
+
+🪙
+
+</p>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="box">
+
+
+<h2>
+تاریخچه آخرین بازی‌ها
+</h2>
+
+
+<div id="history">
+
+هنوز بازی انجام نشده
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
 <nav>
 
+
 <a href="index.html">
+
 خانه
+
 </a>
 
 
 <a href="games.html">
+
 بازی‌ها
+
 </a>
 
 
 <a href="wallet.html">
+
 کیف پول
+
 </a>
 
 
 <a href="profile.html">
+
 پروفایل
+
 </a>
+
 
 
 </nav>
@@ -125,43 +222,7 @@
 
 
 
-<script src="app.js"></script>
-
-
-<script>
-
-
-let user = getUser();
-
-
-
-if(user){
-
-
-document.getElementById("profileName").innerHTML=user.name;
-
-
-document.getElementById("profileCoins").innerHTML=
-"🪙 "+user.coins.toLocaleString();
-
-
-
-document.getElementById("gamesCount").innerHTML=user.games;
-
-
-document.getElementById("winsCount").innerHTML=user.wins;
-
-
-document.getElementById("lossCount").innerHTML=user.losses;
-
-
-
-}
-
-
-
-</script>
-
+<script src="profile.js"></script>
 
 
 </body>
