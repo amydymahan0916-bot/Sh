@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>برداشت</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>
+💸 برداشت
+</h1>
+
+
+<div class="coin">
+
+🪙
+<span id="coins">0</span>
+
+</div>
+
+
+</header>
+
+
+
+
+
+<div class="box">
+
+
+<h2>
+درخواست برداشت
+</h2>
+
+
+
+<p>
+شماره کارت خود را وارد کنید
+</p>
+
+
+<input 
+id="card"
+type="number"
+placeholder="شماره کارت"
+>
+
+
+
+<br><br>
+
+
+
+<p>
+مبلغی که می‌خواهید برداشت کنید (تومان)
+</p>
+
+
+<input 
+id="money"
+type="number"
+placeholder="مبلغ"
+>
+
+
+
+<br><br>
+
+
+
+<button onclick="sendWithdraw()">
+
+ثبت درخواست برداشت
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="box">
+
+
+<h2>
+درخواست‌های من
+</h2>
+
+
+<div id="requests">
+
+درخواستی وجود ندارد
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<script src="withdraw.js"></script>
+
+
+</body>
+
+</html>
