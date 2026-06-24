@@ -1,33 +1,31 @@
 *{
-    box-sizing:border-box;
-    font-family:tahoma, sans-serif;
+box-sizing:border-box;
+font-family:tahoma, sans-serif;
 }
 
 
 body{
 
-    margin:0;
-    background:#050505;
-    color:white;
-    direction:rtl;
-    text-align:center;
-    padding-bottom:80px;
+margin:0;
+background:#070707;
+color:white;
+direction:rtl;
+text-align:center;
+padding-bottom:80px;
 
 }
 
 
 
-/* header */
-
 header{
 
-    height:75px;
-    background:#101010;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:15px 20px;
-    border-bottom:1px solid #333;
+height:80px;
+padding:15px 25px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+background:#0d0d0d;
+border-bottom:1px solid #333;
 
 }
 
@@ -35,8 +33,9 @@ header{
 
 header h1{
 
-    color:#ffd700;
-    font-size:23px;
+font-size:25px;
+color:#ffd700;
+margin:0;
 
 }
 
@@ -45,110 +44,28 @@ header h1{
 
 .coin{
 
-    background:#181818;
-    border:1px solid #ffd700;
-    color:#ffd700;
-    padding:8px 15px;
-    border-radius:30px;
+background:#181818;
+border:1px solid #ffd700;
+color:#ffd700;
+padding:10px 18px;
+border-radius:30px;
+font-size:15px;
 
 }
 
 
-
-
-
-
-/* hero */
-
-
-.hero{
-
-    width:92%;
-    margin:25px auto;
-
-    background:#101010;
-
-    border:1px solid #333;
-
-    border-radius:25px;
-
-    padding:30px 15px;
-
-}
-
-
-
-.hero h2{
-
-    color:#ffd700;
-
-}
-
-
-
-
-.hero p{
-
-    color:#ccc;
-
-    line-height:2;
-
-}
-
-
-
-
-
-
-
-/* box */
-
-.box{
-
-    width:92%;
-    margin:20px auto;
-
-    background:#101010;
-
-    border:1px solid #292929;
-
-    border-radius:20px;
-
-    padding:20px;
-
-}
-
-
-
-.box h2{
-
-    color:#ffd700;
-
-}
-
-
-
-
-
-
-/* button */
 
 
 button{
 
-    background:#ffd700;
-
-    color:#000;
-
-    border:none;
-
-    padding:13px 30px;
-
-    border-radius:25px;
-
-    font-weight:bold;
-
-    cursor:pointer;
+background:#ffd700;
+color:#000;
+border:0;
+padding:12px 25px;
+border-radius:20px;
+cursor:pointer;
+font-size:15px;
+font-weight:bold;
 
 }
 
@@ -156,7 +73,7 @@ button{
 
 button:hover{
 
-    transform:scale(1.05);
+transform:scale(1.05);
 
 }
 
@@ -164,22 +81,9 @@ button:hover{
 
 
 
+a{
 
-input{
-
-    width:85%;
-
-    padding:14px;
-
-    background:#050505;
-
-    color:white;
-
-    border:1px solid #555;
-
-    border-radius:15px;
-
-    text-align:center;
+text-decoration:none;
 
 }
 
@@ -187,71 +91,88 @@ input{
 
 
 
+.hero{
+
+margin:25px auto;
+width:90%;
+padding:35px 15px;
+border-radius:25px;
+background:linear-gradient(145deg,#191919,#050505);
+border:1px solid #333;
+
+}
 
 
-/* بازی های خانه */
+
+
+.hero h2{
+
+color:#ffd700;
+font-size:28px;
+
+}
+
+
+
+
+.box{
+
+width:90%;
+margin:20px auto;
+background:#111;
+padding:20px;
+border-radius:20px;
+border:1px solid #292929;
+
+}
+
+
+
 
 
 .games{
 
-    width:92%;
-
-    margin:20px auto;
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    gap:15px;
+width:95%;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
 
 }
+
 
 
 
 
 .game{
 
-    height:140px;
-
-    background:#101010;
-
-    border:1px solid #ffd700;
-
-    border-radius:20px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
-
-    align-items:center;
-
-    text-decoration:none;
-
-    color:white;
-
-    transition:.3s;
+background:#111;
+border:1px solid #333;
+border-radius:20px;
+padding:15px;
+min-height:190px;
+transition:.3s;
 
 }
+
 
 
 
 .game:hover{
 
-    transform:translateY(-6px);
-
-    box-shadow:0 0 15px #ffd700;
+border-color:#ffd700;
+transform:translateY(-5px);
 
 }
 
 
 
+
+
 .game h2{
 
-    font-size:40px;
-
-    margin:5px;
+font-size:45px;
+margin:5px;
 
 }
 
@@ -259,9 +180,18 @@ input{
 
 .game h3{
 
-    color:#ffd700;
+margin:10px;
+color:#ffd700;
 
-    font-size:15px;
+}
+
+
+
+
+.game p{
+
+font-size:13px;
+color:#ccc;
 
 }
 
@@ -269,88 +199,47 @@ input{
 
 
 
+input{
 
-
-/* کارت های بازی */
-
-
-.cards{
-
-    width:92%;
-
-    margin:20px auto;
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    gap:15px;
-
-}
-
-
-
-.card{
-
-    height:120px;
-
-    background:linear-gradient(145deg,#222,#050505);
-
-    border:2px solid #ffd700;
-
-    border-radius:18px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:45px;
-
-    cursor:pointer;
-
-    transition:.3s;
-
-}
-
-
-
-.card:hover{
-
-    transform:translateY(-7px);
+width:85%;
+padding:14px;
+background:#080808;
+border:1px solid #555;
+border-radius:15px;
+color:white;
+text-align:center;
 
 }
 
 
 
 
+/* شکار گنج */
 
 
-/* رنگ طلایی */
+.mineBox{
 
-
-.gold{
-
-    color:#ffd700;
-
-}
-
-
-
-
-#multi,
-#profit,
-#stage{
-
-    color:#ffd700;
-
-    font-size:25px;
+display:grid;
+grid-template-columns:repeat(3,90px);
+gap:12px;
+justify-content:center;
 
 }
 
 
 
+.mineCell{
+
+height:90px;
+background:#151515;
+border:2px solid #ffd700;
+border-radius:15px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:30px;
+
+}
 
 
 
@@ -361,25 +250,16 @@ input{
 
 nav{
 
-    position:fixed;
-
-    bottom:0;
-
-    right:0;
-
-    width:100%;
-
-    height:65px;
-
-    background:#111;
-
-    border-top:1px solid #333;
-
-    display:flex;
-
-    justify-content:space-around;
-
-    align-items:center;
+position:fixed;
+bottom:0;
+right:0;
+width:100%;
+height:65px;
+background:#111;
+border-top:1px solid #333;
+display:flex;
+justify-content:space-around;
+align-items:center;
 
 }
 
@@ -387,11 +267,8 @@ nav{
 
 nav a{
 
-    color:white;
-
-    text-decoration:none;
-
-    font-size:14px;
+color:white;
+font-size:14px;
 
 }
 
@@ -399,7 +276,7 @@ nav a{
 
 nav a:hover{
 
-    color:#ffd700;
+color:#ffd700;
 
 }
 
@@ -407,20 +284,22 @@ nav a:hover{
 
 
 
+.gold{
+
+color:#ffd700;
+
+}
 
 
-/* موبایل */
 
 
-@media(max-width:600px){
-
+@media(max-width:700px){
 
 
 .games{
 
-    grid-template-columns:repeat(3,1fr);
-
-    gap:8px;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
 
 }
 
@@ -428,7 +307,8 @@ nav a:hover{
 
 .game{
 
-    height:110px;
+padding:8px;
+min-height:160px;
 
 }
 
@@ -436,7 +316,7 @@ nav a:hover{
 
 .game h2{
 
-    font-size:28px;
+font-size:35px;
 
 }
 
@@ -444,36 +324,18 @@ nav a:hover{
 
 .game h3{
 
-    font-size:11px;
+font-size:14px;
 
 }
 
 
 
-.cards{
+.game p{
 
-    gap:10px;
-
-}
-
-
-
-.card{
-
-    height:90px;
-
-    font-size:35px;
+font-size:11px;
 
 }
 
 
 
-.box,
-.hero{
-
-    width:95%;
-
-}
-
-
-}
+    }
