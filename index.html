@@ -25,7 +25,7 @@
 </h1>
 
 
-<div class="coin">
+<div class="coin" id="homeCoins">
 🪙 0
 </div>
 
@@ -82,7 +82,7 @@
 
 
 
-<div class="game">
+<a href="card.html" class="game">
 
 <h2>
 🃏
@@ -93,13 +93,13 @@
 </h3>
 
 
-</div>
+</a>
 
 
 
 
 
-<div class="game">
+<a href="dice.html" class="game">
 
 <h2>
 🎲
@@ -110,13 +110,13 @@
 </h3>
 
 
-</div>
+</a>
 
 
 
 
 
-<div class="game">
+<a href="crash.html" class="game">
 
 <h2>
 🚀
@@ -127,7 +127,7 @@
 </h3>
 
 
-</div>
+</a>
 
 
 
@@ -152,26 +152,45 @@
 
 <p>
 نام کاربر:
-<span class="gold">
-ماهان
+
+<span class="gold" id="homeName">
+مهمان
 </span>
+
 </p>
+
+
 
 
 <p>
+
 موجودی فعلی:
 
-<span class="coin">
+<span class="coin" id="userCoins">
 🪙 0
 </span>
 
+
 </p>
+
 
 
 <a href="wallet.html">
 
 <button>
 افزایش موجودی
+</button>
+
+</a>
+
+
+<br><br>
+
+
+<a href="profile.html">
+
+<button>
+مشاهده پروفایل
 </button>
 
 </a>
@@ -214,7 +233,43 @@
 
 
 
+
 <script src="app.js"></script>
+
+
+
+<script>
+
+
+let user =
+JSON.parse(localStorage.getItem("user"));
+
+
+
+if(user){
+
+
+document.getElementById("homeName").innerHTML =
+user.name;
+
+
+
+document.getElementById("homeCoins").innerHTML =
+"🪙 " + user.coins.toLocaleString();
+
+
+
+document.getElementById("userCoins").innerHTML =
+"🪙 " + user.coins.toLocaleString();
+
+
+
+}
+
+
+
+</script>
+
 
 
 </body>
