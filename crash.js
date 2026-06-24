@@ -1,13 +1,17 @@
 let data =
-JSON.parse(localStorage.getItem("royalData")) || {
+JSON.parse(localStorage.getItem("currentUser"));
 
-    coins:0,
-    wins:0,
-    games:0,
-    record:0,
-    history:[]
 
-};
+
+if(!data){
+
+alert("ابتدا وارد حساب شوید");
+
+location.href="login.html";
+
+}
+
+
 
 
 
@@ -25,14 +29,62 @@ let timer;
 
 
 
+
+
+
 function save(){
 
-    localStorage.setItem(
-        "royalData",
-        JSON.stringify(data)
-    );
+
+
+let users =
+
+JSON.parse(localStorage.getItem("users")) || [];
+
+
+
+let index = users.findIndex(
+
+u => u.id === data.id
+
+);
+
+
+
+if(index !== -1){
+
+users[index] = data;
 
 }
+
+
+
+
+
+localStorage.setItem(
+
+"users",
+
+JSON.stringify(users)
+
+);
+
+
+
+localStorage.setItem(
+
+"currentUser",
+
+JSON.stringify(data)
+
+);
+
+
+
+}
+
+
+
+
 
 
 
@@ -41,16 +93,21 @@ function save(){
 function update(){
 
 
-    data =
-    JSON.parse(localStorage.getItem("royalData")) || data;
+
+data =
+
+JSON.parse(localStorage.getItem("currentUser")) || data;
 
 
 
-    document.getElementById("coins").innerHTML =
-    data.coins.toLocaleString();
+document.getElementById("coins").innerHTML =
+
+data.coins.toLocaleString();
+
 
 
 }
+
 
 
 
@@ -63,152 +120,205 @@ update();
 
 
 
+
 function startFly(){
 
 
-    if(playing)
-    return;
+if(playing)
 
+return;
 
 
-    bet =
-    Number(
-    document.getElementById("bet").value
-    );
 
 
+bet =
 
-    if(bet < 10000){
+Number(
 
-        alert("حداقل ورود 10000 سکه است");
-        return;
+document.getElementById("bet").value
 
-    }
+);
 
 
 
 
-    data =
-    JSON.parse(localStorage.getItem("royalData")) || data;
 
+if(bet < 10000){
 
+alert("حداقل ورود 10000 سکه است");
 
+return;
 
-    if(bet > data.coins){
+}
 
-        alert("موجودی کافی نیست");
-        return;
 
-    }
 
 
 
 
 
-    data.coins -= bet;
+if(bet > data.coins){
 
-    data.games++;
+alert("موجودی کافی نیست");
 
+return;
 
+}
 
-    multiplier = 1;
 
-    playing = true;
 
 
 
 
+data.coins -= bet;
 
-    // ضریب سقوط تصادفی
 
-    crashPoint =
-    Number(
-    (Math.random()*6+1).toFixed(2)
-    );
+data.games++;
 
 
 
 
 
-    document.getElementById("betView").innerHTML =
-    bet.toLocaleString();
 
+multiplier = 1;
 
+playing = true;
 
-    document.getElementById("cashout").disabled=false;
 
 
 
-    document.getElementById("message").innerHTML =
-    "🚀 پرواز شروع شد";
 
 
+crashPoint =
 
+Number(
 
+(Math.random()*6+1).toFixed(2)
 
-    let chart =
-    document.querySelector(".chart");
+);
 
 
 
-    if(chart){
 
-        chart.classList.remove("crash");
 
-    }
 
+document.getElementById("betView").innerHTML =
 
+bet.toLocaleString();
 
 
 
 
-    timer = setInterval(()=>{
 
+document.getElementById("cashout").disabled=false;
 
 
-        multiplier += 0.01;
 
 
 
-        document.getElementById("multi").innerHTML =
-        multiplier.toFixed(2)+"×";
+document.getElementById("message").innerHTML =
 
+"🚀 پرواز شروع شد";
 
 
-        document.getElementById("multiplier").innerHTML =
-        multiplier.toFixed(2)+"×";
 
 
 
 
+let chart =
 
-        let profit =
-        Math.floor(
-        bet * multiplier
-        );
+document.querySelector(".chart");
 
 
 
-        document.getElementById("profit").innerHTML =
-        profit.toLocaleString();
+if(chart){
 
+chart.classList.remove("crash");
 
+}
 
 
 
-        if(multiplier >= crashPoint){
 
 
-            crash();
+save();
 
+update();
 
-        }
 
 
 
 
 
-    },80);
+timer = setInterval(()=>{
+
+
+
+
+
+multiplier += 0.01;
+
+
+
+
+
+document.getElementById("multi").innerHTML =
+
+multiplier.toFixed(2)+"×";
+
+
+
+
+
+document.getElementById("multiplier").innerHTML =
+
+multiplier.toFixed(2)+"×";
+
+
+
+
+
+
+
+let profit =
+
+Math.floor(
+
+bet * multiplier
+
+);
+
+
+
+
+
+
+
+document.getElementById("profit").innerHTML =
+
+profit.toLocaleString();
+
+
+
+
+
+
+
+if(multiplier >= crashPoint){
+
+
+crash();
+
+
+}
+
+
+
+
+
+
+
+},80);
 
 
 
@@ -227,85 +337,107 @@ function cashOut(){
 
 
 
-    if(!playing)
-    return;
+if(!playing)
 
-
-
-    clearInterval(timer);
-
-
-
-    let reward =
-    Math.floor(
-    bet * multiplier
-    );
+return;
 
 
 
 
 
-    data.coins += reward;
-
-
-
-    data.wins++;
-
-
-
-    if(reward > data.record){
-
-        data.record = reward;
-
-    }
+clearInterval(timer);
 
 
 
 
 
-    data.history.unshift(
+let reward =
 
-        "پرواز ضریب + "+
-        reward+
-        " 🪙"
+Math.floor(
 
-    );
+bet * multiplier
 
-
-
-
-
-    playing=false;
-
-
-
-    document.getElementById("cashout").disabled=true;
+);
 
 
 
 
-    document.getElementById("message").innerHTML =
 
-    `
-    💰 برداشت موفق
 
-    <br><br>
-
-    ضریب:
-    ${multiplier.toFixed(2)}×
-
-    <br>
-
-    دریافت:
-    ${reward.toLocaleString()} 🪙
-
-    `;
+data.coins += reward;
 
 
 
-    save();
+data.wins++;
 
-    update();
+
+
+
+
+if(reward > data.record){
+
+data.record = reward;
+
+}
+
+
+
+
+
+
+data.history.unshift(
+
+"پرواز ضریب + "+reward+" 🪙"
+
+);
+
+
+
+
+
+
+playing=false;
+
+
+
+
+
+document.getElementById("cashout").disabled=true;
+
+
+
+
+
+
+document.getElementById("message").innerHTML =
+
+
+`
+
+💰 برداشت موفق
+
+<br><br>
+
+ضریب:
+
+${multiplier.toFixed(2)}×
+
+<br>
+
+دریافت:
+
+${reward.toLocaleString()} 🪙
+
+`;
+
+
+
+
+
+save();
+
+update();
+
 
 
 }
@@ -322,57 +454,67 @@ function crash(){
 
 
 
-    clearInterval(timer);
+clearInterval(timer);
 
 
 
-    playing=false;
-
-
-
-    document.getElementById("cashout").disabled=true;
+playing=false;
 
 
 
 
-    let chart =
-    document.querySelector(".chart");
-
-
-
-    if(chart){
-
-        chart.classList.add("crash");
-
-    }
+document.getElementById("cashout").disabled=true;
 
 
 
 
 
-    document.getElementById("message").innerHTML =
 
+let chart =
 
-    `
-    💥 سقوط کرد
-
-    <br><br>
-
-    ضریب:
-    ${multiplier.toFixed(2)}×
-
-    <br>
-
-    شرط از بین رفت
-
-    `;
+document.querySelector(".chart");
 
 
 
-    save();
+if(chart){
 
-    update();
-
-
+chart.classList.add("crash");
 
 }
+
+
+
+
+
+
+document.getElementById("message").innerHTML =
+
+
+`
+
+💥 سقوط کرد
+
+<br><br>
+
+ضریب:
+
+${multiplier.toFixed(2)}×
+
+<br>
+
+شرط از بین رفت
+
+`;
+
+
+
+
+
+
+save();
+
+update();
+
+
+
+                    }
