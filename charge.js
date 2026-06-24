@@ -1,47 +1,24 @@
-let data =
-JSON.parse(localStorage.getItem("royalData")) || {
-
-coins:0,
-wins:0,
-games:0,
-record:0,
-history:[]
-
-};
+let currentUser = 
+JSON.parse(localStorage.getItem("currentUser"));
 
 
 
+if(!currentUser){
+
+alert("ابتدا وارد حساب شوید");
+
+location.href="login.html";
+
+}
 
 
-let requests =
-
-JSON.parse(localStorage.getItem("walletRequests")) || [];
-
-
-
-
-
-
-
-function update(){
-
-
-data =
-JSON.parse(localStorage.getItem("royalData")) || data;
 
 
 
 document.getElementById("coins").innerHTML =
 
-data.coins.toLocaleString();
+currentUser.coins.toLocaleString();
 
-
-
-showRequests();
-
-
-
-}
 
 
 
@@ -54,6 +31,7 @@ function copyCard(){
 
 
 let card =
+
 document.getElementById("cardNumber").innerText;
 
 
@@ -65,9 +43,7 @@ navigator.clipboard.writeText(card);
 alert("شماره کارت کپی شد");
 
 
-
 }
-
 
 
 
@@ -107,6 +83,15 @@ return;
 
 
 
+let requests =
+
+JSON.parse(localStorage.getItem("walletRequests")) || [];
+
+
+
+
+
+
 
 let request = {
 
@@ -114,13 +99,20 @@ let request = {
 id:Date.now(),
 
 
-user:"ماهان",
+userId:currentUser.id,
+
+
+user:currentUser.username,
 
 
 coins:amount,
 
 
-status:"در انتظار تایید"
+status:"در انتظار تایید",
+
+
+date:new Date().toLocaleString("fa-IR")
+
 
 
 };
@@ -151,11 +143,12 @@ JSON.stringify(requests)
 
 
 
-document.getElementById("amount").value="";
-
-
 
 alert("درخواست شارژ ثبت شد");
+
+
+
+document.getElementById("amount").value="";
 
 
 
@@ -177,24 +170,16 @@ function showRequests(){
 
 
 
+let requests =
+
+JSON.parse(localStorage.getItem("walletRequests")) || [];
+
+
+
+
 let box =
 
 document.getElementById("requests");
-
-
-
-
-
-if(requests.length===0){
-
-
-box.innerHTML="درخواستی وجود ندارد";
-
-
-return;
-
-
-}
 
 
 
@@ -208,8 +193,35 @@ box.innerHTML="";
 
 
 
-requests.forEach(item=>{
 
+let myRequests = requests.filter(
+
+item => item.userId === currentUser.id
+
+);
+
+
+
+
+
+
+if(myRequests.length===0){
+
+
+box.innerHTML="درخواستی وجود ندارد";
+
+return;
+
+
+}
+
+
+
+
+
+
+
+myRequests.forEach(item=>{
 
 
 box.innerHTML += `
@@ -220,7 +232,11 @@ box.innerHTML += `
 
 <p>
 
-🪙 ${item.coins.toLocaleString()} سکه
+🪙 مقدار:
+
+${item.coins.toLocaleString()}
+
+سکه
 
 </p>
 
@@ -234,6 +250,15 @@ ${item.status}
 
 </p>
 
+
+
+<p>
+
+تاریخ:
+
+${item.date}
+
+</p>
 
 
 </div>
@@ -254,4 +279,5 @@ ${item.status}
 
 
 
-update();
+
+showRequests();
