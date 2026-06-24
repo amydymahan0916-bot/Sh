@@ -1,9 +1,12 @@
-let currentUser = 
-JSON.parse(localStorage.getItem("currentUser"));
+let data =
+
+JSON.parse(
+localStorage.getItem("currentUser")
+);
 
 
 
-if(!currentUser){
+if(!data){
 
 alert("ابتدا وارد حساب شوید");
 
@@ -14,17 +17,69 @@ location.href="login.html";
 
 
 
-document.getElementById("coins").innerHTML =
-
-currentUser.coins.toLocaleString();
 
 
 
+function saveUser(){
+
+
+localStorage.setItem(
+
+"currentUser",
+
+JSON.stringify(data)
+
+);
+
+
+
+let users =
+
+JSON.parse(
+
+localStorage.getItem("users")
+
+) || [];
+
+
+
+let index = users.findIndex(
+
+u=>u.id===data.id
+
+);
+
+
+
+if(index !== -1){
+
+users[index]=data;
+
+}
+
+
+
+localStorage.setItem(
+
+"users",
+
+JSON.stringify(users)
+
+);
+
+
+
+}
 
 
 
 
-function sendWithdraw(){
+
+
+
+
+
+function submitWithdraw(){
 
 
 
@@ -35,10 +90,12 @@ document.getElementById("card").value.trim();
 
 
 
-let money =
+let amount =
 
 Number(
-document.getElementById("money").value
+
+document.getElementById("amount").value
+
 );
 
 
@@ -46,24 +103,12 @@ document.getElementById("money").value
 
 
 
-if(!card || !money){
 
 
-alert("همه اطلاعات را وارد کنید");
-
-return;
-
-}
+if(card.length < 16){
 
 
-
-
-
-
-if(money <= 0){
-
-
-alert("مبلغ صحیح وارد کنید");
+alert("شماره کارت صحیح وارد کنید");
 
 return;
 
@@ -75,7 +120,24 @@ return;
 
 
 
-if(money > currentUser.coins){
+
+if(amount < 10000){
+
+
+alert("حداقل برداشت 10000 سکه است");
+
+return;
+
+
+}
+
+
+
+
+
+
+
+if(amount > data.coins){
 
 
 alert("موجودی کافی نیست");
@@ -90,63 +152,50 @@ return;
 
 
 
-let requests =
 
-JSON.parse(localStorage.getItem("withdrawRequests")) || [];
-
+if(!data.requests){
 
 
+data.requests=[];
+
+
+}
 
 
 
 
-let request = {
 
 
-id: Date.now(),
 
 
-userId: currentUser.id,
+data.requests.push({
 
 
-user: currentUser.username,
+type:"برداشت",
 
 
-card: card,
+card:card,
 
 
-money: money,
+amount:amount,
 
 
 status:"در انتظار تایید",
 
 
-date: new Date().toLocaleString("fa-IR")
+date:new Date().toLocaleString("fa")
 
 
 
-};
-
-
-
-
-
-
-
-requests.push(request);
+});
 
 
 
 
 
 
-localStorage.setItem(
 
-"withdrawRequests",
-
-JSON.stringify(requests)
-
-);
+saveUser();
 
 
 
@@ -157,143 +206,8 @@ alert("درخواست برداشت ثبت شد");
 
 
 
-
-
-
-document.getElementById("card").value="";
-
-document.getElementById("money").value="";
-
-
-
-showRequests();
+location.href="wallet.html";
 
 
 
 }
-
-
-
-
-
-
-
-
-
-function showRequests(){
-
-
-
-let requests =
-
-JSON.parse(localStorage.getItem("withdrawRequests")) || [];
-
-
-
-
-let box =
-
-document.getElementById("requests");
-
-
-
-
-
-
-box.innerHTML="";
-
-
-
-
-
-
-let myRequests = requests.filter(
-
-item => item.userId === currentUser.id
-
-);
-
-
-
-
-
-
-
-if(myRequests.length===0){
-
-
-box.innerHTML="درخواستی وجود ندارد";
-
-return;
-
-
-}
-
-
-
-
-
-
-
-myRequests.forEach(item=>{
-
-
-
-box.innerHTML += `
-
-
-<div class="request-box">
-
-
-<p>
-
-💸 مبلغ:
-
-${item.money.toLocaleString()}
-
-تومان
-
-</p>
-
-
-
-<p>
-
-وضعیت:
-
-${item.status}
-
-</p>
-
-
-
-<p>
-
-تاریخ:
-
-${item.date}
-
-</p>
-
-
-
-</div>
-
-
-`;
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-showRequests();
