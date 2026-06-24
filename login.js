@@ -2,34 +2,32 @@ function login(){
 
 
 let username =
-
-document.getElementById("username").value;
+document.getElementById("username").value.trim();
 
 
 
 let password =
-
-document.getElementById("password").value;
+document.getElementById("password").value.trim();
 
 
 
 
 
 let users =
-
 JSON.parse(localStorage.getItem("users")) || [];
 
 
 
 
 
-let user = users.find(
+let user =
+users.find(
 
-u=>
+u =>
 
-u.username===username &&
+u.username === username &&
 
-u.password===password
+u.password === password
 
 );
 
@@ -37,14 +35,11 @@ u.password===password
 
 
 
-
 if(!user){
 
-
-alert("اطلاعات اشتباه است");
+alert("نام کاربری یا رمز اشتباه است");
 
 return;
-
 
 }
 
@@ -64,7 +59,13 @@ JSON.stringify(user)
 
 
 
-alert("خوش آمدید "+username);
+alert(
+
+"خوش آمدید "+user.username
+
+);
+
+
 
 
 
