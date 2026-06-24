@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>پرداخت</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>
+پرداخت
+</h1>
+
+</header>
+
+
+
+
+
+<div class="box">
+
+
+<h2>
+شماره کارت
+</h2>
+
+
+
+<h2 id="cardNumber">
+
+6037997194784360
+
+</h2>
+
+
+
+<p>
+ماهان امیدی
+</p>
+
+
+
+
+<button onclick="copyCard()">
+
+کپی شماره کارت
+
+</button>
+
+
+
+<hr>
+
+
+
+
+<p>
+
+تعداد سکه:
+
+<span id="payCoins">
+0
+</span>
+
+</p>
+
+
+
+
+<p>
+
+مبلغ:
+
+<span id="payAmount">
+0
+</span>
+
+تومان
+
+</p>
+
+
+
+
+<button onclick="sendPay()">
+
+پرداخت کردم
+
+</button>
+
+
+
+<h3 id="message"></h3>
+
+
+
+</div>
+
+
+
+
+
+
+<nav>
+
+
+<a href="index.html">
+خانه
+</a>
+
+
+<a href="games.html">
+بازی‌ها
+</a>
+
+
+<a href="wallet.html">
+کیف پول
+</a>
+
+
+<a href="profile.html">
+پروفایل
+</a>
+
+
+</nav>
+
+
+
+
+
+<script>
+
+
+let coins =
+localStorage.getItem("buyCoins");
+
+let price =
+localStorage.getItem("payPrice");
+
+
+
+document.getElementById("payCoins").innerHTML =
+Number(coins).toLocaleString();
+
+
+
+document.getElementById("payAmount").innerHTML =
+Number(price).toLocaleString();
+
+
+
+
+
+
+
+function copyCard(){
+
+
+navigator.clipboard.writeText(
+"6037997194784360"
+);
+
+
+alert("شماره کارت کپی شد");
+
+
+}
+
+
+
+
+
+
+
+function sendPay(){
+
+
+document.getElementById("message").innerHTML =
+"پرداخت شما برای پشتیبانی ارسال گردید در اسرع وقت حساب شما شارژ میشود در صورت صحت پرداخت";
+
+
+
+}
+
+</script>
+
+
+
+</body>
+
+</html>
