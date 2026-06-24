@@ -4,10 +4,9 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>شکار گنج</title>
+<title>شکار گنج - شرط‌بندی ماهان</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -25,7 +24,7 @@
 
 
 <div class="coin">
-🪙 39,780
+🪙 0
 </div>
 
 
@@ -69,21 +68,31 @@ placeholder="تعداد سکه">
 
 
 
+
 <div class="box">
 
 
 <h2>
+
 ضریب:
-×<span id="multi">1</span>
+×<span id="multi">
+
+1
+
+</span>
 
 </h2>
+
 
 
 <h3>
 
 جایزه:
+
 <span id="profit">
+
 0
+
 </span>
 
 🪙
@@ -92,11 +101,13 @@ placeholder="تعداد سکه">
 
 
 
+
 <button onclick="takeMineProfit()">
 
 برداشت جایزه
 
 </button>
+
 
 
 </div>
@@ -108,6 +119,7 @@ placeholder="تعداد سکه">
 
 
 <div class="mineBox">
+
 
 
 <div class="mineCell" onclick="openCell(this,0)">
@@ -165,13 +177,16 @@ placeholder="تعداد سکه">
 
 <div class="box">
 
+
 <p id="history">
 
 بازی شروع نشده
 
 </p>
 
+
 </div>
+
 
 
 
@@ -193,6 +208,39 @@ placeholder="تعداد سکه">
 
 
 
+
+<nav>
+
+
+<a href="index.html">
+خانه
+</a>
+
+
+<a href="games.html">
+بازی‌ها
+</a>
+
+
+<a href="wallet.html">
+کیف پول
+</a>
+
+
+<a href="profile.html">
+پروفایل
+</a>
+
+
+</nav>
+
+
+
+
+
+
+
+<script src="app.js"></script>
 <script src="mine.js"></script>
 
 
