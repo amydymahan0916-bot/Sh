@@ -1,157 +1,57 @@
-.gameBox{
-
-width:90%;
-margin:25px auto;
-background:
-linear-gradient(145deg,#151515,#050505);
-
-border:1px solid #333;
-border-radius:35px;
-padding:25px;
-
-box-shadow:
-0 0 30px #000;
-
+*{
+box-sizing:border-box;
+font-family:tahoma,sans-serif;
 }
 
 
 
-.cards{
+body{
 
-width:90%;
-margin:30px auto;
+margin:0;
 
-display:grid;
-grid-template-columns:repeat(3,1fr);
-
-gap:18px;
-
-perspective:1000px;
-
-}
-
-
-
-
-
-.card{
-
-height:190px;
-
-position:relative;
-
-cursor:pointer;
-
+min-height:100vh;
 
 background:
+radial-gradient(circle at top,#4b3518,#050505 70%);
 
-linear-gradient(
-135deg,
-#ffd700,
-#8c6500
-);
+color:white;
 
-
-border-radius:30px;
-
-border:3px solid #ffd700;
-
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-
-font-size:45px;
-
-color:#000;
-
-
-transform-style:preserve-3d;
-
-transition:.6s;
-
-
-box-shadow:
-
-0 0 20px rgba(255,215,0,.25);
-
+overflow-x:hidden;
 
 }
 
 
 
+.particles{
 
-.card:hover{
-
-transform:
-translateY(-8px)
-scale(1.03);
-
-
-}
-
-
-
-
-
-.card.open{
-
-
-transform:
-
-rotateY(180deg);
-
-
-}
-
-
-
-
-.card.open::after{
-
-
-content:"";
-
-
-position:absolute;
+position:fixed;
 
 inset:0;
 
+background-image:
+radial-gradient(#ffd70055 1px,transparent 2px);
 
-border-radius:30px;
+background-size:45px 45px;
 
+opacity:.25;
 
-background:#111;
+animation:move 15s linear infinite;
 
-
-backface-visibility:hidden;
-
+z-index:-1;
 
 }
 
 
 
+@keyframes move{
 
-.card.win{
+from{
+transform:translateY(0);
+}
 
-
-background:
-
-linear-gradient(
-135deg,
-#00ff88,
-#006b35
-);
-
-
-color:white;
-
-
-box-shadow:
-
-0 0 30px #00ff88;
-
+to{
+transform:translateY(-200px);
+}
 
 }
 
@@ -159,98 +59,187 @@ box-shadow:
 
 
 
-.card.bomb{
+.game-container{
 
+max-width:560px;
 
-background:
+margin:auto;
 
-linear-gradient(
-135deg,
-#ff0000,
-#650000
-);
-
-
-color:white;
-
-
-box-shadow:
-
-0 0 30px red;
-
+padding:20px;
 
 }
 
 
 
 
+.game-header{
 
-.card.empty{
+display:flex;
 
+justify-content:space-between;
 
-background:
-
-linear-gradient(
-135deg,
-#333,
-#111
-);
-
-
-color:#aaa;
-
+align-items:center;
 
 }
 
 
 
 
+.logo h1{
 
-.card::before{
+margin:0;
 
-
-content:"🂠";
-
-
-font-size:55px;
-
-
-}
-
-
-
-
-
-.card.win::before,
-.card.bomb::before,
-.card.empty::before{
-
-
-display:none;
-
-
-}
-
-
-
-
-
-
-
-#profit,
-#multi,
-#level{
-
+font-size:32px;
 
 color:#ffd700;
 
-font-weight:bold;
-
-font-size:28px;
-
+text-shadow:0 0 20px #ffd700;
 
 }
 
+
+
+.logo span{
+
+color:#aaa;
+
+letter-spacing:5px;
+
+font-size:12px;
+
+}
+
+
+
+
+
+.balance-box{
+
+background:#111;
+
+padding:15px 25px;
+
+border-radius:25px;
+
+border:1px solid #ffd700;
+
+text-align:center;
+
+}
+
+
+
+.balance-box b{
+
+display:block;
+
+color:#ffd700;
+
+font-size:22px;
+
+margin-top:8px;
+
+}
+
+
+
+
+
+
+
+.game-info{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:10px;
+
+margin-top:25px;
+
+}
+
+
+
+.info-box{
+
+background:#111;
+
+border:1px solid #333;
+
+border-radius:20px;
+
+padding:15px;
+
+}
+
+
+
+.info-box span{
+
+color:#aaa;
+
+}
+
+
+
+.info-box strong{
+
+display:block;
+
+color:#ffd700;
+
+font-size:22px;
+
+margin-top:8px;
+
+}
+
+
+
+
+
+
+
+.control-panel{
+
+margin-top:25px;
+
+background:#111;
+
+padding:20px;
+
+border-radius:30px;
+
+border:1px solid #333;
+
+text-align:center;
+
+}
+
+
+
+
+
+input{
+
+width:90%;
+
+padding:15px;
+
+border-radius:20px;
+
+background:#050505;
+
+border:1px solid #555;
+
+color:white;
+
+text-align:center;
+
+font-size:18px;
+
+}
 
 
 
@@ -258,6 +247,15 @@ font-size:28px;
 
 button{
 
+border:0;
+
+padding:15px;
+
+border-radius:20px;
+
+font-weight:bold;
+
+cursor:pointer;
 
 transition:.3s;
 
@@ -267,25 +265,283 @@ transition:.3s;
 
 button:hover{
 
-
-box-shadow:
-
-0 0 20px #ffd700;
-
+transform:translateY(-4px);
 
 }
 
 
 
 
-@media(max-width:700px){
 
+.risk-panel{
 
-.cards{
-
+display:flex;
 
 gap:10px;
 
+margin:20px 0;
+
+}
+
+
+
+.risk-panel button{
+
+width:33%;
+
+background:#222;
+
+color:#ffd700;
+
+}
+
+
+
+
+
+.start-btn{
+
+width:90%;
+
+background:
+linear-gradient(135deg,#ffd700,#996900);
+
+}
+
+
+
+
+
+
+
+.cards-table{
+
+margin-top:40px;
+
+display:grid;
+
+grid-template-columns:repeat(3,105px);
+
+justify-content:center;
+
+gap:25px;
+
+}
+
+
+
+
+
+.card{
+
+width:105px;
+
+height:160px;
+
+perspective:1000px;
+
+}
+
+
+
+.inner{
+
+width:100%;
+
+height:100%;
+
+position:relative;
+
+transform-style:preserve-3d;
+
+transition:1s;
+
+}
+
+
+
+.card.open .inner{
+
+transform:rotateY(180deg);
+
+}
+
+
+
+
+
+.front,
+.back{
+
+position:absolute;
+
+inset:0;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+border-radius:25px;
+
+backface-visibility:hidden;
+
+}
+
+
+
+.front{
+
+background:#111;
+
+border:2px solid #ffd700;
+
+color:#ffd700;
+
+font-size:35px;
+
+}
+
+
+
+.back{
+
+transform:rotateY(180deg);
+
+background:
+linear-gradient(145deg,#ffd700,#996900);
+
+color:#000;
+
+font-size:25px;
+
+font-weight:bold;
+
+}
+
+
+
+
+
+
+.win{
+
+animation:pulse 1s infinite;
+
+}
+
+
+
+@keyframes pulse{
+
+50%{
+
+box-shadow:0 0 40px #ffd700;
+
+}
+
+}
+
+
+
+
+
+
+.bomb{
+
+animation:shake .5s;
+
+}
+
+
+
+@keyframes shake{
+
+25%{
+
+transform:translateX(-15px);
+
+}
+
+50%{
+
+transform:translateX(15px);
+
+}
+
+}
+
+
+
+
+
+
+
+.action-panel{
+
+margin-top:30px;
+
+text-align:center;
+
+}
+
+
+
+.action-panel button{
+
+width:90%;
+
+margin:8px;
+
+background:#ffd700;
+
+}
+
+
+
+#cashout{
+
+background:#00d66b;
+
+color:white;
+
+}
+
+
+
+
+
+
+.message-box{
+
+margin-top:25px;
+
+background:#111;
+
+border:1px solid #333;
+
+border-radius:25px;
+
+padding:25px;
+
+font-size:20px;
+
+text-align:center;
+
+}
+
+
+
+
+@media(max-width:600px){
+
+
+.cards-table{
+
+grid-template-columns:repeat(3,90px);
+
+gap:15px;
 
 }
 
@@ -293,26 +549,11 @@ gap:10px;
 
 .card{
 
+width:90px;
 
-height:130px;
-
-border-radius:20px;
-
-font-size:30px;
-
+height:140px;
 
 }
 
 
-
-.card::before{
-
-
-font-size:40px;
-
-
-}
-
-
-
-}
+  }
