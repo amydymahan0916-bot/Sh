@@ -1,32 +1,29 @@
-// استاد کارت - شرط بندی ماهان
+let bet = 0;
+let multi = 1;
+let profit = 0;
+let started = false;
 
-
-let cardBet = 0;
-let cardMulti = 1;
-let cardProfit = 0;
-let cardStarted = false;
+let opened = [];
 
 
 
 function startCard(){
 
 
-cardBet = Number(
-document.getElementById("bet").value
-);
+bet = Number(document.getElementById("bet").value);
 
 
 
-if(cardBet <= 0){
+if(bet <= 0){
 
-alert("مبلغ بازی را وارد کنید");
+alert("مبلغ را وارد کنید");
 return;
 
 }
 
 
 
-if(!removeCoins(cardBet)){
+if(!removeCoins(bet)){
 
 return;
 
@@ -34,9 +31,10 @@ return;
 
 
 
-cardMulti = 1;
-cardProfit = 0;
-cardStarted = true;
+multi = 1;
+profit = 0;
+opened = [];
+started = true;
 
 
 
@@ -44,65 +42,87 @@ document.getElementById("multi").innerHTML = "1";
 document.getElementById("profit").innerHTML = "0";
 
 document.getElementById("history").innerHTML =
-"کارت خود را انتخاب کنید";
+"یکی از کارت‌ها را انتخاب کن";
 
 
 
-let box =
-document.getElementById("card");
+let cards = document.querySelectorAll(".card");
 
+cards.forEach(card=>{
 
-box.innerHTML = "❓";
+card.innerHTML="?";
+card.classList.remove("open");
+
+});
+
 
 }
 
 
 
 
-function openCard(){
+
+function openCard(id){
 
 
-if(!cardStarted){
+if(!started){
 
-alert("اول بازی را شروع کنید");
+alert("اول بازی را شروع کن");
 return;
 
 }
 
 
 
-let cards = [
-
-"⭐",
-"💎",
-"🔥",
-"💰",
-"❌",
-"👑"
-
-];
+if(opened.includes(id)) return;
 
 
-let result =
-cards[Math.floor(Math.random()*cards.length)];
+opened.push(id);
 
 
 
-document.getElementById("card").innerHTML =
-result;
+let chance = Math.random();
 
 
 
-if(result=="❌"){
+let value;
+
+
+
+if(chance < 0.15){
+
+value="💣";
+
+}else{
+
+value="⭐";
+
+}
+
+
+
+
+let card =
+document.querySelectorAll(".card")[id];
+
+
+
+card.innerHTML=value;
+
+card.classList.add("open");
+
+
+
+
+
+if(value=="💣"){
 
 
 document.getElementById("history").innerHTML =
-"باختی!";
+"باختی";
 
 
-
-cardStarted=false;
-
+started=false;
 
 return;
 
@@ -111,22 +131,21 @@ return;
 
 
 
-cardMulti += 1;
 
 
+multi++;
 
-cardProfit =
-cardBet * cardMulti;
+
+profit = bet * multi;
 
 
 
 document.getElementById("multi").innerHTML =
-cardMulti;
-
+multi;
 
 
 document.getElementById("profit").innerHTML =
-cardProfit.toLocaleString();
+profit.toLocaleString();
 
 
 
@@ -140,29 +159,29 @@ document.getElementById("history").innerHTML =
 
 
 
+
+
+
 function takeCardProfit(){
 
 
-if(cardProfit <= 0){
+if(profit<=0){
 
-alert("سودی برای برداشت ندارید");
+alert("سودی وجود ندارد");
 return;
 
 }
 
 
 
-addCoins(cardProfit);
-
+addCoins(profit);
 
 
 document.getElementById("history").innerHTML =
 "سود دریافت شد";
 
 
-
-cardStarted=false;
-cardProfit=0;
+started=false;
 
 
-  }
+}
