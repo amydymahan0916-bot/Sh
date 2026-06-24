@@ -27,15 +27,19 @@ const multipliers = [
 
 
 
-let data = JSON.parse(localStorage.getItem("royalData")) || {
 
-coins:0,
-wins:0,
-games:0,
-record:0,
-history:[]
 
-};
+let data = JSON.parse(localStorage.getItem("currentUser"));
+
+
+
+if(!data){
+
+alert("ابتدا وارد حساب شوید");
+
+location.href="login.html";
+
+}
 
 
 
@@ -43,12 +47,58 @@ history:[]
 
 function save(){
 
-localStorage.setItem(
-"royalData",
-JSON.stringify(data)
+
+
+let users =
+
+JSON.parse(localStorage.getItem("users")) || [];
+
+
+
+let index = users.findIndex(
+
+u=>u.id === data.id
+
 );
 
+
+
+if(index !== -1){
+
+
+users[index]=data;
+
+
 }
+
+
+
+
+localStorage.setItem(
+
+"users",
+
+JSON.stringify(users)
+
+);
+
+
+
+localStorage.setItem(
+
+"currentUser",
+
+JSON.stringify(data)
+
+);
+
+
+
+}
+
+
+
+
 
 
 
@@ -56,12 +106,15 @@ JSON.stringify(data)
 function update(){
 
 
+
 data =
-JSON.parse(localStorage.getItem("royalData")) || data;
+
+JSON.parse(localStorage.getItem("currentUser")) || data;
 
 
 
 document.getElementById("coins").innerHTML =
+
 data.coins.toLocaleString();
 
 
@@ -105,11 +158,6 @@ return;
 
 }
 
-
-
-
-data =
-JSON.parse(localStorage.getItem("royalData")) || data;
 
 
 
@@ -310,6 +358,11 @@ document.getElementById("message").innerHTML=
 
 
 
+save();
+
+update();
+
+
 return;
 
 
@@ -435,10 +488,6 @@ if(!playing)
 return;
 
 
-
-
-data =
-JSON.parse(localStorage.getItem("royalData")) || data;
 
 
 
