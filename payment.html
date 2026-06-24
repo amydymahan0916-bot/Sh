@@ -27,6 +27,7 @@
 
 
 
+
 <div class="box">
 
 
@@ -35,9 +36,11 @@
 </h2>
 
 
+
 <h2 id="card">
 6037997194784360
 </h2>
+
 
 
 <button onclick="copyCard()">
@@ -46,7 +49,17 @@
 
 
 
+
 <hr>
+
+
+
+<p>
+نام کاربر:
+<span id="userName">
+-
+</span>
+</p>
 
 
 
@@ -69,7 +82,8 @@
 
 
 
-<button onclick="payDone()">
+
+<button onclick="sendRequest()">
 
 پرداخت کردم
 
@@ -80,7 +94,9 @@
 <h3 id="msg"></h3>
 
 
+
 </div>
+
 
 
 
@@ -89,22 +105,43 @@
 <script>
 
 
+
+let user =
+JSON.parse(localStorage.getItem("user"));
+
+
+
 let coins =
-localStorage.getItem("buyCoins");
+Number(localStorage.getItem("buyCoins"));
+
 
 
 let money =
-localStorage.getItem("payPrice");
+Number(localStorage.getItem("payPrice"));
+
+
+
+
+
+if(user){
+
+
+document.getElementById("userName").innerHTML =
+user.name;
+
+
+}
 
 
 
 document.getElementById("coinsShow").innerHTML =
-Number(coins).toLocaleString();
+coins.toLocaleString();
 
 
 
 document.getElementById("moneyShow").innerHTML =
-Number(money).toLocaleString();
+money.toLocaleString();
+
 
 
 
@@ -119,7 +156,7 @@ navigator.clipboard.writeText(
 );
 
 
-alert("کپی شد");
+alert("شماره کارت کپی شد");
 
 
 }
@@ -129,42 +166,70 @@ alert("کپی شد");
 
 
 
-function payDone(){
 
 
-let user =
-JSON.parse(localStorage.getItem("user"));
+function sendRequest(){
 
 
 
-if(user){
+if(!user){
 
 
-user.coins += Number(coins);
+alert("ابتدا وارد حساب شوید");
+
+return;
+
+
+}
+
+
+
+let requests =
+JSON.parse(localStorage.getItem("requests")) || [];
+
+
+
+
+let request = {
+
+
+id: Date.now(),
+
+
+name:user.name,
+
+
+coins:coins,
+
+
+money:money,
+
+
+status:"در انتظار تایید"
+
+
+
+};
+
+
+
+
+requests.push(request);
+
 
 
 
 localStorage.setItem(
-"user",
-JSON.stringify(user)
+"requests",
+JSON.stringify(requests)
 );
 
 
 
-alert("سکه ها اضافه شد");
-
-
-location.href="index.html";
-
-
-}else{
 
 
 document.getElementById("msg").innerHTML =
-"ابتدا وارد حساب شوید";
-
-
-}
+"درخواست شما ارسال شد و پس از تایید شارژ می‌شود";
 
 
 
@@ -173,6 +238,7 @@ document.getElementById("msg").innerHTML =
 
 
 </script>
+
 
 
 </body>
