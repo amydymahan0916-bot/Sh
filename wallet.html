@@ -17,14 +17,11 @@
 <body>
 
 
-
 <header>
-
 
 <h1>
 💰 کیف پول
 </h1>
-
 
 
 <div class="coin">
@@ -45,7 +42,6 @@
 
 
 
-
 <div class="box">
 
 
@@ -54,27 +50,15 @@
 </h2>
 
 
-
-<p>
-
-موجودی فعلی:
-
-</p>
-
-
-
 <h2 class="gold">
 
 🪙
 
 <span id="balance">
-
 0
-
 </span>
 
 </h2>
-
 
 
 </div>
@@ -85,25 +69,22 @@
 
 
 
-
 <div class="box">
 
 
 <h2>
-عملیات کیف پول
+عملیات
 </h2>
 
 
 
 <a href="charge.html">
 
-
 <button>
 
 🪙 شارژ حساب
 
 </button>
-
 
 </a>
 
@@ -113,16 +94,13 @@
 
 
 
-
 <a href="withdraw.html">
-
 
 <button>
 
 💸 برداشت
 
 </button>
-
 
 </a>
 
@@ -161,37 +139,27 @@
 
 
 
+
 <nav>
 
 
 <a href="index.html">
-
 خانه
-
 </a>
-
 
 
 <a href="games.html">
-
 بازی‌ها
-
 </a>
-
 
 
 <a href="wallet.html">
-
 کیف پول
-
 </a>
 
 
-
 <a href="profile.html">
-
 پروفایل
-
 </a>
 
 
@@ -202,139 +170,7 @@
 
 
 
-
-<script>
-
-
-let data =
-
-JSON.parse(localStorage.getItem("royalData")) || {
-
-coins:0
-
-};
-
-
-
-
-document.getElementById("coins").innerHTML =
-
-data.coins.toLocaleString();
-
-
-
-document.getElementById("balance").innerHTML =
-
-data.coins.toLocaleString();
-
-
-
-
-
-let charge =
-
-JSON.parse(localStorage.getItem("walletRequests")) || [];
-
-
-
-let withdraw =
-
-JSON.parse(localStorage.getItem("withdrawRequests")) || [];
-
-
-
-
-
-let box = document.getElementById("history");
-
-
-
-if(charge.length==0 && withdraw.length==0){
-
-
-box.innerHTML="درخواستی وجود ندارد";
-
-
-}
-
-else{
-
-
-box.innerHTML="";
-
-
-
-charge.forEach(item=>{
-
-
-box.innerHTML +=
-
-`
-
-<p>
-
-🪙 شارژ:
-
-${item.coins.toLocaleString()}
-
-<br>
-
-وضعیت:
-
-${item.status}
-
-</p>
-
-<hr>
-
-`;
-
-
-
-});
-
-
-
-
-
-withdraw.forEach(item=>{
-
-
-box.innerHTML +=
-
-`
-
-<p>
-
-💸 برداشت:
-
-${item.money.toLocaleString()}
-
-تومان
-
-<br>
-
-وضعیت:
-
-${item.status}
-
-</p>
-
-<hr>
-
-`;
-
-
-
-});
-
-
-
-}
-
-
-</script>
-
+<script src="wallet.js"></script>
 
 
 </body>
