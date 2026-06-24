@@ -12,19 +12,128 @@ let mines = [];
 
 
 
-function startMine(){
+let data =
+JSON.parse(localStorage.getItem("currentUser"));
 
 
-mineBet =
-Number(
-document.getElementById("bet").value
+
+if(!data){
+
+alert("ابتدا وارد حساب شوید");
+
+location.href="login.html";
+
+}
+
+
+
+
+
+
+
+function saveUser(){
+
+
+
+let users =
+
+JSON.parse(localStorage.getItem("users")) || [];
+
+
+
+let index = users.findIndex(
+
+u=>u.id === data.id
+
 );
 
 
 
-if(mineBet<=0){
+if(index !== -1){
 
-alert("مبلغ بازی را وارد کنید");
+users[index]=data;
+
+}
+
+
+
+localStorage.setItem(
+
+"users",
+
+JSON.stringify(users)
+
+);
+
+
+
+localStorage.setItem(
+
+"currentUser",
+
+JSON.stringify(data)
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+function updateCoins(){
+
+
+
+let coin = document.getElementById("coins");
+
+
+if(coin){
+
+coin.innerHTML =
+
+data.coins.toLocaleString();
+
+}
+
+
+}
+
+
+
+updateCoins();
+
+
+
+
+
+
+
+
+
+function startMine(){
+
+
+mineBet =
+
+Number(
+
+document.getElementById("bet").value
+
+);
+
+
+
+
+
+if(mineBet < 10000){
+
+alert("حداقل ورود 10000 سکه است");
 
 return;
 
@@ -33,11 +142,30 @@ return;
 
 
 
-if(!removeCoins(mineBet)){
+
+
+
+if(mineBet > data.coins){
+
+alert("موجودی کافی نیست");
 
 return;
 
 }
+
+
+
+
+
+
+
+data.coins -= mineBet;
+
+
+data.games++;
+
+
+
 
 
 
@@ -47,57 +175,89 @@ mineMulti=1;
 
 mineProfit=mineBet;
 
-
-
 mines=[];
+
+
+
+
 
 
 
 while(mines.length<3){
 
+
 let x =
-Math.floor(
-Math.random()*9
-);
+
+Math.floor(Math.random()*9);
+
 
 
 if(!mines.includes(x)){
 
+
 mines.push(x);
 
-}
 
 }
 
 
+}
 
 
 
-document.getElementById("multi").innerHTML=1;
+
+
+
+document.getElementById("multi").innerHTML=
+
+"×1";
+
+
 
 document.getElementById("profit").innerHTML=
-mineProfit;
+
+mineProfit.toLocaleString();
+
+
+
 
 
 
 document.getElementById("history").innerHTML=
+
 "خانه‌ها را انتخاب کن 💎";
 
 
 
 
 
+
+
 document.querySelectorAll(".mineCell")
+
 .forEach(cell=>{
+
 
 cell.innerHTML="?";
 
 cell.style.background="#111";
 
+
 });
 
 
+
+
+
+saveUser();
+
+updateCoins();
+
+
+
 }
+
+
 
 
 
@@ -119,7 +279,11 @@ return;
 
 
 
+
+
+
 if(mines.includes(index)){
+
 
 
 cell.innerHTML="💣";
@@ -129,15 +293,26 @@ cell.style.background="#700";
 
 
 
+
 document.getElementById("history").innerHTML=
+
 "مین پیدا شد! باخت ❌";
+
 
 
 
 document.getElementById("profit").innerHTML=0;
 
 
+
 playingMine=false;
+
+
+
+
+saveUser();
+
+updateCoins();
 
 
 
@@ -146,32 +321,53 @@ playingMine=false;
 else{
 
 
+
 cell.innerHTML="💎";
+
 
 
 
 mineMulti++;
 
 
+
+
 mineProfit =
+
 mineBet * mineMulti;
 
 
 
+
+
+
 document.getElementById("multi").innerHTML=
-mineMulti;
+
+"×"+mineMulti;
+
+
+
 
 
 
 document.getElementById("profit").innerHTML=
+
 mineProfit.toLocaleString();
 
 
 
-}
 
 
 }
+
+
+
+
+
+
+}
+
+
 
 
 
@@ -182,29 +378,84 @@ mineProfit.toLocaleString();
 function takeMineProfit(){
 
 
+
 if(!playingMine){
+
 
 alert("جایزه‌ای ندارید");
 
 return;
 
+
 }
 
 
 
-addCoins(mineProfit);
+
+
+
+
+data.coins += mineProfit;
+
+
+
+data.wins++;
+
+
+
+
+
+
+
+if(mineProfit > data.record){
+
+data.record = mineProfit;
+
+}
+
+
+
+
+
+
+
+data.history.unshift(
+
+"مین + "+mineProfit+" 🪙"
+
+);
+
+
+
+
+
+
+saveUser();
+
+updateCoins();
+
+
+
 
 
 
 alert(
+
 "جایزه اضافه شد: "+
+
 mineProfit+
+
 " 🪙"
+
 );
+
+
+
 
 
 
 playingMine=false;
 
 
-}
+
+  }
