@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>کیف پول</title>
+<title>برداشت</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -17,25 +17,13 @@
 <body>
 
 
-
 <header>
 
 <h1>
-💰 کیف پول
+💸 برداشت موجودی
 </h1>
 
-
-<div class="coin">
-
-🪙 <span id="coins">0</span>
-
-</div>
-
-
 </header>
-
-
-
 
 
 
@@ -44,23 +32,18 @@
 
 
 <h2>
-افزایش موجودی
+درخواست برداشت
 </h2>
-
-
-
-<p>
-هر ۱۰,۰۰۰ سکه = ۱۰,۰۰۰ تومان
-</p>
 
 
 
 
 <input 
-id="amount"
+id="card"
 type="number"
-placeholder="تعداد سکه"
+placeholder="شماره کارت خود را وارد کنید"
 >
+
 
 
 
@@ -68,16 +51,28 @@ placeholder="تعداد سکه"
 
 
 
-<button onclick="sendRequest()">
+<input
+id="money"
+type="number"
+placeholder="مبلغ به تومان"
+>
 
-ثبت درخواست پرداخت
+
+
+
+<br><br>
+
+
+
+<button onclick="sendWithdraw()">
+
+ثبت درخواست برداشت
 
 </button>
 
 
 
 </div>
-
 
 
 
@@ -93,54 +88,20 @@ placeholder="تعداد سکه"
 </h2>
 
 
+<div id="list">
 
-<div id="requests">
+</div>
 
-درخواستی وجود ندارد
 
 </div>
 
 
 
-</div>
 
 
 
 
-
-
-
-
-<nav>
-
-
-<a href="index.html">
-خانه
-</a>
-
-
-<a href="games.html">
-بازی‌ها
-</a>
-
-
-<a href="wallet.html">
-کیف پول
-</a>
-
-
-<a href="profile.html">
-پروفایل
-</a>
-
-
-</nav>
-
-
-
-
-
-<script src="wallet.js"></script>
+<script src="withdraw.js"></script>
 
 
 </body>
