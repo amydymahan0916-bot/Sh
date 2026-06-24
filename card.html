@@ -12,22 +12,33 @@
 
 </head>
 
-
 <body>
 
 
-<header>
+<div class="particles"></div>
 
-<h1>
-CARD MASTER
-<br>
+
+<div class="game-container">
+
+
+<header class="game-header">
+
+<div class="logo">
+
+<h1> CARD MASTER </h1>
 <span>ELITE</span>
-</h1>
 
-<div class="balance">
-موجودی
-<br>
-🪙 <b id="money">0</b>
+</div>
+
+
+<div class="balance-box">
+
+<div>موجودی</div>
+
+<b>
+🪙 <span id="coins">100000</span>
+</b>
+
 </div>
 
 </header>
@@ -35,55 +46,102 @@ CARD MASTER
 
 
 
-<div class="stats">
 
-<div>
-ورودی
-<strong id="bet">0</strong>
+<section class="game-info">
+
+
+<div class="info-box">
+<span>ورودی</span>
+<strong id="betView">0</strong>
 </div>
 
-<div>
-سود
+
+<div class="info-box">
+<span>سود</span>
 <strong id="profit">0</strong>
 </div>
 
-<div>
-ضریب
-<strong id="multi">1×</strong>
+
+<div class="info-box">
+<span>ضریب</span>
+<strong id="multi">×1</strong>
 </div>
 
-</div>
+
+</section>
 
 
 
 
 
-<div class="gameBox">
+
+<section class="control-panel">
 
 
-<input id="amount" placeholder="مبلغ بازی">
+<input id="bet" type="number" placeholder="مبلغ بازی">
 
 
-<div class="levels">
 
-<button onclick="setMode('ELITE')">
-ELITE
-</button>
+<div class="risk-panel">
 
-<button onclick="setMode('NORMAL')">
-NORMAL
-</button>
-
-<button onclick="setMode('SAFE')">
+<button onclick="setRisk('safe')">
 SAFE
 </button>
 
+
+<button onclick="setRisk('normal')">
+NORMAL
+</button>
+
+
+<button onclick="setRisk('hard')">
+ELITE
+</button>
+
+
 </div>
 
 
 
-<button class="start" onclick="startGame()">
-شروع بازی 🎴
+
+<button class="start-btn" onclick="startGame()">
+
+🎴 شروع بازی
+
+</button>
+
+
+
+</section>
+
+
+
+
+
+
+<section id="cards" class="cards-table">
+
+</section>
+
+
+
+
+
+
+<div class="action-panel">
+
+
+<button id="cashout" onclick="cashOut()" disabled>
+
+💰 برداشت سود
+
+</button>
+
+
+<button onclick="startGame()">
+
+🔄 بازی دوباره
+
 </button>
 
 
@@ -93,38 +151,17 @@ SAFE
 
 
 
-<div id="cards" class="cards">
+<div id="message" class="message-box">
 
-
-</div>
-
-
-
-
-
-<button class="cash" onclick="cashout()">
-برداشت سود 💰
-</button>
-
-
-
-<button class="again" onclick="resetGame()">
-بازی دوباره 🔄
-</button>
-
-
-
-
-
-<div class="result">
-
-<h2 id="resultTitle">
-برد ✨
-</h2>
-
-<div id="resultText">
+آماده بازی
 
 </div>
+
+
+
+
+<div id="winCoins" class="coins-effect"></div>
+
 
 </div>
 
@@ -133,6 +170,7 @@ SAFE
 
 
 <script src="card.js"></script>
+
 
 </body>
 
