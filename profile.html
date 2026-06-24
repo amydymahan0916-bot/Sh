@@ -1,26 +1,20 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 
-
 <head>
 
 <meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
-<title>پروفایل</title>
-
+<title>پروفایل - شرط‌بندی ماهان</title>
 
 <link rel="stylesheet" href="style.css">
-
 
 </head>
 
 
-
 <body>
-
 
 
 <header>
@@ -31,7 +25,7 @@
 
 
 <div class="coin">
-🪙 39,780
+🪙 0
 </div>
 
 
@@ -40,35 +34,54 @@
 
 
 
+
+
+
 <div class="box">
 
 
 <h2>
+👤 حساب کاربری
+</h2>
+
+
+
+<h3 class="gold">
+
 ماهان
+
+</h3>
+
+
+
+<p>
+
+سطح کاربر:
+<br>
+
+⭐ طلایی
+
+</p>
+
+
+
+<p>
+
+موجودی:
+
+</p>
+
+
+<h2 class="gold" id="myCoins">
+
+🪙 0
+
 </h2>
 
 
-<p>
-سطح: طلایی ⭐
-</p>
-
-
-<p>
-تعداد بازی‌ها: 120
-</p>
-
-
-<p>
-بردها: 78
-</p>
-
-
-<p>
-رکورد: 9500 امتیاز
-</p>
-
-
 </div>
+
+
 
 
 
@@ -79,26 +92,94 @@
 
 
 <h2>
-مدال‌ها
+آمار بازی
 </h2>
 
 
+
 <p>
-🥇 قهرمان کارت
+
+تعداد بازی‌ها:
+
+<span id="games">
+0
+</span>
+
 </p>
 
 
+
 <p>
-🎳 استاد بولینگ
+
+بردها:
+
+<span id="wins">
+0
+</span>
+
 </p>
 
 
+
 <p>
-🏆 بازیکن برتر
+
+باخت‌ها:
+
+<span id="lose">
+0
+</span>
+
 </p>
+
 
 
 </div>
+
+
+
+
+
+
+
+
+<div class="box">
+
+
+<h2>
+امکانات
+</h2>
+
+
+
+<a href="games.html">
+
+<button>
+
+شروع بازی
+
+</button>
+
+</a>
+
+
+<br><br>
+
+
+<a href="wallet.html">
+
+<button>
+
+خرید سکه
+
+</button>
+
+</a>
+
+
+
+</div>
+
+
 
 
 
@@ -132,7 +213,26 @@
 
 
 
+
+
+
+
+
 <script src="app.js"></script>
+
+
+
+<script>
+
+
+document.getElementById("myCoins").innerHTML =
+
+"🪙 " + getCoins().toLocaleString();
+
+
+
+</script>
+
 
 
 </body>
